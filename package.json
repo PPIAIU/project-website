@@ -1,6 +1,17 @@
 {
   "dependencies": {
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
     "express": "^4.19.2",
     "mongoose": "^8.5.2"
-  }
+  },
+  "name": "webappaiu",
+  "version": "1.0.0",
+  "description": "membuat website dynamis",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zulfan & nardi",
+  "license": "ISC"
 }
