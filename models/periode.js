@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
+const Divisi = require('./divisi')
 const Schema = mongoose.Schema
 
 const periodeSchema = new Schema({
     name: String,
-    divisi: [{
+    divisis: [{
         type: Schema.Types.ObjectId,
         ref: 'Divisi'
     }],

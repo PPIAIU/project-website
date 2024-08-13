@@ -10,8 +10,14 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.store = async (req, res) => {
-    const periode = new Periode(req.body.name)
+    const periode = new Periode(req.body)
     await periode.save()
+    .then(result => {
+        res.status(201).json(result)
+    })
+    .catch(err => {
+        res.status(500).json({err: "could not send"})
+    })
     res.redirect('/period/show')
 }
 
@@ -30,7 +36,14 @@ module.exports.edit = async (req, res) => {
 
 module.exports.update = async (req, res) => {
     const {id} = req.params;
-    const 
+    const periode = await Periode.findByIdAndUpdate(id, {...id.body.periode})
+    await periode.save()
+}   
 
+module.exports.destroy = async (req, res) => {
+    const {id} = req.params
+    const periode = await Periode.findById(id)
+    await Periode.findByIdAndDelete(req.params.id);
+    res.redirect('/periode')
 }
 

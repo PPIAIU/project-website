@@ -5,9 +5,9 @@ const controllerMember = require('../controllers/controllerMember')
 
 const Member = require('../models/member')
 
-router.route('/')
-    .get(  )
+router.post('/',)
 
 router.get('/create', controllerMember.create)
 
 module.exports = router
+

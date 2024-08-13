@@ -1,10 +1,19 @@
 
 
 const express = require('express')
-const route = express.Router()
 
-route.get('/', (req,res) => {
-    res.send('hello divisiii')
-})
+const router = express.Router()
+const controllerDivisi = require('../controllers/controllerDivisi')
 
-module.exports = route
+router.route('/:divisi_id')
+    .get( controllerDivisi.show)
+    .put(controllerDivisi.update)
+    .delete(controllerDivisi.destroy)
+
+router.route('/edit', controllerDivisi.edit)
+
+router.get('/create', controllerDivisi.create)
+
+router.post('/:periode_id', controllerDivisi.store)
+
+module.exports = router

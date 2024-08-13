@@ -1,9 +1,11 @@
 const Member = require('../models/member')
+const Divisi = require('../models/divisi')
 
 module.exports.create = (req, res) => {
+    
     res.render('member/create')
 }
-module.exports.index = async (req, res) => {
-    const members = await Member.find()
-    res.render('member/index', {members})
+
+module.exports.store = async (req, res) => {
+    
 }
