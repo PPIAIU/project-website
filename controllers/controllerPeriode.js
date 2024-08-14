@@ -10,7 +10,7 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.store = async (req, res) => {
-    const periode = new Periode(req.body)
+    const periode = new Periode(req.body.periode)
     await periode.save()
     .then(result => {
         res.status(201).json(result)
@@ -24,7 +24,7 @@ module.exports.store = async (req, res) => {
 module.exports.show = async (req, res) => {
     const periode = await Periode.findById(req.params.id)
     .populate({
-        path: 'divisi'
+        path: 'divisis'
     })
     res.render('periode/show', {periode})
 }
@@ -42,8 +42,7 @@ module.exports.update = async (req, res) => {
 
 module.exports.destroy = async (req, res) => {
     const {id} = req.params
-    const periode = await Periode.findById(id)
-    await Periode.findByIdAndDelete(req.params.id);
+    await Periode.findOneAndDelete({_id : id});
     res.redirect('/periode')
 }
 

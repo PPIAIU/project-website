@@ -1,0 +1,12 @@
+<% layout('layouts/app') %>
+
+<h1>showing periode <%=  %></h1>
+
+<h3><%= periode.name  %></h3>
+
+<% for ( divisi of periode.divisis ) { %>
+
+  <a href="/divisi/<%= divisi._id %>"><h4><%= divisi.name %></h4></a>  
+
+
+    <% } %>

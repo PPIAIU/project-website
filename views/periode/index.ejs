@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+<% layout('layouts/app') %>
+<h2>ini adalah periode ppi aiu</h2>
+
+
+<% for (periode of periodes) { %>
+
+
+ <a href="/periode/<%= periode._id %>"> <h1><%= periode.name %></h1> </a>  
+
+
+<% } %>
