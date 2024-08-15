@@ -4,7 +4,10 @@ const Periode = require('../models/periode')
 
 
 module.exports.show = async ( req, res) => {
-    const divisi = await Divisi.findById(req.params)
+    const divisi = await Divisi.findById(req.params.id)
+    .populate({
+        path: 'members'
+    })
     res.render('divisi/show', {divisi})
 }
 

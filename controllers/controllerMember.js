@@ -20,7 +20,6 @@ module.exports.store = async (req, res) => {
     console.log(divisi)
     await divisi.save()
     await member.save()
-    res.send('it sended')
   } catch (error) {
     res.send(error)
   }
