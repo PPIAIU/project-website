@@ -1,52 +1,28 @@
 <% layout('layouts/app') %>
 
-    <title>Video Background</title>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Open Sans', sans-serif;
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    body {
+        font-family: 'Open Sans', sans-serif;
+    }
+</style>
 </head>
 <body class="text-white m-0 p-0 box-border">
-    <section class="relative w-full h-screen bg-black">
+    <section class="relative w-full h-screen bg-red-800">
         <header class="flex items-center justify-between relative z-10 p-12">
             <div class="logo">
-                <img src="assets/logo.png" alt="" class="w-24">
-            </div>
-            <img src="assets/burger-menu.svg" alt="" class="w-16 p-2 bg-black cursor-pointer z-20 ham">
-            <nav class="fixed top-0 right-0 flex items-center justify-center text-center bg-white w-2/5 h-screen transform translate-x-full transition-transform duration-500 z-30">
-                <ul class="space-y-8">
-                    <li><a href="#" class="text-gray-800 text-2xl font-bold">Home</a></li>
-                    <li><a href="#" class="text-gray-800 text-2xl font-bold">Service</a></li>
-                    <li><a href="#" class="text-gray-800 text-2xl font-bold">Contact</a></li>
-                </ul>
-            </nav>
+                <img src="/public/image/logo-ppi.png" alt="" class="w-24">
+            </div>  
         </header>
         <div class="absolute inset-0 flex items-center justify-center text-center z-10">
             <div class="content">
-                <h1 class="text-6xl uppercase font-extrabold">Escape the Ordinary</h1>
-                <h2 class="text-3xl mt-4">Unleash Your Inner Explorer</h2>
+                <h1 class="text-6xl uppercase font-extrabold">Welcome To PPI AIU</h1>
+                <h2 class="text-3xl mt-5">Budi Utomo !!!</h2>
+                <p class="text-lg mt-5">Dedikasi - Kolaborasi - Harmoni</p>
                 <a href="#" class="inline-block mt-8 px-8 py-4 border-2 border-white rounded-full text-lg font-bold uppercase transition-all duration-500 hover:bg-white hover:text-black">Explore</a>
             </div>
-            <div class="absolute left-12 bottom-12 social-icons">
-                <ul class="flex items-center space-x-8 list-none">
-                    <li><a href="#"><img src="assets/facebook.png" alt="" class="w-6"></a></li>
-                    <li><a href="#"><img src="assets/instagram.png" alt="" class="w-6"></a></li>
-                    <li><a href="#"><img src="assets/twitter.png" alt="" class="w-6"></a></li>
-                    <li><a href="#"><img src="assets/tik-tok.png" alt="" class="w-6"></a></li>
-                </ul>
-            </div>
         </div>
-        <video src="assets/nature.mp4" autoplay muted loop class="absolute inset-0 w-full h-screen object-cover z-0 opacity-70"></video>
+        <video src="/public/video/nature.mp4" autoplay muted loop class="absolute inset-0 w-full h-screen object-cover z-0 opacity-70"></video>
     </section>
-
-    <script>
-        var toggle = document.querySelector(".ham");
-        var nav = document.querySelector("nav");
-
-        toggle.addEventListener("click",function(e){
-            nav.classList.toggle("translate-x-0");
-        });
-    </script>
+</body>

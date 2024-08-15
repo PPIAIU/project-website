@@ -15,6 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
 app.use(express.json())
+app.use(express.static(path.join(__dirname, 'public')))
 
 // connect to mongodb
 mongoose.connect('mongodb://127.0.0.1/ppiaiu')
