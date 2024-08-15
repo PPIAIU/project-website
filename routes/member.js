@@ -2,12 +2,15 @@
 const express = require('express')
 const router = express.Router()
 const controllerMember = require('../controllers/controllerMember')
-const Member = require('../models/member')
-const Divisi = require('../models/divisi')
 
-router.post('/',)
+router.route('/:id')
+    .get(controllerMember.show)
+    .post(controllerMember.update)
+    .delete(controllerMember.destroy)
 
 router.get('/create', controllerMember.create)
+router.post('/:divisi_id/store', controllerMember.store)
+router.get('/edit', controllerMember.edit)
 
 module.exports = router
 

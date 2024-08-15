@@ -4,7 +4,7 @@ const app = express()
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override')
-app.get('/', ((req, res) => {
+app.get('/home', ((req, res) => {
   res.render('home')
 }))
 

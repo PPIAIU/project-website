@@ -4,12 +4,14 @@ const Schema  = mongoose.Schema
 const memberSchema = new Schema({
     name: String,
     jabatan: String,
-    images: [
-        {
-            url: String,
-            filename: String
-        }
-    ]
+    // images: [
+    //     {
+    //         url: String,
+    //         filename: String
+    //     }
+    // ]
 })
+
+
 
 module.exports = mongoose.model('Member', memberSchema)
