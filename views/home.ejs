@@ -1,28 +1,24 @@
 <% layout('layouts/app') %>
 
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-    body {
-        font-family: 'Open Sans', sans-serif;
-    }
-</style>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to the external CSS file -->
 </head>
-<body class="text-white m-0 p-0 box-border">
-    <section class="relative w-full h-screen bg-red-800">
-        <header class="flex items-center justify-between relative z-10 p-12">
+<body>
+    <section class="main-section">
+        <header class="header">
             <div class="logo">
-                <img src="/public/image/logo-ppi.png" alt="" class="w-24">
+                <img src="/image/logo-ppi.png" alt="PPI AIU Logo">
             </div>  
         </header>
-        <div class="absolute inset-0 flex items-center justify-center text-center z-10">
+        <div class="content-container">
             <div class="content">
-                <h1 class="text-6xl uppercase font-extrabold">Welcome To PPI AIU</h1>
-                <h2 class="text-3xl mt-5">Budi Utomo !!!</h2>
-                <p class="text-lg mt-5">Dedikasi - Kolaborasi - Harmoni</p>
-                <a href="#" class="inline-block mt-8 px-8 py-4 border-2 border-white rounded-full text-lg font-bold uppercase transition-all duration-500 hover:bg-white hover:text-black">Explore</a>
+                <h1 id="h1">Welcome To PPI AIU</h1>
+                <h2>Budi Utomo !!!</h2>
+                <p>Dedikasi - Kolaborasi - Harmoni</p>
+                <a href="#">Explore</a>
             </div>
         </div>
-        <video src="/public/video/nature.mp4" autoplay muted loop class="absolute inset-0 w-full h-screen object-cover z-0 opacity-70"></video>
+        <video src="/video/lumpur.mp4" autoplay muted loop class="background-video"></video>
     </section>
 </body>
