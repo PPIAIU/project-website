@@ -5,7 +5,7 @@ const express = require('express')
 const router = express.Router()
 const controllerDivisi = require('../controllers/controllerDivisi')
 
-router.route('/:_id')
+router.route('/:id')
     .get( controllerDivisi.show)
     .put(controllerDivisi.update)
     .delete(controllerDivisi.destroy)
