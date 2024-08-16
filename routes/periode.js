@@ -12,6 +12,6 @@ router.get('/create', wrapAsync(controllerPeriode.create))
 router.route('/:id')
     .get( controllerPeriode.show)
     .put(controllerPeriode.edit)
-    .delete(controllerPeriode.destroy)
-
+    
+router.delete('/:id/divisi/:divisi_id',controllerPeriode.destroy)
 module.exports = router

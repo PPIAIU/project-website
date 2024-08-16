@@ -2,6 +2,8 @@
 
 <h1>showing periode <%=  %></h1>
 
+<a href="/divisi/<%= periode._id %>/create">buat departemen baru</a>
+
 <h3><%= periode.name  %></h3>
 
 <% for ( divisi of periode.divisis ) { %>
@@ -10,3 +12,12 @@
 
 
     <% } %>
+    
+    <form action="/periode/<%= periode._id %>?_method=delete" method="post" >
+      <button type="submit">delete periode</button>
+    </form>
+
+
+    
+
+ 

@@ -2,8 +2,9 @@ const Member = require('../models/member')
 const Divisi = require('../models/divisi')
 
 module.exports.show = async (req, res) => {
-    const member = await Member.findById(req.params)
-    res.render('divisi/show', member)
+    const  member  = await Member.findById(req.params.id)
+    console.log(member)
+  res.render('member/show', { member })
 }
 
 module.exports.create = (req, res) => {
@@ -20,6 +21,7 @@ module.exports.store = async (req, res) => {
     console.log(divisi)
     await divisi.save()
     await member.save()
+    // res.status(500).json(member, divisi)
   } catch (error) {
     res.send(error)
   }
