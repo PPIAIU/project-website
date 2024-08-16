@@ -4,6 +4,7 @@ const Schema  = mongoose.Schema
 const memberSchema = new Schema({
     name: String,
     jabatan: String,
+    background: String,
     // images: [
     //     {
     //         url: String,

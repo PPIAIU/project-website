@@ -12,13 +12,13 @@ module.exports.create = async (req, res) => {
 module.exports.store = async (req, res) => {
     const periode = new Periode(req.body.periode)
     await periode.save()
-    .then(result => {
-        res.status(201).json(result)
-    })
-    .catch(err => {
-        res.status(500).json({err: "could not send"})
-    })
-    res.redirect('/period/show')
+    // .then(result => {
+    //     res.status(201).json(result)
+    // })
+    // .catch(err => {
+    //     res.status(500).json({err: "could not send"})
+    // })
+    res.redirect('/periode')
 }
 
 module.exports.show = async (req, res) => {
@@ -42,7 +42,7 @@ module.exports.update = async (req, res) => {
 
 module.exports.destroy = async (req, res) => {
     const {id} = req.params
-    await Periode.findOneAndDelete({_id : id});
+    await Periode.findOneAndDelete({ _id : id});
     res.redirect('/periode')
 }
 
