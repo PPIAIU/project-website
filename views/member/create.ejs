@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+<% layout('layouts/app') %>
 <body>
-    <h1>ini member</h1>
+    <h1>creating member</h1>
+    <form action="/member/<%= divisi_id %>/store" method="post" > 
+        <label for="name">name</label>
+        <input type="text" name="member[name]" id="name">
+        <label for="jabatan">jabatan</label>
+        <input type="text" name="member[jabatan]" id="jabatan">
+        <button type="submit">submit</button>
+    </form>
 </body>
-</html>

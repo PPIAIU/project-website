@@ -8,8 +8,10 @@ router.route('/:id')
     .post(controllerMember.update)
     .delete(controllerMember.destroy)
 
-router.get('/create', controllerMember.create)
+router.get('/:divisi_id/create', controllerMember.create)
+
 router.post('/:divisi_id/store', controllerMember.store)
+
 router.get('/edit', controllerMember.edit)
 
 module.exports = router
