@@ -25,7 +25,7 @@ body {
 }
 
 .logo img {
-    width: 6rem; /* Adjusted size for responsiveness */
+    width: 7rem; /* Adjusted size for responsiveness */
 }
 
 .content-container {
@@ -41,7 +41,7 @@ body {
 
 .content h1 {
     text-transform: uppercase;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1.875rem 0;
     font-weight: 800; /* Bold font */
     font-size: 4rem; /* Adjusted size for responsiveness */
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -59,7 +59,7 @@ body {
 
 .content h2 {
     font-size: 2.5rem; /* Adjusted size for responsiveness */
-    margin-top: 1rem;
+    margin-top: 2.188rem;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     animation: moveFromLeft 8s infinite ease-in-out; /* New animation */
 }
@@ -89,7 +89,7 @@ body {
 
 .content p {
     font-size: 1.5rem; /* Adjusted size for responsiveness */
-    margin-top: 1rem;
+    margin-top: 2.5rem;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     animation: moveFromRight 8s infinite ease-in-out; /* New animation */
 }
@@ -119,7 +119,7 @@ body {
 
 .content a {
     display: inline-block;
-    margin-top: 6rem;
+    margin-top: 8rem;
     padding: 0.75rem 1.5rem;
     border: 2px solid white;
     border-radius: 9999px;
@@ -186,15 +186,18 @@ body {
     }
 
     .logo img {
-        width: 3rem; /* Adjusted size for mobile devices */
+        width: 5.5rem; /* Adjusted size for mobile devices */
+        margin: 2rem 0; /* Add margin to the logo for mobile devices */
     }
 
     .content h1 {
-        font-size: 2.5rem; /* Smaller font size for mobile devices */
+        font-size: 2rem; /* Smaller font size for mobile devices */
+        margin: 2rem 0 0 0; /* Add margin to the logo for mobile devices */
     }
 
     .content h2 {
-        font-size: 1.75rem; /* Smaller font size for mobile devices */
+        font-size: 1.50rem; /* Smaller font size for mobile devices */
+        margin-bottom: 1vh;
     }
 
     .content p {
@@ -204,5 +207,6 @@ body {
     .content a {
         padding: 0.5rem 1rem; /* Adjust button padding for mobile devices */
         font-size: 0.875rem; /* Smaller font size for buttons on mobile */
+        margin-top: 11rem; 
     }
 }
