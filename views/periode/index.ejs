@@ -1,11 +1,18 @@
 <% layout('layouts/app') %>
-<h2>ini adalah periode ppi aiu</h2>
 
+<div class="periode-container">
+    <h2>Ini adalah Periode PPI AIU</h2>
 
-<% for (periode of periodes) { %>
+    <div class="periode-list">
+        <% for (let periode of periodes) { %>
+            <div class="periode-item">
+                <a href="/periode/<%= periode._id %>">
+                    <h1><%= periode.name %></h1>
+                </a>  
+            </div>
+        <% } %>
+    </div>
 
- <a href="/periode/<%= periode._id %>"> <h1><%= periode.name %></h1> </a>  
-
-<% } %>
-
-<button><a href="/periode/create">new periode</a></button>  
+    <button class="new-periode-button">
+        <a href="/periode/create">New Periode</a>
+    </button

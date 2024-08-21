@@ -1,9 +1,13 @@
 <% layout("layouts/app") %>
 
-<h1>create page for periode!!!</h1>
+<div class="form-container">
+    <h1>Create New Periode</h1>
 
-<form action="/periode" method="post" > 
-    <label for="name">name</label>
-    <input type="text" name="periode[name]" id="name">
-    <button type="submit"> submit</button>
-</form>
+    <form action="/periode" method="post" class="form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="periode[name]" id="name" class="input">
+        </div>
+        <button type="submit" class="button">Submit</button>
+    </form>
+</div>
