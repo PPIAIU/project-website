@@ -8,5 +8,7 @@
 <% for (const member of divisi.members) { %>
 
    <a href="/member/<%= member._id %>"><h3> <%= member.name %> </h3></a> 
-    <p> <%= member.jabatan %> </p>
+
     <% } %>
+<a href="/member/<%= divisi._id %>/create">buat member</a>
+   

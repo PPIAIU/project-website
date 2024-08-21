@@ -12,8 +12,8 @@ router.route('/:id')
 
 router.route('/edit', controllerDivisi.edit)
 
-router.get('/create', controllerDivisi.create)
+router.get('/:periode_id/create', controllerDivisi.create)
 
-router.post('/:periode_id', controllerDivisi.store)
+router.post('/:periode_id/store', controllerDivisi.store)
 
 module.exports = router

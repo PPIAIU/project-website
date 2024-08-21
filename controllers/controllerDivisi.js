@@ -2,14 +2,23 @@ const express = require('express')
 const Divisi = require('../models/divisi')
 const Periode = require('../models/periode')
 
+module.exports.show = async ( req, res) => {
+    const divisi = await Divisi.findById(req.params.id)
+    .populate({
+        path: 'members'
+    })
+    console.log(divisi)
+    res.render('divisi/show', {divisi})
+}
+
 module.exports.create = async (req, res) => {
-    const { periode_id } = req.params
-    res.render('divisi/create', periode_id)
+    const {periode_id} = req.params
+    res.render('divisi/create', {periode_id})
 }
 
 module.exports.store = async (req, res) => {
     const { periode_id } = req.params
-    const divisi = new Divisi(req.body)
+    const divisi = new Divisi(req.body.divisi)
     const periode = await Periode.findById(periode_id)
     // .then(result => {
     //     res.status(201).json(result)
@@ -23,18 +32,8 @@ module.exports.store = async (req, res) => {
     periode.divisis.push(divisi)
     await periode.save()
     await divisi.save()
-    res.redirect('/divisi/create')
-    }
-
-module.exports.show = async ( req, res) => {
-    const divisi = await Divisi.findById(req.params.id)
-    .populate({
-        path: 'members'
-    })
-    console.log(divisi)
-    res.render('divisi/show', {divisi})
+    res.redirect(`/periode` )
 }
-
 
 module.exports.edit = async (req, res) => {
     const divisi = await Divisi.findById(req.params)

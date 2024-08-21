@@ -7,26 +7,23 @@ module.exports.show = async (req, res) => {
   res.render('member/show', { member })
 }
 
-module.exports.create = (req, res) => {
-    res.render('member/create')
+module.exports.create = async (req, res) => {
+    const {divisi_id} = req.params
+    res.render('member/create',{divisi_id})
 }
 
 module.exports.store = async (req, res) => {
-  try {
     const { divisi_id } = req.params
     const divisi = await Divisi.findById(divisi_id)
-    const member = new Member(req.body)
+    const member = new Member(req.body.member)
     divisi.members.push(member)
     console.log(member)
     console.log(divisi)
     await divisi.save()
     await member.save()
+    res.redirect(`/periode`)
     // res.status(500).json(member, divisi)
-  } catch (error) {
-    res.send(error)
-  }
   
-    
 }
 
 module.exports.edit = async (req, res) => {
