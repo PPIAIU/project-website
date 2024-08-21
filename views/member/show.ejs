@@ -6,3 +6,6 @@
 <h3><%= member.jabatan %></h3>
 <p><%= member.background %></p>
 
+<form action="/member/<%= member._id %>?_method=delete" method="post">
+    <button>delete this member</button>
+</form>

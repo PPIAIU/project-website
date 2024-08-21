@@ -32,7 +32,7 @@ module.exports.store = async (req, res) => {
     periode.divisis.push(divisi)
     await periode.save()
     await divisi.save()
-    res.redirect(`/periode` )
+    res.redirect(`/periode/${periode._id}` )
 }
 
 module.exports.edit = async (req, res) => {

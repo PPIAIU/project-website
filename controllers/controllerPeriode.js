@@ -18,13 +18,16 @@ module.exports.store = async (req, res) => {
     // .catch(err => {
     //     res.status(500).json({err: "could not send"})
     // })
-    res.redirect('/periode')
+    res.redirect(`/periode/`)
 }
 
 module.exports.show = async (req, res) => {
     const periode = await Periode.findById(req.params.id)
     .populate({
         path: 'divisis'
+    })
+    .populate({
+        path: 'members'
     })
     res.render('periode/show', {periode})
 }
@@ -36,13 +39,13 @@ module.exports.edit = async (req, res) => {
 
 module.exports.update = async (req, res) => {
     const {id} = req.params;
-    const periode = await Periode.findByIdAndUpdate(id, {...id.body.periode})
+    const periode = await Periode.findByIdAndUpdate(id, req.body.periode)
     await periode.save()
+    res.redirect('/periode')
 }   
 
 module.exports.destroy = async (req, res) => {
-    const {id} = req.params
-    await Periode.findOneAndDelete({ _id : id});
+    await Periode.findOneAndDelete(req.params.id);
     res.redirect('/periode')
 }
 

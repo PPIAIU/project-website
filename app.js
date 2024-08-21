@@ -32,9 +32,18 @@ app.use('/divisi', require('./routes/divisi.js'))
 app.use('/periode', require('./routes/periode.js'))
 
 
+
+//direct webpage
+app.get('/fondasi', async (req, res) => {
+	res.render('fondasi')
+})
+app.get('/beranda', async (req, res) => {
+	res.render('beranda')
+})
 app.get('/home', ((req, res) => {
 	res.render('home')
   }))
+
 
 
 
