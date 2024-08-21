@@ -13,15 +13,15 @@ const periodeSchema = new Schema({
     members: [
         {
             type: Schema.Types.ObjectId,
-            reef: 'Member'
+            ref: 'Member'
         }
     ]
 })
 
-periodeSchema.post('findOneAndDelete', async function (doc) {
-    if(doc){
-        const res1 = await Divisi.deleteMany({ _id : { $in : doc.divisis} })
-        const res2 = await Member.deleteMany({ _id : { $in : doc.members }  })
+periodeSchema.post('findOneAndDelete', async function (periode) {
+    if(periode){
+        const res1 = await Divisi.deleteMany({ _id : { $in : periode.divisis} })
+        const res2 = await Member.deleteMany({ _id : { $in : periode.members } })
         console.log(res1)
         console.log(res2)
     }

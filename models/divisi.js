@@ -12,9 +12,10 @@ const divisiSchema = new Schema({
     }]
 })
 
-divisiSchema.post('findOneAndDelete', async function (members) {
-    if(divisi.members.length) {
-        const res = await Member.deleteMany({_id : { $in : divisi.members}})
+divisiSchema.post('findOneAndDelete', async function (doc) {
+    if(doc) {
+        const res = await Member.deleteMany({_id : { $in : doc.members}})
+
         console.log(res)
     }
 })

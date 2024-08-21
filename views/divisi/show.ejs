@@ -10,5 +10,12 @@
    <a href="/member/<%= member._id %>"><h3> <%= member.name %> </h3></a> 
 
     <% } %>
+
+    <form action="/divisi/<%= divisi._id %>?_method=delete" method="post">
+        <button>delete this <%= divisi.name %></button>
+    </form>
+
+    <a href="/periode">back to all periode</a>
+
 <a href="/member/<%= divisi._id %>/create">buat member</a>
    
