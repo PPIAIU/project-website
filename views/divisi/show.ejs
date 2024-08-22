@@ -1,13 +1,12 @@
 <% layout('layouts/app') %>
 
-
 <h1><%= divisi.name %></h1>
 
 <h4><%= divisi.deskripsi %></h4>
 
 <% for (const member of divisi.members) { %>
 
-   <a href="/member/<%= member._id %>"><h3> <%= member.name %> </h3></a> 
+   <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show"><h3> <%= member.name %> </h3></a> 
 
     <% } %>
 
@@ -17,5 +16,5 @@
 
     <a href="/periode">back to all periode</a>
 
-<a href="/member/<%= divisi._id %>/create">buat member</a>
+<a href="/member/<%= periode_id %>/<%= divisi._id %>/create">buat member</a>
    

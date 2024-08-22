@@ -4,13 +4,14 @@ const router = express.Router()
 const controllerMember = require('../controllers/controllerMember')
 
 router.route('/:id')
-    .get(controllerMember.show)
     .post(controllerMember.update)
     .delete(controllerMember.destroy)
 
-router.get('/:divisi_id/create', controllerMember.create)
 
-router.post('/:divisi_id/store', controllerMember.store)
+router.get('/:periode_id/:divisi_id/create', controllerMember.create)
+router.get('/:periode_id/:divisi_id/:member_id/show', controllerMember.show)
+
+router.post('/:periode_id/:divisi_id/store', controllerMember.store)
 
 router.get('/edit', controllerMember.edit)
 

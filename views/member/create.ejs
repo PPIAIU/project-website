@@ -1,7 +1,7 @@
 <% layout('layouts/app') %>
 <body>
     <h1>creating member</h1>
-    <form action="/member/<%= divisi_id %>/store" method="post" > 
+    <form action="/member/<%= periode_id %>/<%= divisi_id %>/store" method="post" > 
         <label for="name">name</label>
         <input type="text" name="member[name]" id="name">
         <label for="jabatan">jabatan</label>
