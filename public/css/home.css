@@ -62,7 +62,7 @@ a {
     background-color: #1a1a1a; /* Dark background for footer */
     color: #ffffff; /* White text color */
     padding-top: 2rem;
-    padding-bottom: 20rem;
+    padding-bottom: 20rem;  
 }
 
 .footer-content {
@@ -131,4 +131,8 @@ a {
 
 .logo-image {
     width: 5rem;
+}
+
+h1 {
+    color: #1a1a1a;
 }
