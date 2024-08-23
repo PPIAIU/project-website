@@ -10,7 +10,7 @@
 
 <% for ( divisi of periode.divisis ) { %>
 
-  <a href="/divisi/<%= divisi._id %>"><h4><%= divisi.name %></h4></a>  
+  <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show"><h4><%= divisi.name %></h4></a>  
     <% } %>
     
     <form action="/periode/<%= periode._id %>?_method=delete" method="post" >

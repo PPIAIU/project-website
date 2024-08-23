@@ -37,11 +37,12 @@ app.use('/periode', require('./routes/periode.js'))
 app.get('/fondasi', async (req, res) => {
 	res.render('fondasi')
 })
-app.get('/beranda', async (req, res) => {
-	res.render('beranda')
-})
-app.get('/home', ((req, res) => {
+app.get('/home', async (req, res) => {
 	res.render('home')
+})
+app.get('/welcome', ((req, res) => {
+	res.render('welcome')
+
   }))
 
 

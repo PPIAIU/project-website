@@ -3,12 +3,15 @@ const Divisi = require('../models/divisi')
 const Periode = require('../models/periode')
 
 module.exports.show = async ( req, res) => {
-    const divisi = await Divisi.findById(req.params.id)
+    const {periode_id, divisi_id} = req.params
+    const periode = await Periode.findById(periode_id)
+    const divisi = await Divisi.findById(divisi_id)
     .populate({
         path: 'members'
     })
-    console.log(divisi)
-    res.render('divisi/show', {divisi})
+    await console.log(periode)
+    await console.log(divisi)
+    res.render('divisi/show', {divisi,periode, divisi_id, periode_id} )
 }
 
 module.exports.create = async (req, res) => {
@@ -28,7 +31,6 @@ module.exports.store = async (req, res) => {
     // })
     console.log(divisi)
     console.log(periode)
-    
     periode.divisis.push(divisi)
     await periode.save()
     await divisi.save()
