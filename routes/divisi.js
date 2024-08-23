@@ -6,10 +6,10 @@ const router = express.Router()
 const controllerDivisi = require('../controllers/controllerDivisi')
 
 router.route('/:id')
-.put(controllerDivisi.update)
-.delete(controllerDivisi.destroy)
+    .get( controllerDivisi.show)
+    .put(controllerDivisi.update)
+    .delete(controllerDivisi.destroy)
 
-router.get('/:periode_id/:divisi_id/show', controllerDivisi.show)
 router.route('/edit', controllerDivisi.edit)
 
 router.get('/:periode_id/create', controllerDivisi.create)
