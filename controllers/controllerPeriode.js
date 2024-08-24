@@ -18,7 +18,7 @@ module.exports.store = async (req, res) => {
     // .catch(err => {
     //     res.status(500).json({err: "could not send"})
     // })
-    res.redirect(`/periode/`)
+    res.redirect(`/periode`)
 }
 
 module.exports.show = async (req, res) => {

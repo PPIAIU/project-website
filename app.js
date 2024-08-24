@@ -1,9 +1,11 @@
 const express = require('express')
+const joi = require('joi')
 const path = require('path')
 const app = express()
 const mongoose = require('mongoose')
 const ejsMate = require('ejs-mate')
 const methodOverride = require('method-override')
+const ErrorHandler = require('./utils/ErrorHandler')
 
 
 // view engine
@@ -42,8 +44,20 @@ app.get('/home', async (req, res) => {
 })
 app.get('/welcome', ((req, res) => {
 	res.render('welcome')
-
   }))
+
+app.all('*', (req, res, next) => {
+	next(new ErrorHandler('page is not found', 405))
+})
+
+app.use((err, req, res, next) => {
+    const {statusCode = 500} = err;
+    if(!err.message){
+        err.message = 'Something went wrong'
+    }
+    res.status(statusCode).render('error', {err})
+})
+
 
 
 
