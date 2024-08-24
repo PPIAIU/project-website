@@ -11,8 +11,8 @@ router.route('/:id')
 .put( validateMember, wrapAsync(controllerDivisi.update) )
 .delete( wrapAsync(controllerDivisi.destroy) )
 
-router.get('/:periode_id/:divisi_id/show', wrapAsync(controllerDivisi.show) )
-router.route('/edit', wrapAsync(controllerDivisi.edit) )
+router.get('/:periode_id/:divisi_id/show', controllerDivisi.show)
+router.route('/edit', controllerDivisi.edit)
 
 router.get('/:periode_id/create', wrapAsync(controllerDivisi.create) )
 
