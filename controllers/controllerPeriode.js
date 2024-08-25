@@ -12,6 +12,8 @@ module.exports.create = async (req, res) => {
 module.exports.store = async (req, res) => {
     const periode = new Periode(req.body.periode)
     await periode.save()
+    req.flash('success_msg', 'Data berhasil ditambahkan')
+    // res.status(201).json(periode)
     // .then(result => {
     //     res.status(201).json(result)
     // })
