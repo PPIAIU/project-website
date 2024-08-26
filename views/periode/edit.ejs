@@ -1,9 +1,10 @@
 <% layout('layouts/app') %>
+<div style="margin-top: 30em;">
+    <h1>edit page for periode!!!</h1>
 
-<h1>edit page for periode!!!</h1>
-
-<form action="/periode/<%= periode._id %>?_method=put" method="post" > 
-    <label for="name">name</label>
-    <input type="text" name="periode[name]" id="name" value="<%= periode.name %>">
-    <button type="submit">submit</button>
-</form>
+    <form action="/periode/<%= periode._id %>?_method=put" method="post" > 
+        <label for="name">name</label>
+        <input type="text" name="periode[name]" id="name" value="<%= periode.name %>">
+        <button type="submit">submit</button>
+    </form>
+</div>

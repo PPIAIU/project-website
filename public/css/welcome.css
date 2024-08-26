@@ -61,7 +61,7 @@ body {
     font-size: 2.5rem; /* Adjusted size for responsiveness */
     margin-top: 2.188rem;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    animation: moveFromLeft 8s infinite ease-in-out; /* New animation */
+    animation: moveFromLeft 20s infinite ease-in-out; /* New animation */
 }
 
 @keyframes moveFromLeft {
