@@ -1,6 +1,5 @@
 <% layout('layouts/app') %>
 
-<div style="margin-top: 30em;">
   <h1>showing periode <%=  %></h1>
 
   <a href="/divisi/<%= periode._id %>/create">buat departemen baru</a>
@@ -17,7 +16,6 @@
       <form action="/periode/<%= periode._id %>?_method=delete" method="post" >
         <button type="submit">delete <%= periode.name%></button>
       </form>
-  </div>
 
     
 
