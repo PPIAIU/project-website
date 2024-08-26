@@ -12,7 +12,7 @@ module.exports.create = async (req, res) => {
 module.exports.store = async (req, res) => {
     const periode = new Periode(req.body.periode)
     await periode.save()
-    req.flash('success_msg', 'Data berhasil ditambahkan')
+    req.flash('success_msg', 'Data is successfully stored')
     // res.status(201).json(periode)
     // .then(result => {
     //     res.status(201).json(result)
@@ -43,11 +43,13 @@ module.exports.update = async (req, res) => {
     const {id} = req.params;
     const periode = await Periode.findByIdAndUpdate(id, req.body.periode)
     await periode.save()
+    req.flash('success_msg', 'Data is successfully edited')
     res.redirect('/periode')
 }   
 
 module.exports.destroy = async (req, res) => {
     await Periode.findOneAndDelete(req.params.id);
+    req.flash('success_msg', 'Data is successfully deleted')
     res.redirect('/periode')
 }
 

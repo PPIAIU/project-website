@@ -29,6 +29,7 @@ module.exports.store = async (req, res) => {
     await divisi.save()
     await member.save()
     await periode.save()
+    req.flash('success_msg', 'Data is successfully stored')
     res.redirect(`/divisi/${periode._id}/${divisi._id}/show`)
     // res.status(500).json(member, divisi)
 }
@@ -42,12 +43,14 @@ module.exports.edit = async (req, res) => {
 module.exports.update = async (req, res) => {
     const {id} = req.params
     const member = await Member.findByIdAndUpdate(id, req.body.member)
+    req.flash('success_msg', 'Data is successfully edited')
     res.redirect(`/member/${member._id}`)
 }
 
 module.exports.destroy = async (req, res) => {
     const {periode_id, divisi_id, id} = req.params
     await Member.findByIdAndDelete(id)
+    req.flash('success_msg', 'Data is successfully deleted')
     // res.redirect(`/divisi/${periode_id}/${divisi_id}/show`)
     res.redirect('/periode')
 }

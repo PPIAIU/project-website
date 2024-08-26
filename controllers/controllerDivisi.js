@@ -9,8 +9,8 @@ module.exports.show = async ( req, res) => {
     .populate({
         path: 'members'
     })
-    await console.log(periode)
-    await console.log(divisi)
+    console.log(periode)
+    console.log(divisi)
     res.render('divisi/show', {divisi,periode, divisi_id, periode_id} )
 }
 
@@ -34,6 +34,7 @@ module.exports.store = async (req, res) => {
     periode.divisis.push(divisi)
     await periode.save()
     await divisi.save()
+    req.flash('success_msg', 'Data is successfully stored')
     res.redirect(`/periode/${periode._id}` )
 }
 
@@ -45,10 +46,13 @@ module.exports.edit = async (req, res) => {
 module.exports.update = async (req, res) => {
     const { id } = req.params
     const divisi = await Divisi.findByIdAndUpdate(id, req.body)
+    req.flash('success_msg', 'Data is successfully edited')
     res.redirect(`/divisi/${divisi._id}`)
 }
 
 module.exports.destroy = async ( req, res) => {
     await Divisi.findByIdAndDelete(req.params.id)
+    req.flash('success_msg', 'Data is successfully deleted')
     res.redirect('/periode')
 }
+
