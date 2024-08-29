@@ -19,9 +19,9 @@ module.exports.show = async (req, res) => {
 module.exports.store = async (req, res) => {
     const { divisi_id, periode_id } = req.params
     const divisi = await Divisi.findById(divisi_id)
-    await console.log(periode_id)
     const periode = await Periode.findById(periode_id)
     const member = new Member(req.body.member)
+    member.author = req.user._id
     divisi.members.push(member)
     periode.members.push(member)
     console.log(member)
@@ -35,16 +35,17 @@ module.exports.store = async (req, res) => {
 }
 
 module.exports.edit = async (req, res) => {
-    const { id } = req.params
-    const member = await Member.findById(id)
-    res.render('/member/edit', member)
+    const {periode_id, divisi_id, member_id} = req.params
+    const member = await Member.findById(member_id)
+    res.render('member/edit', {member, periode_id, divisi_id, member_id})
 }
 
 module.exports.update = async (req, res) => {
     const {id} = req.params
-    const member = await Member.findByIdAndUpdate(id, req.body.member)
+    const member = await Member.findByIdAndUpdate(id, {...req.body.member})
+    await member.save()
     req.flash('success_msg', 'Data is successfully edited')
-    res.redirect(`/member/${member._id}`)
+    res.redirect(`/periode`)
 }
 
 module.exports.destroy = async (req, res) => {

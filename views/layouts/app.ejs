@@ -7,11 +7,11 @@
 </head>
 <body>
 
-    <%-include('partials/header') %>
-    <%= success_msg %>
-    <%= error_msg %>
+    <%- include('partials/header') %>
+    
     <div style="margin:30em 0;" class="container">
-        
+        <p><%= success_msg %></p>  
+        <p><%= error_msg %></p>
         <%- body %>
 
     </div>

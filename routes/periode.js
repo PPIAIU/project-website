@@ -4,21 +4,22 @@ const wrapAsync = require('../utils/wrapAsync')
 const validatePeriode = require('../middlewares/validatePeriode')
 const router = express.Router()
 const isValidObjectId = require('../middlewares/isValidObjectId')
+const isAuth = require('../middlewares/isAuth')
 
 
 router.route('/')
     .get(wrapAsync(controllerPeriode.index))
-    .post( isValidObjectId('/periode'), validatePeriode, wrapAsync( controllerPeriode.store) )
+    .post( isAuth, validatePeriode, wrapAsync( controllerPeriode.store) )
 
-router.get('/create', controllerPeriode.create)
+router.get('/create',  isAuth, controllerPeriode.create)
 
-router.get('/:id/edit', isValidObjectId('/periode'),  wrapAsync(controllerPeriode.edit))
+router.get('/:id/edit', isAuth, isValidObjectId('/periode'),  wrapAsync(controllerPeriode.edit))
 
 
 router.route('/:id')
     .get( isValidObjectId('/periode'), wrapAsync(controllerPeriode.show) )
-    .put( isValidObjectId('/periode'), wrapAsync( validatePeriode, controllerPeriode.update) )
+    .put( isValidObjectId('/periode'), isAuth, validatePeriode, wrapAsync( controllerPeriode.update) )
     
-router.delete('/:id', wrapAsync(controllerPeriode.destroy)  )
+router.delete('/:id', isAuth, wrapAsync(controllerPeriode.destroy)  )
 
 module.exports = router

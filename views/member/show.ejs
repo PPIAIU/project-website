@@ -6,6 +6,11 @@
 <h3><%= member.jabatan %></h3>
 <p><%= member.background %></p>
 
+<% if(currentUser && member.author.equals(currentUser._id)) { %>
+
 <form action="/member/<%= member._id%>?_method=delete" method="post">
     <button>delete <%= member.name %></button>
 </form>
+
+<button><a href="/member/<%= periode_id %>/<%= divisi_id %>/<%= member_id %>/edit">edit member</a></button>
+<% } %>

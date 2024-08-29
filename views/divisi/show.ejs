@@ -4,17 +4,28 @@
 
 <h4><%= divisi.deskripsi %></h4>
 
+<h2>showing member of <%= divisi.name %></h2>
 <% for (const member of divisi.members) { %>
+
 
    <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show"><h3> <%= member.name %> </h3></a> 
 
     <% } %>
 
+<% if(currentUser && divisi.author.equals(currentUser._id)) { %>
+    <!-- delete divisi -->
     <form action="/divisi/<%= divisi._id %>?_method=delete" method="post">
         <button>delete this <%= divisi.name %></button>
     </form>
+    <br>
+    <!-- create member -->
+    <button><a href="/member/<%= periode_id %>/<%= divisi._id %>/create">buat member</a></button>
+    <!-- edit division -->
+    <button><a href="/divisi/<%= divisi._id %>/edit">edit <%= divisi.name %></a></button>
+    <br>
+    <div style="margin-top: 1em;">
+    <!-- back to all periode -->
+   <button><a href="/periode">back to all periode</a></button> 
+</div>
 
-    <a href="/periode">back to all periode</a>
-
-<a href="/member/<%= periode_id %>/<%= divisi._id %>/create">buat member</a>
-   
+<% } %>

@@ -14,6 +14,18 @@
                     <li><a href="/periode" class="header-link">Board</a></li>
                     <li><a href="/events" class="header-link">Blogs</a></li>
                     <li><a href="/fondasi" class="header-link">Foundation</a></li>
+                    <% if(currentUser) { %>
+                    <li><a href="/logout" class="header-link" onclick="
+                    event.preventDefault();
+                    document.getElementById('logout-form').submit();"
+                        >Logout</a>
+                    <form id="logout-form" action="/logout" method="post" style="display: none;" >
+                    </form>
+                    </li>
+                    <% } else { %>
+                    <li><a href="/login" class="header-link">Login</a></li>
+                        <% } %>
+ 
                 </ul>
             </nav>
         </div>

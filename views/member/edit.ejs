@@ -1,0 +1,16 @@
+<% layout('layouts/app') %>
+
+<h1>edit <%= member.name %></h1>
+
+<form action="/member/<%= member._id %>?_method=put" method="post">
+    <label for="name">name</label>
+    <input type="text" name="member[name]" id="name" value="<%= member.name %>" >
+    
+    <label for="jabatan">Posision</label>
+    <input type="text" name="member[jabatan]" id="jabatan" value="<%= member.jabatan %>">
+    
+    <label for="background">background</label>
+    <input type="text" name="member[background]" id="background"value="<%= member.background %>">
+
+    <button type="submit">submit</button>
+</form>

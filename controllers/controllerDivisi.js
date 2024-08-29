@@ -23,6 +23,7 @@ module.exports.store = async (req, res) => {
     const { periode_id } = req.params
     const divisi = new Divisi(req.body.divisi)
     const periode = await Periode.findById(periode_id)
+    divisi.author = req.user._id
     // .then(result => {
     //     res.status(201).json(result)
     // .catch(err => {
@@ -39,15 +40,16 @@ module.exports.store = async (req, res) => {
 }
 
 module.exports.edit = async (req, res) => {
-    const divisi = await Divisi.findById(req.params)
-    res.render('divisi/edit')
+    const divisi = await Divisi.findById(req.params.divisi_id)
+    res.render('divisi/edit', {divisi})
 }
 
 module.exports.update = async (req, res) => {
-    const { id } = req.params
-    const divisi = await Divisi.findByIdAndUpdate(id, req.body)
+    const {  id } = req.params
+    const divisi = await Divisi.findByIdAndUpdate(id, {...req.body.divisi})
+    await divisi.save()
     req.flash('success_msg', 'Data is successfully edited')
-    res.redirect(`/divisi/${divisi._id}`)
+    res.redirect(`/periode`)
 }
 
 module.exports.destroy = async ( req, res) => {

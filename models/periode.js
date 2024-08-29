@@ -2,10 +2,16 @@ const mongoose = require('mongoose')
 const Divisi = require('./divisi')
 const Member = require('./member')
 const divisi = require('./divisi')
+const User = require('./user')
+
 const Schema = mongoose.Schema
 
 const periodeSchema = new Schema({
     name: String,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     divisis: [{
         type: Schema.Types.ObjectId,
         ref: 'Divisi'
