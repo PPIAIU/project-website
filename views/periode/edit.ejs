@@ -2,9 +2,11 @@
 <div>
     <h1>edit page for periode!!!</h1>
 
-    <form action="/periode/<%= periode._id %>?_method=put" method="post" > 
+    <form action="/periode/<%= periode._id %>?_method=put" method="post" novalidate enctype="multipart/form-data"> 
         <label for="name">name</label>
         <input type="text" name="periode[name]" id="name" value="<%= periode.name %>">
+        <label for="image">image</label>
+        <input type="file" name="image" accept="image/*" required>
         <button type="submit">submit</button>
     </form>
 </div>

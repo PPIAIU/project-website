@@ -7,6 +7,12 @@ const Schema = mongoose.Schema
 const divisiSchema = new Schema({
     name: String,
     deskripsi: String,
+    image: [
+        {
+        url: String,
+        filename: String
+    }
+],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

@@ -2,10 +2,12 @@
 
 <h1>create page for new divisi!!!</h1>
 
-<form action="/divisi/<%= periode_id %>/store" method="post" > 
+<form action="/divisi/<%= periode_id %>/store" method="post" enctype="multipart/form-data"> 
     <label for="name">name</label>
     <input type="text" name="divisi[name]" id="name">
     <label for="deskripsi">deskripsi</label>
     <input type="text" name="divisi[deskripsi]" id="deskripsi">
+    <label for="image">image</label>
+    <input type="file" name="image" accept="image/*" required>
     <button type="submit">submit</button>
 </form>

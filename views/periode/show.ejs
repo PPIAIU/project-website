@@ -1,12 +1,10 @@
 <% layout('layouts/app') %>
 
-  <h1>showing periode <%=  %></h1>
-  
-  
-  <h3><%= periode.name  %></h3>
-  
+  <h1><%= periode.name  %></h1>
+  <% for(const imagage of periode.image) { %>
+  <img src="/uploads/periode/<%= imagage.filename %>" alt="<%=  periode.name   %>">
+  <% } %>
   <% for ( divisi of periode.divisis ) { %>
-    
     <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show"><h4><%= divisi.name %></h4></a>  
     <% } %>
     

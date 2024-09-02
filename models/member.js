@@ -7,6 +7,12 @@ const memberSchema = new Schema({
     name: String,
     jabatan: String,
     background: String,
+    image: [
+        {
+        url: String,
+        filename: String
+    }
+],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

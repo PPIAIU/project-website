@@ -8,6 +8,12 @@ const Schema = mongoose.Schema
 
 const periodeSchema = new Schema({
     name: String,
+    image: [
+        {
+        url: String,
+        filename: String
+    }
+],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

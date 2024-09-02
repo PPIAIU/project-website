@@ -1,6 +1,7 @@
 const express = require('express')
 const Divisi = require('../models/divisi')
 const Periode = require('../models/periode')
+const fs = require('fs')
 
 module.exports.show = async ( req, res) => {
     const {periode_id, divisi_id} = req.params
@@ -22,8 +23,10 @@ module.exports.create = async (req, res) => {
 module.exports.store = async (req, res) => {
     const { periode_id } = req.params
     const divisi = new Divisi(req.body.divisi)
+    const image = req.files.map(file => ({url: file.path, filename: file.filename}))
     const periode = await Periode.findById(periode_id)
     divisi.author = req.user._id
+    divisi.image = image
     // .then(result => {
     //     res.status(201).json(result)
     // .catch(err => {
@@ -45,14 +48,28 @@ module.exports.edit = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-    const {  id } = req.params
+    const { id } = req.params
     const divisi = await Divisi.findByIdAndUpdate(id, {...req.body.divisi})
+    if(req.files && req.files.length > 0 ) {
+        divisi.image.forEach(image => {
+            fs.unlinkSync(image.url)
+        })
+        const image = req.files.map(file => ({url: file.path, filename: file.filename}))
+        divisi.image = image
     await divisi.save()
+    }
     req.flash('success_msg', 'Data is successfully edited')
     res.redirect(`/periode`)
 }
 
 module.exports.destroy = async ( req, res) => {
+    const {id} = req.params
+    const divisi = await Divisi.findById(id)
+    if(divisi.image.length > 0) {
+        divisi.image.forEach(image => {
+            fs.unlinkSync(image.url)
+        })
+    }
     await Divisi.findByIdAndDelete(req.params.id)
     req.flash('success_msg', 'Data is successfully deleted')
     res.redirect('/periode')

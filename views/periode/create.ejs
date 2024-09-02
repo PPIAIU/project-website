@@ -3,10 +3,12 @@
 <div  class="form-container">
     <h1>Create New Periode</h1>
 
-    <form action="/periode" method="post" class="form">
+    <form action="/periode" method="post" class="form" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" name="periode[name]" id="name" class="input">
+            <label for="name" >Name</label>
+            <input type="text" name="periode[name]" id="name" class="input" required>
+            <label for="image">image</label>
+            <input type="file" name="image" accept="image/*" required>
         </div>
         <button type="submit" class="button">Submit</button>
     </form>

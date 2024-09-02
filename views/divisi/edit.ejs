@@ -2,12 +2,14 @@
 
 <h1>edit departemen</h1>
 
-<form action="/divisi/<%= divisi._id %>?_method=put" method="post">
+<form action="/divisi/<%= divisi._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
     <label for="name">name</label>
     <input type="text" name="divisi[name]" id="name" value="<%= divisi.name %>" >
     
     <label for="deskripsi">Description</label>
     <input type="text" name="divisi[deskripsi]" id="deskripsi" value="<%= divisi.deskripsi %>">
 
+    <label for="image">image</label>
+    <input type="file" name="image" accept="image/*" required>
     <button type="submit">submit</button>
 </form>

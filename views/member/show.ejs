@@ -2,6 +2,12 @@
 
 <h1>this is for showing members details</h1>
 
+<% for(const imagage of member.image ) { %>
+
+<img src="/uploads/member/<%= imagage.filename %>" alt="image">
+
+<% } %>
+
 <h3><%= member.name %></h3>
 <h3><%= member.jabatan %></h3>
 <p><%= member.background %></p>

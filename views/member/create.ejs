@@ -1,13 +1,15 @@
 <% layout('layouts/app') %>
 <body>
     <h1>creating member</h1>
-    <form action="/member/<%= periode_id %>/<%= divisi_id %>/store" method="post" > 
+    <form action="/member/<%= periode_id %>/<%= divisi_id %>/store" method="post" enctype="multipart/form-data"> 
         <label for="name">name</label>
         <input type="text" name="member[name]" id="name">
         <label for="jabatan">jabatan</label>
         <input type="text" name="member[jabatan]" id="jabatan">
         <label for="background">background</label>
         <input type="text" name="member[background]" id="background">
+        <label for="image">image</label>
+        <input type="file" name="image" accept="image/*" required>
         <button type="submit">submit</button>
     </form>
 </body>

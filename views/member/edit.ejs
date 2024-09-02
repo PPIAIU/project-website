@@ -2,7 +2,7 @@
 
 <h1>edit <%= member.name %></h1>
 
-<form action="/member/<%= member._id %>?_method=put" method="post">
+<form action="/member/<%= member._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
     <label for="name">name</label>
     <input type="text" name="member[name]" id="name" value="<%= member.name %>" >
     
@@ -11,6 +11,9 @@
     
     <label for="background">background</label>
     <input type="text" name="member[background]" id="background"value="<%= member.background %>">
+
+    <label for="image">image</label>
+    <input type="file" name="image" accept="image/*" required>
 
     <button type="submit">submit</button>
 </form>
