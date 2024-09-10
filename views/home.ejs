@@ -1,13 +1,413 @@
 <% layout('layouts/app') %>
 
+
 <style>
-    h1 {
-        margin: 500px;
+    .hidden{
+        opacity: 0;
+        transition: all 3s;
+        filter: blur(5px);
+        transform: translateX(-100%);
+        z-index: -1;
+        color: white;
+    }
+    .show{
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateX(0);
+    }
+    .imageBackground {
+        object-fit: cover;
+        width: 100%;
+        min-height: 60vh;
+        position: relative;
+    }
+
+
+    
+
+    span {
+        color: #f65b22;
+        font-weight:900;
+    }
+
+    .bodyHome {
+        position: absolute;
+        z-index: -2;
+        object-fit: cover;
+        background-position: center;
+        background-size: cover;
+        color: #131316;
+        width: 100%;
+        min-height: 90vh;
+    }
+
+    .bodyHome::before{
+        margin: 0px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+    }
+
+
+    section {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        min-width: 100vh;
+        z-index: -1;
+        position: relative;
+    }
+    .slider-container {
+        width: 500px;
+        height: 300px;
+        perspective: 1000px;
+        margin: 0 auto;
+    }
+    
+    .slider {
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        animation: rotate 10s infinite linear;
+    }
+    
+    .slide {
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+    
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         
     }
+    .logo {
+        position: absolute;
+        z-index: -1;
+    }
+    .background {
+        height: 100px;
+    }
+    .section1 h1{
+        font-size: 20px;
+        text-align: center;
+    }
+    .section1{
+        margin-top: 50px;
+    }
+
+    .section2{
+        text-align: center;
+        margin-top: 50px;
+    }
+    .subSection2{
+        line-height: 25px;
+
+    }
+
+    /* COUNTER STYLE */
+    
+.counter-wrapper{
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 1.5rem;
+    padding: 7rem 15%;
+    margin-top: 5rem;
+    position: relative;
+}
+.counter-wrapper::before{
+    position: absolute;
+    content: '';
+    content: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1;
+}
+.counter{
+   text-align: center;   
+   z-index: 2;
+   position: relative;
+}
+.counter::before{
+    position: absolute;
+    content: '';
+    bottom: -2rem;
+    left: 50%;
+    width: 20%;
+    height: .2rem;
+    background: #fe4d4d;
+    border-radius: .5rem;
+    -webkit-border-radius: .5rem;
+    -moz-border-radius: .5rem;
+    -ms-border-radius: .5rem;
+    -o-border-radius: .5rem;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+.counter .count{
+    font-size: 5rem;
+    color: white;
+}
+.counter p{
+    font-size: 1.4rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+}
+
+
+
+
+
+    
+    @media (prefers-reduced-motion) {
+        .hidden{
+            transition: none;
+        }
+    }
+
+    /* media query  tablet */
+    @media screen and ( max-width: 1010px) and (min-width: 769px) {
+
+        .bodyHome{
+            background-size: cover;
+            width: 1005px;
+            background-position: center;
+            color: #131316;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bodyHome::before{
+        margin: 0px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        width: 1000px;
+        height: 100%;
+    }
+        .imageBackground {
+            object-fit: cover;
+            min-height: 100vh;
+            width: 1000px;
+        }
+        .counter-wrapper{
+       grid-template-columns: repeat(2, 1fr);
+       grid-row-gap: 8rem;
+   }         .section1 , .section2{
+            margin: 20px 30px;
+        }
+
+    }
+    /* media query moble */
+    @media screen and (max-width: 768px) {
+
+        .section1 , .section2{
+            margin: 20px 30px;
+        }
+        .bodyHome{
+            background-size: contain;
+            width: 50px;
+            background-position: center;
+            color: #131316;
+            height: 100%;
+            width: 100%;
+        }
+
+        .bodyHome::before{
+        margin: 0px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: -1;
+        width: 100%;
+    }
+
+        
+
+        .imageBackground {
+            object-fit: cover;
+            min-height: 100vh;
+            width: 100%;
+        }
+        .hidden {
+            transform: none;
+            filter: none;
+            opacity: 1;
+        }
+
+        .slider-container {
+            width: 100%;
+            height: 200px;
+        }
+
+        .slide img {
+            object-fit: contain;
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+        section {
+            min-width: 50px;
+        }
+        /* counter */
+        .counter-wrapper{
+       grid-template-columns: repeat(2, 1fr);
+       grid-row-gap: 8rem;
+   }
+    }
+    @keyframes rotate {
+        0% {
+            transform: rotateY(0deg);
+        }
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
 </style>
-<h1>ini Home</h1>
+
+<body class="bodyHome" >
+    <div class="bodyHome">
+        <img class="imageBackground " src="/image/DSC_0428 (1).JPG" alt="">
+        <img src="/image/" alt="">
+    </div>
+
+    <!-- section1 -->
+<section class="hidden">
+    <div  class="section1">
+<div class="slider-container">
+    <div class="slider">    
+        <div class="slide">
+            <img class="logo"  src="/image/logo-ppi.png" alt="Image 1">
+        </div>
+    </div>
+</div>
+<h1 style="color: white;">Persatuan Pelajar Indonesia Albukhary International University</h1>
+</div>
+</section>
+
+
+<!-- section 2 -->
+<section class="hidden">
+    <div class="section2">
+        <div  class="subSection2">
+            <h1 style="color: white;">Our <span >Vision</span> </h1>
+            <h3>Become an organization that gathers and advocates for its members as well as develop potential to become citizens who are useful for religion, nation, state, and campus community.</h3>
+        </div>
+        
+        <div class="subSection2" style="margin-top: 30px;">
+            <h1 style="color: white;"> <span>Our</span>  Mission</h1>
+            <h3>1. Strengthen the sense of unity between members in a family atmosphere.</h3>
+           <h3>
+            2. Advocate for the rights of <span>PPI AIU</span>  members as AIU students.
+           </h3>
+           <h3>
+               3. Organizing useful activities that are in line with the nature of <span>PPI AIU</span>.
+           </h3>
+           <h3>
+               4. Provide a positive image of the Indonesian nation by the Code of Ethics for Indonesian Diplomats.</div>
+           </h3>
+        
+    </div>
+    
+</section>
+
+<!-- section 3 -->
+<section  class="hidden" style="margin-top: 30px;">
+    <div class="counter-wrapper">
+        <div class="counter">
+            <h1 class="count" data-target="193">0</h1>
+            <p>Male and Female Members</p>
+        </div>
+        <div class="counter">
+            <h1 class="count" data-target="68">0</h1>
+            <p>Male Members</p>
+        </div>
+        <div class="counter">
+            <h1 class="count" data-target="125">0</h1>
+            <p>Female Members</p>
+        </div>
+        <div class="counter">
+            <h1 class="count" data-target="50">0</h1>
+            <p>Total Current Staff</p>
+        </div>
+    </div>
+</section>
 
 
 
+</body>
+
+<script>
+    // Get all elements with the class "hidden"
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            console.log(entry)
+            if(entry.isIntersecting) {
+                entry.target.classList.add('show');
+            } else {
+                entry.target.classList.remove('show')
+            }
+        })
+    })
+
+    const hiddenElements = document.querySelectorAll('.hidden');
+    hiddenElements.forEach((el) => observer.observe(el));
+
+
+    //rotation of the logo
+
+    const slider = document.querySelector('.slider');
+    let rotateY = 0;
+    
+    function rotateSlider() {
+        rotateY += 120;
+        slider.style.transform = `rotateY(${rotateY}deg)`;
+    }
+    
+    setInterval(rotateSlider, 5000);
+
+    // COUNTER 
+    const counts = document.querySelectorAll('.count')
+const speed = 50
+
+counts.forEach((counter) => {
+    function upDate(){
+        const target = Number(counter.getAttribute('data-target'))
+        const count = Number(counter.innerText)
+        const inc = target / speed        
+        if(count < target){
+            counter.innerText = Math.floor(inc + count) 
+            setTimeout(upDate, 15)
+        }else{
+            counter.innerText = target
+        }
+    }
+    upDate()
+})
+</script>
 <!-- visi misi ppi aiu, a glimpse of ppi aiu, lokasi geometri ppi aiu, dan rekapitulasi jumlah mahasiswa indonesia di aiu  -->

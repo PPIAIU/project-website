@@ -17,6 +17,7 @@ a {
     position: fixed;
     width: 100%;
     top: 0;
+    z-index: 2;
 }
 
 .container {
@@ -37,6 +38,7 @@ a {
 .header-logo img {
     width: 5rem;
     transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .header-logo img:hover {
@@ -70,82 +72,64 @@ a {
     color: #f39c12;
 }
 
-/* Footer Styling */
-.footer {
-    background-color: #1a1a1a; /* Dark background for footer */
-    color: #ffffff; /* White text color */
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    position: relative;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-}
+.footer{
+    background:#000;
+    padding:30px 0px;
+    font-family: 'Play', sans-serif;
+    text-align:center;
+    z-index: -1;
+    }
+    
+    .footer .row{
+    width:100%;
+    margin:1% 0%;
+    padding:0.6% 0%;
+    color:gray;
+    font-size:0.8em;
+    }
+    
+    .footer .row a{
+    text-decoration:none;
+    color:gray;
+    transition:0.5s;
+    }
+    
+    .footer .row a:hover{
+    color: rgb(255, 65, 65);
+    }
+    
+    .footer .row ul{
+    width:100%;
+    }
+    
+    .footer .row ul li{
+    display:inline-block;
+    margin:0px 30px;
+    }
+    
+    .footer .row a i{
+    font-size:2em;
+    margin:0% 1%;
+    }
+    
+    @media (max-width:720px){
+    .footer{
+    text-align:left;
+    padding:5%;
+    }
+    .footer .row ul li{
+    display:block;
+    margin:10px 0px;
+    text-align:left;
+    }
+    .footer .row a i{
+    margin:0% 3%;
+    }
+    }
 
-.footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    border-bottom: 1px solid #333;
-    padding-bottom: 2rem;
-}
+    @media screen and ( max-width: 1010px) and (min-width: 769px) {
+        .footer {
+            width: 1000px;
+        }
 
-.footer-container {
-    margin: 0 6em 0 6em;
-}
-
-.footer-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: #f39c12; /* Gold color for the titles */
-    position: relative;
-}
-
-.footer-title::after {
-    content: '';
-    display: block;
-    width: 50px;
-    height: 2px;
-    background-color: #f39c12;
-    margin: 0.5rem auto;
-}
-
-.footer-list,
-.social-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-list li,
-.social-links li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-link {
-    color: #ffffff;
-    transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-    color: #f39c12; /* Gold color on hover */
-    text-decoration: underline;
-}
-
-.social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.footer-copy {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 0.875rem;
-    color: #bbbbbb; /* Light grey for the copyright text */
-}
-
-h1 {
-    color: #1a1a1a;
-}
+    }

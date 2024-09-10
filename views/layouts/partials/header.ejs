@@ -1,21 +1,149 @@
-<link rel="stylesheet" href="/css/home.css">
+<style>
+    
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    font-family: 'Roboto', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.header {
+    border-bottom: 1px solid #E2E8F0;
+    background-color: #222;
+}
+
+.navbar {
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem;
+}
+
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    /* background-color: #101010; */
+    background-color: #fff;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    margin-left: 5rem;
+}
+
+.nav-link {
+    /* font-size: 1.6rem; */
+    font-size: 2rem;
+    font-weight: 400;
+    /* color: #475569; */
+    color: #fff;
+    /* change */
+}
+
+.nav-link:hover {
+    color: red;
+}
+
+.nav-logo {
+    /* font-size: 2.1rem; */
+    font-size: 3rem;
+    font-weight: 500;
+    /* color: #482ff7; */
+    color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 5rem;
+        flex-direction: column;
+        /* background-color: #fff; */
+        background-color: #222;
+        width: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow:
+            0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-link {
+        color: #fff;
+    }
+
+    .nav-menu.active {
+        left: 0;
+        margin-top: 50px;
+    }
+
+    .nav-item {
+        margin: 2.5rem 0;
+        color: #ffff;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+        
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+}
+
+</style>
 <header class="header">
-    <div class="container">
-        <div class="header-content">
-            <div class="header-logo">
-                <a href="/">
-                    <img src="/image/logo-ppi.png" alt="PPI AIU Logo">
-                </a>
-                <span class="header-logo-name">PPI AIU</span>
-            </div>
-            <nav class="header-navigation">
-                <ul>
-                    <li><a href="/home" class="header-link">Home</a></li>
-                    <li><a href="/periode" class="header-link">Board</a></li>
-                    <li><a href="/events" class="header-link">Blogs</a></li>
-                    <li><a href="/fondasi" class="header-link">Foundation</a></li>
+            <nav class="navbar">
+                <div class="header-logo">
+                    <a href="/">
+                        <img src="/image/logo-ppi.png" alt="PPI AIU Logo">
+                    </a>
+                    <span class="header-logo-name">PPI AIU</span>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="/periode" class="nav-link">Board</a></li>
+                    <li class="nav-item"><a href="/events" class="nav-link">Blogs</a></li>
+                    <li class="nav-item"><a href="/fondasi" class="nav-link">Foundation</a></li>
                     <% if(currentUser) { %>
-                    <li><a href="/logout" class="header-link" onclick="
+                    <li class="nav-item"><a href="/logout" class="nav-link" onclick="
                     event.preventDefault();
                     document.getElementById('logout-form').submit();"
                         >Logout</a>
@@ -23,11 +151,38 @@
                     </form>
                     </li>
                     <% } else { %>
-                    <li><a href="/login" class="header-link">Login</a></li>
+                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
                         <% } %>
  
                 </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </nav>
-        </div>
-    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', mobileMenu);
+        function mobileMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+// when we click on hamburger icon its close 
+        const headerLink = document.querySelectorAll('.nav-link');
+        headerLink.forEach(n => n.addEventListener('click', closeMenu)) 
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+
+
+    </script>
 </header>
+
+

@@ -1,6 +1,6 @@
 <% layout("layouts/app") %>
-
-<div  class="form-container">
+<link rel="stylesheet" href="/css/form.css">
+<!-- <div  class="form-container">
     <h1>Create New Periode</h1>
 
     <form action="/periode" method="post" class="form" enctype="multipart/form-data">
@@ -12,4 +12,23 @@
         </div>
         <button type="submit" class="button">Submit</button>
     </form>
+</div> -->
+<section  class="sectionForm">
+<div class="form">
+    <form action="/periode" method="post" enctype="multipart/form-data">
+    <div class="title">Welcome</div>
+    <div class="subtitle">Let's create new periode!</div>
+    <div class="input-container ic1">
+      <input type="text" name="periode[name]" id="name" class="input" required>
+      <div class="cut"></div>
+      <label for="name" class="placeholder">Name of periode</label>
+    </div>
+    <div class="input-container ic2">
+      <input type="file" name="image" accept="image/*" required>
+      <label for="image" class="placeholder">Image of periode</label>
+    </div>
+    <button type="text" class="submit">submit</button>
+</form>
 </div>
+
+</section>

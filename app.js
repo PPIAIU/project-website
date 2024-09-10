@@ -1,4 +1,5 @@
 const express = require('express')
+const gsap = require('gsap')
 const joi = require('joi')
 const path = require('path')
 const app = express()

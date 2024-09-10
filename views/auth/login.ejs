@@ -1,5 +1,7 @@
 <% layout('layouts/app') %>
 
+<link rel="stylesheet" href="/css/auth.css">
+<!-- 
 <div>
     <h1>Login</h1>
     <form action="/login" method="post">
@@ -9,4 +11,23 @@
         <input type="password" name="password" placeholder="password">
         <input type="submit" value="Login">
     </form>
-</div>
+</div> -->
+<body>    
+<section class="sectionLogin" >
+<div class="wrapper">
+    <form action="/login" method="post">
+      <h2>Admin Login</h2>
+        <div class="input-field">
+        <input type="text" name="username"  required>
+        <label>Enter Username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password"  required>
+        <label>Enter your password</label>
+      </div>
+      <button type="submit">Log In</button>
+    </form>
+  </div>
+  </body>
+
+</section>
