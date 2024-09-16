@@ -1,0 +1,16 @@
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
+
+span {
+    color: red;
+}
+
+section {
+    background-color: rgb(72, 4, 4);
+}

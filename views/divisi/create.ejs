@@ -1,8 +1,7 @@
 <% layout("layouts/app") %>
+<link rel="stylesheet" href="/css/form.css">
 
-<h1>create page for new divisi!!!</h1>
-
-<form action="/divisi/<%= periode_id %>/store" method="post" enctype="multipart/form-data"> 
+<!-- <form action="/divisi/<%= periode_id %>/store" method="post" enctype="multipart/form-data"> 
     <label for="name">name</label>
     <input type="text" name="divisi[name]" id="name">
     <label for="deskripsi">deskripsi</label>
@@ -10,4 +9,29 @@
     <label for="image">image</label>
     <input type="file" name="image" accept="image/*" required>
     <button type="submit">submit</button>
-</form>
+</form> -->
+
+<section  class="sectionForm">
+    <div class="form">
+        <form action="/divisi/<%= periode_id %>/store" method="post" enctype="multipart/form-data">
+        <div class="title">Welcome</div>
+        <div class="subtitle">Let's create new division!</div>
+        <div class="input-container ic1">
+          <input type="text" name="divisi[name]" id="name" class="input" required>
+          <div class="cut"></div>
+          <label for="name" class="placeholder">Name of division</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="divisi[deskripsi]" id="deskripsi" class="input" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Deskription</label>
+          </div>
+        <div class="input-container ic2">
+          <input type="file" name="image" accept="image/*" required>
+          <label for="image" class="placeholder">Image of division</label>
+        </div>
+        <button type="text" class="submit">submit</button>
+    </form>
+    </div>
+    
+    </section>

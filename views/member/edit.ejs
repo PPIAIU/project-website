@@ -1,7 +1,7 @@
 <% layout('layouts/app') %>
+<link rel="stylesheet" href="/css/form.css">
 
-<h1>edit <%= member.name %></h1>
-
+<!-- 
 <form action="/member/<%= member._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
     <label for="name">name</label>
     <input type="text" name="member[name]" id="name" value="<%= member.name %>" >
@@ -10,10 +10,41 @@
     <input type="text" name="member[jabatan]" id="jabatan" value="<%= member.jabatan %>">
     
     <label for="background">background</label>
-    <input type="text" name="member[background]" id="background"value="<%= member.background %>">
+    <input type="text" name="member[background]" id="background" value="<%= member.background %>">
 
     <label for="image">image</label>
     <input type="file" name="image" accept="image/*" required>
 
     <button type="submit">submit</button>
-</form>
+</form> -->
+
+
+<section  class="sectionForm">
+    <div class="form">
+        <form action="/member/<%= member._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
+        <div class="title">Welcome</div>
+        <div class="subtitle">Let's edit this member!</div>
+        <div class="input-container ic1">
+            <input type="text" name="member[name]" id="name" class="input" id="name" value="<%= member.name %>" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Name</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="member[jabatan]" id="jabatan" class="input" value="<%= member.jabatan %>" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Position</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="member[background]" id="background" class="input" value="<%= member.background %>" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">background</label>
+        </div>
+        <div class="input-container ic2">
+            <input type="file" name="image" accept="image/*" required>
+            <label for="image" class="placeholder">Image of member</label>
+        </div>
+        <button type="text" class="submit">submit</button>
+    </form>
+    </div>
+    
+</section>

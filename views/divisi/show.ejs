@@ -1,36 +1,47 @@
 <% layout('layouts/app') %>
-
-    <% for(const imagage of divisi.image) { %>
-        <img src="/uploads/divisi/<%= imagage.filename %>" alt="image">
-        <% } %>
-
-<h1><%= divisi.name %></h1>
-
-<h4><%= divisi.deskripsi %></h4>
-
-<h2>showing member of <%= divisi.name %></h2>
-        
-<% for (const member of divisi.members) { %>
-
-
-   <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show"><h3> <%= member.name %> </h3></a> 
-
-    <% } %>
+<link rel="stylesheet" href="/css/board.css">
+<section class="slider_section">
+        <h1 class="title"><%= divisi.name %></h1>
+            <% for(const imagage of divisi.image) { %>
+                <img class="imagePeriode" src="/uploads/divisi/<%= imagage.filename %>" alt="image">
+                <% } %>
+        <h4 class="text-normal" style="margin: 30px 0px 0px 0px;">What's <span><%= divisi.name %></span></h4>
+    <h5 class="text-description"><%= divisi.deskripsi %></h5>
+    
+<h2 class="text-normal" style="margin: 0px 0 30px 0px;">Member of <%= divisi.name %></h2>
+    <div class="divisi-divisi">
+        <% for (const member of divisi.members) {%>
+        <div class = "card">
+            <% for(const imagage of member.image ) { %>
+            <img src="/uploads/member/<%= imagage.filename %>" alt="">
+            <% } %>
+            <div class="card-content">
+              <h2>
+                <%= member.name %>
+              </h2>
+              <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show" class="button">
+                Find out more 
+              </a>
+            </div>
+          </div>
+          <% } %>
+        </div>
 
 <% if(currentUser && divisi.author.equals(currentUser._id)) { %>
     <!-- delete divisi -->
     <form action="/divisi/<%= divisi._id %>?_method=delete" method="post">
-        <button>delete this <%= divisi.name %></button>
+        <button class="new-periode-button">delete this <%= divisi.name %></button>
     </form>
     <br>
     <!-- create member -->
-    <button><a href="/member/<%= periode_id %>/<%= divisi._id %>/create">buat member</a></button>
+    <button class="new-periode-button"><a href="/member/<%= periode_id %>/<%= divisi._id %>/create">create new member of <%= divisi.name %></a></button>
     <!-- edit division -->
-    <button><a href="/divisi/<%= divisi._id %>/edit">edit <%= divisi.name %></a></button>
+    <button class="new-periode-button"><a href="/divisi/<%= divisi._id %>/edit">edit <%= divisi.name %></a></button>
     <br>
     <div style="margin-top: 1em;">
     <!-- back to all periode -->
-   <button><a href="/periode">back to all periode</a></button> 
+   <button class="new-periode-button"><a href="/periode">back to all periode</a></button> 
 </div>
-
 <% } %>
+</section>
+   

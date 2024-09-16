@@ -78,15 +78,22 @@ app.use('/member', require('./routes/member.js'))
 app.use('/divisi', require('./routes/divisi.js'))
 app.use('/periode', require('./routes/periode.js'))
 app.use('', require('./routes/auth.js'))
+app.use('/blog', require('./routes/blog.js'))
 
 
 
 //direct webpage
-app.get('/fondasi', async (req, res) => {
+app.get('/foundation', async (req, res) => {
 	res.render('fondasi')
+})
+app.get('/blog', async (req, res) => {
+	res.render('blog')
 })
 app.get('/home', async (req, res) => {
 	res.render('home')
+})
+app.get('/developer', async (req, res) => {
+	res.render('developer')
 })
 app.get('/welcome', ((req, res) => {
 	res.render('welcome')

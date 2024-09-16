@@ -1,5 +1,6 @@
 <% layout('layouts/app') %>
 
+<link rel="stylesheet" href="/js/hidden.js">
 
 <style>
     .hidden{
@@ -8,20 +9,17 @@
         filter: blur(5px);
         transform: translateX(-100%);
         z-index: -1;
-        color: white;
+        color: rgb(255, 255, 255);
     }
     .show{
         opacity: 1;
         filter: blur(0px);
         transform: translateX(0);
     }
-    .imageBackground {
-        object-fit: cover;
-        width: 100%;
-        min-height: 60vh;
-        position: relative;
-    }
 
+    .bodyHome{
+        background-color: rgb(72, 4, 4);
+    }
 
     
 
@@ -30,29 +28,6 @@
         font-weight:900;
     }
 
-    .bodyHome {
-        position: absolute;
-        z-index: -2;
-        object-fit: cover;
-        background-position: center;
-        background-size: cover;
-        color: #131316;
-        width: 100%;
-        min-height: 90vh;
-    }
-
-    .bodyHome::before{
-        margin: 0px;
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.7);
-        z-index: -1;
-        height: 100%;
-        width: 100%;
-    }
 
 
     section {
@@ -171,28 +146,21 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
 }
-
-
-
-
-
     
     @media (prefers-reduced-motion) {
         .hidden{
             transition: none;
         }
     }
-
-    /* media query  tablet */
-    @media screen and ( max-width: 1010px) and (min-width: 769px) {
-
+/* 
+    @media screen and (max-height: 1366px) and ( min-height: 1011px) {
         .bodyHome{
-            background-size: cover;
-            width: 1005px;
+            background-size: contain;
+            width: 100%;
             background-position: center;
             color: #131316;
             height: 100%;
-            width: 100%;
+            width: 1366px;
         }
 
         .bodyHome::before{
@@ -206,6 +174,23 @@
         width: 1000px;
         height: 100%;
     }
+        .imageBackground {
+            object-fit: cover;
+            min-height: 100vh;
+            width: 1000px;
+        }
+        .counter-wrapper{
+       grid-template-columns: repeat(2, 1fr);
+       grid-row-gap: 8rem;
+   }         .section1 , .section2{
+            margin: 20px 30px;
+        }
+
+        
+    } */
+    /* media query  tablet */
+    @media screen and ( max-width: 1010px) and (min-width: 769px) {
+
         .imageBackground {
             object-fit: cover;
             min-height: 100vh;
@@ -234,24 +219,7 @@
             width: 100%;
         }
 
-        .bodyHome::before{
-        margin: 0px;
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-        width: 100%;
-    }
 
-        
-
-        .imageBackground {
-            object-fit: cover;
-            min-height: 100vh;
-            width: 100%;
-        }
         .hidden {
             transform: none;
             filter: none;
@@ -292,8 +260,6 @@
 
 <body class="bodyHome" >
     <div class="bodyHome">
-        <img class="imageBackground " src="/image/DSC_0428 (1).JPG" alt="">
-        <img src="/image/" alt="">
     </div>
 
     <!-- section1 -->
@@ -306,7 +272,7 @@
         </div>
     </div>
 </div>
-<h1 style="color: white;">Persatuan Pelajar Indonesia Albukhary International University</h1>
+<h1>Persatuan Pelajar Indonesia Albukhary International University</h1>
 </div>
 </section>
 
@@ -315,12 +281,12 @@
 <section class="hidden">
     <div class="section2">
         <div  class="subSection2">
-            <h1 style="color: white;">Our <span >Vision</span> </h1>
+            <h1 >Our <span >Vision</span> </h1>
             <h3>Become an organization that gathers and advocates for its members as well as develop potential to become citizens who are useful for religion, nation, state, and campus community.</h3>
         </div>
         
         <div class="subSection2" style="margin-top: 30px;">
-            <h1 style="color: white;"> <span>Our</span>  Mission</h1>
+            <h1  > <span>Our</span>  Mission</h1>
             <h3>1. Strengthen the sense of unity between members in a family atmosphere.</h3>
            <h3>
             2. Advocate for the rights of <span>PPI AIU</span>  members as AIU students.
@@ -361,22 +327,22 @@
 
 
 </body>
-
+<script src="/js/hidden.js"></script>
 <script>
     // Get all elements with the class "hidden"
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            console.log(entry)
-            if(entry.isIntersecting) {
-                entry.target.classList.add('show');
-            } else {
-                entry.target.classList.remove('show')
-            }
-        })
-    })
+    // const observer = new IntersectionObserver((entries) => {
+    //     entries.forEach((entry) => {
+    //         console.log(entry)
+    //         if(entry.isIntersecting) {
+    //             entry.target.classList.add('show');
+    //         } else {
+    //             entry.target.classList.remove('show')
+    //         }
+    //     })
+    // })
 
-    const hiddenElements = document.querySelectorAll('.hidden');
-    hiddenElements.forEach((el) => observer.observe(el));
+    // const hiddenElements = document.querySelectorAll('.hidden');
+    // hiddenElements.forEach((el) => observer.observe(el));
 
 
     //rotation of the logo

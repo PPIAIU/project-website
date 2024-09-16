@@ -1,6 +1,9 @@
 <% layout('layouts/app') %>
+
+<link rel="stylesheet" href="/css/form.css">
+
 <body>
-    <h1>creating member</h1>
+    <!-- <h1>creating member</h1>
     <form action="/member/<%= periode_id %>/<%= divisi_id %>/store" method="post" enctype="multipart/form-data"> 
         <label for="name">name</label>
         <input type="text" name="member[name]" id="name">
@@ -11,5 +14,37 @@
         <label for="image">image</label>
         <input type="file" name="image" accept="image/*" required>
         <button type="submit">submit</button>
+    </form> -->
+    
+    
+
+    <section  class="sectionForm">
+    <div class="form">
+        <form action="/member/<%= periode_id %>/<%= divisi_id %>/store" method="post" enctype="multipart/form-data">
+        <div class="title">Welcome</div>
+        <div class="subtitle">Let's create new member!</div>
+        <div class="input-container ic1">
+            <input type="text" name="member[name]" id="name" class="input" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Name</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="member[jabatan]" id="jabatan" class="input" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Position</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="member[background]" id="background" class="input" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">background</label>
+        </div>
+        <div class="input-container ic2">
+            <input type="file" name="image" accept="image/*" required>
+            <label for="image" class="placeholder">Image of member</label>
+        </div>
+        <button type="text" class="submit">submit</button>
     </form>
+    </div>
+    
+</section>
 </body>

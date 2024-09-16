@@ -1,7 +1,7 @@
 <% layout('layouts/app') %>
+<link rel="stylesheet" href="/css/form.css">
 
-<h1>edit departemen</h1>
-
+<!-- 
 <form action="/divisi/<%= divisi._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
     <label for="name">name</label>
     <input type="text" name="divisi[name]" id="name" value="<%= divisi.name %>" >
@@ -12,4 +12,30 @@
     <label for="image">image</label>
     <input type="file" name="image" accept="image/*" required>
     <button type="submit">submit</button>
-</form>
+</form> -->
+
+
+<section  class="sectionForm">
+    <div class="form">
+        <form action="/divisi/<%= divisi._id %>?_method=put" method="post" novalidate enctype="multipart/form-data">
+        <div class="title">Welcome</div>
+        <div class="subtitle">Let's edit this division!</div>
+        <div class="input-container ic1">
+          <input type="text" name="divisi[name]" id="name" class="input" value="<%= divisi.name %>" required>
+          <div class="cut"></div>
+          <label for="name" class="placeholder">Name of division</label>
+        </div>
+        <div class="input-container ic1">
+            <input type="text" name="divisi[deskripsi]" id="deskripsi" value="<%= divisi.deskripsi %>" class="input" required>
+            <div class="cut"></div>
+            <label for="name" class="placeholder">Deskription</label>
+          </div>
+        <div class="input-container ic2">
+          <input type="file" name="image" accept="image/*" required>
+          <label for="image" class="placeholder">Image of division</label>
+        </div>
+        <button type="text" class="submit">submit</button>
+    </form>
+    </div>
+    
+    </section>

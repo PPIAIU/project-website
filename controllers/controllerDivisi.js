@@ -1,6 +1,7 @@
 const express = require('express')
 const Divisi = require('../models/divisi')
 const Periode = require('../models/periode')
+const Member = require('../models/member')
 const fs = require('fs')
 
 module.exports.show = async ( req, res) => {
@@ -65,6 +66,19 @@ module.exports.update = async (req, res) => {
 module.exports.destroy = async ( req, res) => {
     const {id} = req.params
     const divisi = await Divisi.findById(id)
+    if (divisi.members && divisi.members.length > 0) {
+        for (const memberId of divisi.members) {
+            const member = await Member.findById(memberId);
+            if (member && member.image) {
+                member.image.forEach(image => {
+                    if (image && image.url) {
+                        fs.unlinkSync(image.url);
+                    }
+                });
+                await Member.findByIdAndDelete(memberId);
+            }
+        }
+    }
     if(divisi.image.length > 0) {
         divisi.image.forEach(image => {
             fs.unlinkSync(image.url)

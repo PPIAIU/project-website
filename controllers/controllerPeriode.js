@@ -70,32 +70,38 @@ module.exports.update = async (req, res) => {
 
 module.exports.destroy = async (req, res) => {
     const {id} = req.params
-    const periode = await Periode.findById(id)
-
+    const periode = await Periode.findById(id).populate('members')
+     // Delete member images
+     if (periode.members && periode.members.length > 0) {
+        for (const member of periode.members) {
+            if (member.image && member.image.length > 0) {
+                for (const image of member.image) {
+                    if (image && image.url) {
+                        await fs.promises.unlink(image.url);
+                    }
+                }
+            }
+            await Member.findByIdAndDelete(member._id);
+        }
+    }
     //DELETE PERIODE IMAGE IN DIVISI
-    periode.divisis.forEach(async (divisiId) => {
-        const divisi = await Divisi.findById(divisiId)
-        divisi.image.forEach(image => {
-            fs.unlinkSync(image.url)
-        })
-        await Divisi.findByIdAndDelete(divisiId)
-    })
-
-    //DELETE PERIODE IMAGE IN MEMBER
-    periode.members.forEach(async (memberId) => {
-        const member = await Member.findById(memberId)
-        member.image.forEach(image => {
-            fs.unlinkSync(image.url)
-        })
-        await Member.findByIdAndDelete(memberId)
-    })
-
+    if(periode.divisis && periode.divisis.length > 0) {
+        for (const divisiId of periode.divisis) {
+            const divisi = await Divisi.findById(divisiId);
+            if (divisi && divisi.image) {
+                divisi.image.forEach(image => {
+                    if (image && image.url) {
+                        fs.unlinkSync(image.url);
+                    }
+                });
+                await Divisi.findByIdAndDelete(divisiId);
+            }
+        }
+}
     periode.image.forEach(image => {
             fs.unlinkSync(image.url);
         });
-
     await Periode.findByIdAndDelete(req.params.id);
     req.flash('success_msg', 'Data is successfully deleted')
     res.redirect('/periode')
 }
-

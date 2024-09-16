@@ -1,21 +1,33 @@
 <% layout('layouts/app') %>
+<link rel="stylesheet" href="/css/board.css">
+<section class="slider_section ">
 
-  <h1><%= periode.name  %></h1>
-  <% for(const imagage of periode.image) { %>
-  <img src="/uploads/periode/<%= imagage.filename %>" alt="<%=  periode.name   %>">
-  <% } %>
+  <h1 class="title">Welcome to <span><%= periode.name  %>'s</span> board</h1>
+
+<div class="divisi-divisi">
   <% for ( divisi of periode.divisis ) { %>
-    <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show"><h4><%= divisi.name %></h4></a>  
-    <% } %>
-    
-    <% if(currentUser && periode.author.equals(currentUser._id)) { %>
-    <button><a href="/divisi/<%= periode._id %>/create">buat departemen baru</a></button>  
-   <button> <a href="/periode/<%= periode._id %>/edit">edit periode ini</a></button>   
-    
-    <form action="/periode/<%= periode._id %>?_method=delete" method="post" >
-      <button type="submit">delete <%= periode.name%></button>
-    </form>
+    <div class="divisi">
+         <h1 class="nama-divisi" ><%= divisi.name %></h1>
+        <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show">  
+        <% for (const imagage of divisi.image) { %>
+        <img class="imagePeriode" src="/uploads/divisi/<%= imagage.filename %>" alt="">
+        <% } %>
+      </a>
+    </div>
+    <% } %>  
+      
+</div>
 
-    <% } %>
 
- 
+<% if(currentUser && periode.author.equals(currentUser._id)) { %>
+  <button class="new-periode-button"><a href="/divisi/<%= periode._id %>/create">create new division</a></button>  
+ <button class="new-periode-button"> <a href="/periode/<%= periode._id %>/edit">edit this cabinet</a></button>   
+  
+  <form action="/periode/<%= periode._id %>?_method=delete" method="post" >
+    <button class="new-periode-button" type="submit">delete <%= periode.name%></button>
+  </form>
+
+  <% } %>
+
+</section>
+  

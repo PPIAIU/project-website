@@ -1,19 +1,27 @@
 <% layout('layouts/app') %>
+<link rel="stylesheet" href="/css/board.css">
 
-<div class="periode-container">
-    <h2>Ini adalah Periode PPI AIU</h2>
+<section class="slider_section">
+  <h1 class="title">Our <span>Cabinets</span> </h1>
 
     <div class="periode-list">
         <% for (let periode of periodes) { %>
-            <div class="periode-item">
                 <a href="/periode/<%= periode._id %>">
-                    <h1><%= periode.name %></h1>
+                    <% for (const imagage of periode.image) { %>
+                  <div> <img class="imagePeriode" src="/uploads/periode/<%=imagage.filename %>" alt="image"></div>  
+                    <% } %>
+                   <div> <h2 class="titleNameCabinet"> <%= periode.name %></h2> </div>
+                  <div class="namecabinet">Our board</div>  
                 </a>  
-            </div>
         <% } %>
+
     </div>
     <% if(currentUser) { %>
-    <button class="new-periode-button">
-        <a href="/periode/create">New Periode</a>
-    </button
-<% } %>
+        <button class="new-periode-button">
+            <a href="/periode/create">New Cabinet</a>
+        </button>
+        
+        <% } %>
+
+
+<script src="/js/hidden.js"></script>

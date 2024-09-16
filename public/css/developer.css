@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 10px;
+  font-family: 'montserrat', sans-serif;
+	scroll-behavior: smooth;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+p {
+	color: black;
+	font-size: 1.4rem;
+	margin-top: 5px;
+	line-height: 2.5rem;
+	font-weight: 300;
+	letter-spacing: 0.05rem;
+}
+
+a {
+  text-decoration: none;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+}
+.section-tittle {
+  text-align: center;
+  color: black;
+  letter-spacing: 0.2rem;
+  font-size: 4rem;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+.section-tittle span {
+  color: rgb(228, 154, 18);
+}
+
+
+.cta {
+  display: inline-block;
+  padding: 10px 30px;
+  font-size: 2rem;
+  color: white;
+  background-color: transparent;
+  border: 2px solid rgb(228, 154, 18);
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin-top: 30px;
+  transition: 0.3s ease;
+  transition-property: background-color, color;
+  z-index: 1;
+  position: relative;
+}
+
+.cta:hover {
+  color: white;
+  background-color: rgb(228, 154, 18);
+}
+
+.brand h1 {
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	color: white;
+  font-weight: 500;
+	letter-spacing: 1.5px;
+}
+.brand h1 span {
+	color: rgb(228, 154, 18);
+}
+
+/* About Section */
+#about span {
+	color: black;
+}
+
+#about .about {
+	flex-direction: column-reverse;
+	text-align: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 100px 20px;
+}
+#about .col-left {
+	width: 250px;
+	height: 360px;
+}
+#about .col-right {
+	width: 100%;
+}
+#about .col-right h2 {
+	font-size: 1.8rem;
+	font-weight: 500;
+	letter-spacing: 0.2rem;
+	margin-bottom: 10px;
+}
+#about .col-right p {
+	margin-bottom: 20px;
+}
+#about .col-right  {
+	color: rgb(228, 154, 18);
+	margin-bottom: 50px;
+	padding: 10px 20px;
+	font-size: 2rem;
+	margin-top: 80px;
+}
+
+#about .col-right a {
+	color: rgb(228, 154, 18);
+}
+
+#about .col-right a:hover {
+	color: white;
+}
+
+#about .col-left .about-img {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	border: 10px solid white;
+}
+
+#about .col-left .about-img::after {
+	content: '';
+	position: absolute;
+	left: -33px;
+	top: 19px;
+	height: 98%;
+	width: 98%;
+	border: 7px solid rgb(228, 154, 18);
+	z-index: -1;
+}
+/* End About Section */
+
+/* media query for tablet */
+
+@media only screen and (min-width:768px){
+  .cta {
+		font-size: 2.5rem;
+		padding: 20px 60px;
+	}
+  h1.section-title {
+    font-size: 6rem;
+  }
+
+	.brand h1 {
+		font-size: 2.5rem;
+		text-transform: uppercase;
+		color: white;
+		font-weight: 500;
+		letter-spacing: 3px;
+	}
+	.brand h1 span {
+		color: rgb(228, 154, 18);
+	}
+  /* Hero */
+  #hero h1 {
+    font-size: 7rem;
+  }
+  /* End Hero */
+
+	/* Services Section */
+	#services .service-bottom .service-item {
+		flex-basis: 45%;
+		margin: 2.5%;
+	}
+	/* End Services Section */
+
+	/* Project */
+	#projects .project-item {
+		flex-direction: row;
+	}
+	#projects .project-item:nth-child(even) {
+		flex-direction: row-reverse;
+	} 
+	#projects .project-item {
+		height: 400px;
+		margin: 0;
+		width: 100%;
+		border-radius: 0;
+	}
+	#projects .all-projects .project-info {
+		height: 100%;
+	}
+	#projects .all-projects .project-img {
+		height: 100%;
+	}
+	/* End Project */
+
+	/* About */
+	#about .about {
+		flex-direction: row;
+		padding: 0;
+	}
+	#about .col-left {
+		width: 600px;
+		height: 400px;
+		padding-left: 60px;
+	}
+	#about .about .col-left .about-img::after {
+		left: -45px;
+		top: 34px;
+		height: 98%;
+		width: 98%;
+		border: 10px solid rgb(228, 154, 18);
+	}
+	#about .col-right {
+		text-align: left;
+		padding: 30px;
+	}
+	#about .col-right h1 {
+		text-align: left;
+	}
+	/* End About */
+
+	/* contact  */
+	#contact .contact {
+		flex-direction: column;
+		padding: 100px 0;
+		align-items: center;
+		justify-content: center;
+		min-width: 20vh;
+	}
+	#contact .contact-items {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		margin: 0;
+	}
+	#contact .contact-item {
+		width: 30%;
+		margin: 20px;
+		flex-direction: row;
+	}
+	#contact .contact-item .icon {
+		height: 100px;
+		width: 100px;
+	}
+	#contact .contact-item .icon img {
+		object-fit: contain;
+	}
+	#contact .contact-item .contact-info {
+		width: 100%;
+		text-align: left;
+		padding-left: 20px;
+	}
+	/* End contact  */
+}
+/* End Media Query For Tablet */
+
+/* Media Query For Desktop */
+@media only screen and (min-width: 1200px) {
+	.brand h1 {
+		font-size: 2.5rem;
+		text-transform: uppercase;
+		color: white;
+		font-weight: 500;
+		letter-spacing: 3px;
+	}
+	.brand h1 span {
+		color: rgb(228, 154, 18);
+	}
+
+	#hero h1 {
+    font-weight: 500;
+  }
+  
+  /* header */
+	#header .hamburger {
+		display: none;
+	}
+	#header .nav-list ul {
+		position: initial;
+		display: block;
+		height: auto;
+		width: fit-content;
+		background-color: transparent;
+	}
+	#header .nav-list ul li {
+		display: inline-block;
+	}
+	#header .nav-list ul li a {
+		font-size: 1.8rem;
+	}
+	#header .nav-list ul a:after {
+		display: none;
+	}
+	/* End header */
+
+	#services .service-bottom .service-item {
+		flex-basis: 22%;
+		margin: 1.5%;
+	}
+	
+	#projects .projects-header h1 {
+		margin-bottom: 40px;
+		font-size: 4rem;
+	}
+
+	#contact .container h1 {
+		margin-bottom: 40px;
+		font-size: 4rem;
+	}
+}
+/* End  Media Query For Desktop */
