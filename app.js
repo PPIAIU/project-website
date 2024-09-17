@@ -19,6 +19,8 @@ const session = require('express-session')
 const flash = require('connect-flash')
 //user
 const User = require('./models/user.js')
+//dotenv for enviroment variable
+require('dotenv').config();
 
 // view engine
 app.engine('ejs', ejsMate)
@@ -64,14 +66,23 @@ app.use((req, res, next) => {
 	next()
 })
 
+//connect to the database server
+mongoose.connect(process.env.MONGO_URI,{
+    serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+    connectTimeoutMS: 30000
+  })
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error(err));
+  
+
 
 // connect to mongodb
-mongoose.connect('mongodb://127.0.0.1/ppiaiu')
-	.then((result) => {
-		console.log('connected to mongodb')
-	}).catch((err) => {
-		console.log(err)
-	});
+// mongoose.connect('mongodb://127.0.0.1/ppiaiu')
+// 	.then((result) => {
+// 		console.log('connected to mongodb')
+// 	}).catch((err) => {
+// 		console.log(err)
+// 	});
 
 // ngambil routes di folder routes
 app.use('/member', require('./routes/member.js'))
@@ -112,10 +123,14 @@ app.use((err, req, res, next) => {
 })
 
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port http://127.0.0.1:${PORT}`);
+});
 
 
 
-app.listen(2000, () => {
-    console.log((`Server is running on http://127.0.0.1:2000`))
-})
+// app.listen(2000, () => {
+//     console.log((`Server is running on http://127.0.0.1:2000`))
+// })
 

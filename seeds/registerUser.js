@@ -2,8 +2,12 @@
 const mongoose = require('mongoose')
 const passportLocalMongoose = require('passport-local-mongoose')
 const User = require('../models/user.js')
+require('dotenv').config();
 
-mongoose.connect('mongodb://127.0.0.1/ppiaiu')
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
+    connectTimeoutMS: 30000
+  })
 	.then((result) => {
 		console.log('connected to mongodb')
 	}).catch((err) => {
