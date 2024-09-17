@@ -106,7 +106,7 @@ app.get('/home', async (req, res) => {
 app.get('/developer', async (req, res) => {
 	res.render('developer')
 })
-app.get('/welcome', ((req, res) => {
+app.get('/', ((req, res) => {
 	res.render('welcome')
   }))
 
@@ -125,12 +125,8 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port http://127.0.0.1:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
 
 
-
-// app.listen(2000, () => {
-//     console.log((`Server is running on http://127.0.0.1:2000`))
-// })
 
