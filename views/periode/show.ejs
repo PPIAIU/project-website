@@ -5,12 +5,12 @@
   <h1 class="title">Welcome to <span><%= periode.name  %>'s</span> board</h1>
 
 <div class="divisi-divisi">
-  <% for ( divisi of periode.divisis ) { %>
+  <% for (const divisi of periode.divisis ) { %>
     <div class="divisi">
          <h1 class="nama-divisi" ><%= divisi.name %></h1>
         <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show">  
-        <% for (const imagage of divisi.image) { %>
-        <img class="imagePeriode" src="/uploads/divisi/<%= imagage.filename %>" alt="">
+        <% for (const image of divisi.image) { %>
+        <img class="imagePeriode" src="/image/divisi/<%= image.filename %>" alt="">
         <% } %>
       </a>
     </div>

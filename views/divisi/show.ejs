@@ -3,7 +3,7 @@
 <section class="slider_section">
         <h1 class="title"><%= divisi.name %></h1>
             <% for(const imagage of divisi.image) { %>
-                <img class="imagePeriode" src="/uploads/divisi/<%= imagage.filename %>" alt="image">
+                <img class="imagePeriode" src="/image/divisi/<%= imagage.filename %>" alt="image">
                 <% } %>
         <h4 class="text-normal" style="margin: 30px 0px 0px 0px;">What's <span><%= divisi.name %></span></h4>
     <h5 class="text-description"><%= divisi.deskripsi %></h5>
@@ -13,7 +13,7 @@
         <% for (const member of divisi.members) {%>
         <div class = "card">
             <% for(const imagage of member.image ) { %>
-            <img src="/uploads/member/<%= imagage.filename %>" alt="">
+            <img src="/image/member/<%= imagage.filename %>" alt="">
             <% } %>
             <div class="card-content">
               <h2>

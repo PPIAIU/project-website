@@ -6,15 +6,14 @@
 
     <div class="periode-list">
         <% for (let periode of periodes) { %>
-                <a href="/periode/<%= periode._id %>">
-                    <% for (const imagage of periode.image) { %>
-                  <div> <img class="imagePeriode" src="/uploads/periode/<%=imagage.filename %>" alt="image"></div>  
-                    <% } %>
+                <a style="margin-left: 20px;" href="/periode/<%= periode._id %>">
+                  <% for(const image of periode.image) { %>
+                      <div> <img src="/image/periode/<%= image.filename %>" class="imagePeriode"  alt="no-image"></div> 
+                  <% }  %>  
                    <div> <h2 class="titleNameCabinet"> <%= periode.name %></h2> </div>
                   <div class="namecabinet">Our board</div>  
                 </a>  
         <% } %>
-
     </div>
     <% if(currentUser) { %>
         <button class="new-periode-button">

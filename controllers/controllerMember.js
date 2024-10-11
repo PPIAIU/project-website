@@ -2,6 +2,22 @@ const Member = require('../models/member')
 const Divisi = require('../models/divisi')
 const Periode = require('../models/periode')
 const fs = require('fs')
+const {MongoClient, GridFSBucket} = require('mongodb')
+const Grid = require('gridfs-stream')
+const mongoose = require('mongoose')
+
+let gridfsBucket, gfs;
+const conn = mongoose.createConnection(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 30000,
+    connectTimeoutMS: 30000,
+})
+
+conn.once('open', () => {
+    gridfsBucket = new GridFSBucket(conn.db, {bucketName: 'uploadMember'})
+    gfs = Grid(conn.db, mongoose.mongo)
+    gfs.collection('uploadMember')
+})
+
 
 module.exports.create = async (req, res) => {
     const {periode_id, divisi_id } = req.params
@@ -19,7 +35,7 @@ module.exports.show = async (req, res) => {
 
 module.exports.store = async (req, res) => {
     const { divisi_id, periode_id } = req.params
-    const image = req.files.map(file=> ({url: file.path, filename: file.filename}))
+    const image = req.file
     const divisi = await Divisi.findById(divisi_id)
     const periode = await Periode.findById(periode_id)
     const member = new Member(req.body.member)
@@ -43,31 +59,101 @@ module.exports.edit = async (req, res) => {
     res.render('member/edit', {member, periode_id, divisi_id, member_id})
 }
 
-module.exports.update = async (req, res) => {
-    const {id} = req.params
-    const member = await Member.findByIdAndUpdate(id, {...req.body.member})
-    if(req.files && req.files.length > 0) {
-        member.image.forEach(image => {
-            fs.unlinkSync(image.url)
-        })
-        const image = req.files.map(file => ({url: file.path, filename: file.filename}))
-        member.image = image
-        await member.save()
-    }
+// module.exports.update = async (req, res) => {
+//     const {id} = req.params
+//     const member = await Member.findByIdAndUpdate(id, {...req.body.member})
+//     if(req.files && req.files.length > 0) {
+//         member.image.forEach(image => {
+//             fs.unlinkSync(image.url)
+//         })
+//         const image = req.files.map(file => ({url: file.path, filename: file.filename}))
+//         member.image = image
+//         await member.save()
+//     }
 
-    req.flash('success_msg', 'Data is successfully edited')
-    res.redirect(`/periode`)
-}
+//     req.flash('success_msg', 'Data is successfully edited')
+//     res.redirect(`/periode`)
+// }
+
+
+module.exports.update = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Find the existing Member document by ID
+        const member = await Member.findById(id);
+
+        if (!member) {
+            req.flash('error_msg', 'Member not found');
+            return res.redirect('/periode');
+        }
+
+        // If new images are uploaded, replace the old images in GridFS
+
+            // Delete the old images from GridFS if any exist
+            if (member.image && member.image.length > 0) {
+                await Promise.all(member.image.map(async (image) => {
+                    try {
+                        const file = await gridfsBucket.find({ filename: image.filename }).toArray();
+                        if (file.length > 0) {
+                            await gridfsBucket.delete(file[0]._id);
+                            console.log(`Image ${image.filename} deleted successfully from GridFS.`);
+                        } else {
+                            console.log(`Image ${image.filename} not found in GridFS.`);
+                        }
+                    } catch (err) {
+                        console.error(`Error deleting image ${image.filename} from GridFS:`, err);
+                    }
+                }));
+            }
+
+            // Add new images to GridFS and update the Periode document
+            const newImages = req.file//.map((file) => ({
+            //     filename: file.filename,
+            //     url: `/image/periode/${file.filename}` // Update this path as needed
+            // }));
+
+            member.image = newImages;
+        
+
+        // Save the updated Periode document with the new image references
+        await member.save();
+
+        req.flash('success_msg', 'Data is successfully edited');
+        res.redirect('/periode');
+    } catch (error) {
+        console.error('Error updating member:', error);
+        req.flash('error_msg', 'An error occurred while updating the periode');
+        res.redirect('/periode');
+    }
+};
+
 
 module.exports.destroy = async (req, res) => {
     const {id} = req.params
     const member = await Member.findById(id)
-    if(member.image.length > 0) {
-        member.image.forEach(image => {
-            fs.unlinkSync(image.url)
-        })
-    }
     await Member.findByIdAndDelete(req.params.id)
+    //check if the member hasnot image
+    if(!member.image) {
+        res.redirect('/periode')
+    }
+    //check if the member has image
+    if(member.image && member.image.length > 0) {
+        await Promise.all(member.image.map(async (image) => {
+            try {
+                const file = await gridfsBucket.find({filename: image.filename}).toArray()
+                if(file && file.length > 0) {
+                    await gridfsBucket.delete(file[0]._id)
+                    console.log('file deleted')
+                } else {
+                    console.log('file not found')
+                }
+
+            } catch (err) {
+                console.error(`Error deleting image ${image.filename} from GridFS:`, err);
+            }
+        }))
+    } 
 
     req.flash('success_msg', 'Data is successfully deleted')
     // res.redirect(`/divisi/${periode_id}/${divisi_id}/show`)

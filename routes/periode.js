@@ -6,13 +6,13 @@ const router = express.Router()
 const isValidObjectId = require('../middlewares/isValidObjectId')
 const isAuth = require('../middlewares/isAuth')
 const upload = require('../configs/uploadPeriode')
+// const upload = require('../app.js')
 
 
 router.route('/')
     .get(wrapAsync(controllerPeriode.index))
-    .post( isAuth, upload.array('image', 1), validatePeriode, wrapAsync( controllerPeriode.store) )
+    .post( isAuth, upload.single('image'), validatePeriode, wrapAsync( controllerPeriode.store) )
  
-
 router.get('/create',  isAuth, controllerPeriode.create)
 
 router.get('/:id/edit', isAuth, isValidObjectId('/periode'),  wrapAsync(controllerPeriode.edit))
@@ -20,8 +20,8 @@ router.get('/:id/edit', isAuth, isValidObjectId('/periode'),  wrapAsync(controll
 
 router.route('/:id')
     .get( isValidObjectId('/periode'), wrapAsync(controllerPeriode.show) )
-    .put( isValidObjectId('/periode'), isAuth, upload.array('image', 1), validatePeriode, wrapAsync( controllerPeriode.update) )
+    .put( isValidObjectId('/periode'), isAuth, upload.single('image'), validatePeriode, wrapAsync( controllerPeriode.update) )
     
-router.delete('/:id', isAuth, wrapAsync(controllerPeriode.destroy)  )
+router.delete('/:id', isAuth, wrapAsync(controllerPeriode.destroy) )
 
 module.exports = router

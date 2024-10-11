@@ -14,13 +14,13 @@ const upload = require('../configs/uploadDivisi')
 
 router.route('/:id')
 .delete( isAuth, wrapAsync(controllerDivisi.destroy) )
-.put( isValidObjectId('/periode'), isAuth, upload.array('image', 1), validateDivisi, wrapAsync(controllerDivisi.update) )
+.put( isValidObjectId('/periode'), isAuth, upload.single('image'), validateDivisi, wrapAsync(controllerDivisi.update) )
 
 router.get('/:periode_id/:divisi_id/show', isValidObjectId('/periode'),  controllerDivisi.show)
 router.get('/:divisi_id/edit',  isAuth, isValidObjectId('/periode'), controllerDivisi.edit)
 
 router.get('/:periode_id/create', isAuth, isValidObjectId('/periode'), wrapAsync(controllerDivisi.create) )
 
-router.post('/:periode_id/store', isAuth, isValidObjectId('/periode'), upload.array('image', 1),  validateDivisi, wrapAsync(controllerDivisi.store) )
+router.post('/:periode_id/store', isAuth, isValidObjectId('/periode'), upload.single('image'),  validateDivisi, wrapAsync(controllerDivisi.store) )
 
 module.exports = router
