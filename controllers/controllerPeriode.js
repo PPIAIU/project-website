@@ -85,7 +85,7 @@ module.exports.update = async (req, res) => {
 
     try {
         // Find the existing Periode document by ID
-        const periode = await Periode.findById(id);
+        const periode = await Periode.findByIdAndUpdate(id, {...req.body.periode}); 
 
         if (!periode) {
             req.flash('error_msg', 'Periode not found');

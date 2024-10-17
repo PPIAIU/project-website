@@ -81,7 +81,7 @@ module.exports.update = async (req, res) => {
 
     try {
         // Find the existing Member document by ID
-        const member = await Member.findById(id);
+        const member = await Member.findByIdAndUpdate(id, { ...req.body.member});
 
         if (!member) {
             req.flash('error_msg', 'Member not found');

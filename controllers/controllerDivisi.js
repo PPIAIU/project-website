@@ -89,7 +89,7 @@ module.exports.update = async (req, res) => {
 
     try {
         // Find the existing Divisi document by ID
-        const divisi = await Divisi.findById(id);
+        const divisi = await Divisi.findByIdAndUpdate(id, {...req.body.divisi});
 
         if (!divisi) {
             req.flash('error_msg', 'Divisi not found');

@@ -205,7 +205,7 @@ span {
     overflow: hidden;
     position: relative;
     background-color: rgb(176, 103, 103);
-    color: wheat;
+    color: white;
     box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
     
    
@@ -228,7 +228,13 @@ span {
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: normal;
       text-transform: uppercase;
+      background-color: rgb(232, 75, 75);
+      padding: 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      transition:  .3s ease-out;
     }
+
     
     p, a {
       position: absolute;
@@ -252,6 +258,7 @@ span {
     &:hover h2 {
       inset: auto auto 220px 30px;
       transition: inset .3s ease-out;
+      background-color: transparent;
     }
     
     &:hover p, &:hover a {
