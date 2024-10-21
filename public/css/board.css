@@ -36,7 +36,7 @@
 }
 
 .title {
-    font-size: 70px;
+    font-size: 50px;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -189,7 +189,7 @@ span {
     border-radius: 10%;
     margin-bottom: 10px;
     transition: box-shadow 1s ease-in-out;
-}
+} 
 
 /* card member */
 
@@ -280,7 +280,7 @@ span {
   }
 
   .nameMember {
-    font-size: 50px;
+    font-size: 30px;
     margin: 20px 0;
   }
 
