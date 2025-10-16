@@ -107,9 +107,12 @@ let gfs, gridfsBucketPeriode, gridfsBucketDivisi, gridfsBucketMember;;
 
 
 // connect to the database server
-mongoose.connect(process.env.MONGO_URI)
+const mongoURI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1/ppiaiu';
+console.log('Connecting to MongoDB with URI:', mongoURI ? 'Connected' : 'No URI found');
+
+mongoose.connect(mongoURI)
     .then((conn) => {
-        console.log('Connected to MongoDB');
+        console.log('Connected to MongoDB successfully');
         const db = conn.connection.db;
         gridfsBucketPeriode = new GridFSBucket(db, { bucketName: 'uploadPeriode' });
         gridfsBucketDivisi = new GridFSBucket(db, { bucketName: 'uploadDivisi'});
@@ -117,7 +120,7 @@ mongoose.connect(process.env.MONGO_URI)
     })
     .catch(err => console.error('Error connecting to MongoDB:', err));
   
-var conn = mongoose.createConnection(process.env.MONGO_URI );
+var conn = mongoose.createConnection(mongoURI);
 //init gfs
 
 // Initialize the GridFSBucket

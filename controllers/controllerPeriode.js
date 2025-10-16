@@ -11,7 +11,8 @@ let gfs, gridfsBucketPeriode, gridfsBucketDivisi, gridfsBucketMember;
 
 
 // Create a single connection to MongoDB
-const conn = mongoose.createConnection(process.env.MONGO_URI);
+const mongoURI = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1/ppiaiu';
+const conn = mongoose.createConnection(mongoURI);
 
 conn.once('open', () => {
     console.log('MongoDB connection opened.');
