@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ppi-aiu-official.herokuapp.com/sitemap.xml
+
+# Block admin routes
+Disallow: /auth/
+Disallow: /activity/new
+Disallow: /activity/*/edit
+Disallow: /periode/new
+Disallow: /periode/*/edit
+Disallow: /divisi/new
+Disallow: /divisi/*/edit
+Disallow: /member/new  
+Disallow: /member/*/edit
