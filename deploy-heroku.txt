@@ -1,0 +1,22 @@
+# Heroku Deployment Commands
+
+# 1. Login ke Heroku
+heroku login
+
+# 2. Buat aplikasi Heroku baru
+heroku create ppi-aiu-website
+
+# 3. Set environment variables
+heroku config:set NODE_ENV=production
+heroku config:set SESSION_SECRET=your_super_secret_key_here
+
+# 4. Set MongoDB connection (gunakan MongoDB Atlas - gratis)
+heroku config:set MONGODB_URI=your_mongodb_atlas_connection_string
+
+# 5. Deploy website
+git add .
+git commit -m "Deploy PPI AIU website"
+git push heroku main
+
+# 6. Buka website
+heroku open

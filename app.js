@@ -1,8 +1,12 @@
+//dotenv for enviroment variable - LOAD FIRST BEFORE ANYTHING
+require('dotenv').config();
+
 const express = require('express')
 const gsap = require('gsap')
 const bodyParser = require('body-parser');
 const crypto = require('crypto')
 const multer = require('multer')
+const cookieParser = require('cookie-parser')
 const Grid = require('gridfs-stream')
 const {GridFsStorage} = require('multer-gridfs-storage');
 const joi = require('joi')
@@ -37,10 +41,32 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')))
 //to make able sendingg data usiingg url
 app.use(express.urlencoded({extended: true}))
-//method override 
+
+//method override - should be after urlencoded but before routes
 app.use(methodOverride('_method'))
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        var method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
+}))
+
+// Debug method override
+app.use((req, res, next) => {
+    console.log(`[DEBUG] Method: ${req.method}, URL: ${req.originalUrl}`);
+    console.log(`[DEBUG] Body keys:`, Object.keys(req.body || {}));
+    console.log(`[DEBUG] Has _method:`, req.body && req.body._method);
+    if (req.body && req.body._method) {
+        console.log(`[METHOD-OVERRIDE] Original: ${req.method}, Override: ${req.body._method}, URL: ${req.originalUrl}`);
+    }
+    next();
+});
 //for sendingg json file 
 app.use(express.json())
+//cookie parser for language preferences
+app.use(cookieParser())
 //session
 app.use(session({
 	secret: 'secret-key-for-web',
@@ -66,6 +92,10 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 // app.use(express.static( './public'))
 
+//i18n middleware - must be after session and before routes
+const i18n = require('./middlewares/i18n');
+app.use(i18n.middleware());
+
 //setting current user must after passport
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user
@@ -77,10 +107,7 @@ let gfs, gridfsBucketPeriode, gridfsBucketDivisi, gridfsBucketMember;;
 
 
 // connect to the database server
-mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 30000,
-    connectTimeoutMS: 30000
-})
+mongoose.connect(process.env.MONGO_URI)
     .then((conn) => {
         console.log('Connected to MongoDB');
         const db = conn.connection.db;
@@ -254,6 +281,15 @@ app.use('/divisi', require('./routes/divisi.js'))
 app.use('/periode', require('./routes/periode.js'))
 app.use('', require('./routes/auth.js'))
 app.use('/blog', require('./routes/blog.js'))
+// Debug middleware for activity routes
+app.use('/activity', (req, res, next) => {
+    console.log(`[ACTIVITY] ${req.method} ${req.originalUrl}`, req.body._method ? `(override: ${req.body._method})` : '');
+    console.log(`[ACTIVITY] Headers:`, req.headers['content-type']);
+    console.log(`[ACTIVITY] Body:`, req.body);
+    console.log(`[ACTIVITY] After method-override, actual method should be:`, req.method);
+    next();
+});
+app.use('/activity', require('./routes/activity.js'))
 
 
 //direct webpage
@@ -261,8 +297,8 @@ app.use('/blog', require('./routes/blog.js'))
 app.get('/foundation', async (req, res) => {
 	res.render('fondasi')
 })
-app.get('/blog', async (req, res) => {
-	res.render('blog')
+app.get('/fondasi', async (req, res) => {
+	res.render('fondasi')
 })
 app.get('/home', async (req, res) => {
 	res.render('home')
@@ -270,20 +306,74 @@ app.get('/home', async (req, res) => {
 app.get('/developer', async (req, res) => {
 	res.render('developer')
 })
+// Root path goes directly to visitor homepage
 app.get('/', ((req, res) => {
+	res.render('home')
+}))
+// Welcome page moved to /welcome if still needed
+app.get('/welcome', ((req, res) => {
 	res.render('welcome')
-  }))
+}))
+// Admin route redirects to login
+app.get('/admin', ((req, res) => {
+	res.redirect('/login')
+}))
+
+// Language switching route
+app.post('/switch-language', (req, res) => {
+    const { language, returnUrl } = req.body;
+    const supportedLocales = ['id', 'en', 'ar'];
+    
+    if (supportedLocales.includes(language)) {
+        // Set language in session
+        req.session.locale = language;
+        
+        // Set language cookie (expires in 1 year)
+        res.cookie('locale', language, { 
+            maxAge: 365 * 24 * 60 * 60 * 1000, 
+            httpOnly: false 
+        });
+        
+        // Send JSON response for AJAX requests
+        if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+            return res.json({ 
+                success: true, 
+                message: req.t('language.switch'),
+                language: language 
+            });
+        }
+        
+        // Redirect back to the referring page or home
+        const redirectUrl = returnUrl || req.get('Referer') || '/';
+        res.redirect(redirectUrl);
+    } else {
+        if (req.xhr || req.headers.accept.indexOf('json') > -1) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'Invalid language' 
+            });
+        }
+        res.redirect(req.get('Referer') || '/');
+    }
+});
 
 app.all('*', (req, res, next) => {
 	next(new ErrorHandler('page is not found', 405))
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500} = err;
-    if(!err.message){
-        err.message = 'Something went wrong'
+    // Log useful context
+    console.error(`[Error] ${req.method} ${req.originalUrl}:`, err && err.stack ? err.stack : err);
+    // If headers already sent, delegate to default Express error handler
+    if (res.headersSent) {
+        return next(err);
     }
-    res.status(statusCode).render('error', {err})
+    const statusCode = err && err.statusCode ? err.statusCode : 500;
+    const safeErr = err || {};
+    if (!safeErr.message) {
+        safeErr.message = 'Something went wrong';
+    }
+    res.status(statusCode).render('error', { err: safeErr });
 })
 
 // connect to server

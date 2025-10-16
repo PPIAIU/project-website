@@ -5,7 +5,7 @@ const controllerAuth = require('../controllers/controllerAuth')
 const passport = require('passport')
 
 router.route('/login')
-.get( wrapAsync(controllerAuth.loginForm))
+.get(controllerAuth.loginForm)
 .post(passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: {

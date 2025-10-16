@@ -1,3 +1,38 @@
+<% const hasSuccess = Array.isArray(success_msg) ? success_msg.length > 0 : !!success_msg; %>
+<% const hasError = Array.isArray(error_msg) ? error_msg.length > 0 : !!error_msg; %>
 
-<p style="margin-top: 200px; position: fixed;  z-index: 1;" ></p><%= success_msg %></p>  
-<p><%= error_msg %></p>
+<div id="flash-container" style="position: fixed; top: 90px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000;">
+	<% if (hasSuccess) { %>
+		<% (Array.isArray(success_msg) ? success_msg : [success_msg]).filter(Boolean).forEach(function(msg){ %>
+			<div class="flash flash-success" style="background: #28a745; color: white; padding: 12px 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; min-width: 260px;">
+				<i class="fas fa-check-circle"></i>
+				<span style="flex: 1;"><%= msg %></span>
+				<button type="button" class="flash-close" aria-label="Close" style="background: transparent; border: none; color: white; font-size: 16px; cursor: pointer;">&times;</button>
+			</div>
+		<% }); %>
+	<% } %>
+
+	<% if (hasError) { %>
+		<% (Array.isArray(error_msg) ? error_msg : [error_msg]).filter(Boolean).forEach(function(msg){ %>
+			<div class="flash flash-error" style="background: #dc3545; color: white; padding: 12px 16px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; min-width: 260px;">
+				<i class="fas fa-exclamation-triangle"></i>
+				<span style="flex: 1;"><%= msg %></span>
+				<button type="button" class="flash-close" aria-label="Close" style="background: transparent; border: none; color: white; font-size: 16px; cursor: pointer;">&times;</button>
+			</div>
+		<% }); %>
+	<% } %>
+</div>
+
+<script>
+	(function(){
+		const flashes = document.querySelectorAll('#flash-container .flash');
+		flashes.forEach((el) => {
+			// auto dismiss after 4s
+			const timer = setTimeout(() => el.remove(), 4000);
+			const btn = el.querySelector('.flash-close');
+			if (btn) {
+				btn.addEventListener('click', () => { clearTimeout(timer); el.remove(); });
+			}
+		});
+	})();
+</script>

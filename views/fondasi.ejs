@@ -1,11 +1,334 @@
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/fondasi.css">
-<section>
-    <h1 class="title"><span>ADART</span>  PPI AIU 2023/2024</h1>
-    <iframe allowfullscreen="allowfullscreen" scrolling="no" class="fp-iframe" src="https://heyzine.com/flip-book/bd77401467.html" style="border: 1px solid lightgray; width: 100%; height: 400px;"></iframe>
-    <h1 class="title">GBHO <span> PPI AIU 2023/2024 </span></h1>
-    <iframe allowfullscreen="allowfullscreen" scrolling="no" class="fp-iframe" src="https://heyzine.com/flip-book/28ca06e429.html" style="border: 1px solid lightgray; width: 100%; height: 400px;"></iframe>
+
+<section class="section">
+    <div class="container-modern">
+        <h1 class="section-title">Foundation <span>Documents</span></h1>
+        <p style="text-align:center; color:var(--text-light); max-width:900px; margin:0 auto 1.5rem;">Explore PPI AIU's foundational documents including ADART and GBHO</p>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; margin-top:2rem;">
+            <!-- ADART Card -->
+            <div class="document-card" onclick="openModal('adart')">
+                <div class="document-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="document-content">
+                    <h3>ADART PPI AIU 2024/2025</h3>
+                    <p>Anggaran Dasar dan Anggaran Rumah Tangga</p>
+                    <div class="document-meta">
+                        <span><i class="fas fa-calendar"></i> 2024/2025</span>
+                        <span><i class="fas fa-file-pdf"></i> ADART</span>
+                    </div>
+                    <button class="view-document-btn">
+                        <i class="fas fa-eye"></i> View Document
+                    </button>
+                </div>
+            </div>
+
+            <!-- GBHO Card -->
+            <div class="document-card" onclick="openModal('gbho')">
+                <div class="document-icon">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <div class="document-content">
+                    <h3>GBHO PPI AIU 2024/2025</h3>
+                    <p>Garis Besar Haluan Organisasi</p>
+                    <div class="document-meta">
+                        <span><i class="fas fa-calendar"></i> 2024/2025</span>
+                        <span><i class="fas fa-file-pdf"></i> GBHO</span>
+                    </div>
+                    <button class="view-document-btn">
+                        <i class="fas fa-eye"></i> View Document
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
+<!-- Modal for ADART -->
+<div id="adartModal" class="document-modal" onclick="closeModal('adart')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3><i class="fas fa-file-alt"></i> ADART PPI AIU 2024/2025</h3>
+            <div class="modal-controls">
+                <button class="fullscreen-btn" onclick="toggleFullscreen('adartModal')" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="close-btn" onclick="closeModal('adart')" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <iframe src="https://heyzine.com/flip-book/e2bf8fa8bd.html" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for GBHO -->
+<div id="gbhoModal" class="document-modal" onclick="closeModal('gbho')">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3><i class="fas fa-compass"></i> GBHO PPI AIU 2024/2025</h3>
+            <div class="modal-controls">
+                <button class="fullscreen-btn" onclick="toggleFullscreen('gbhoModal')" title="Fullscreen">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="close-btn" onclick="closeModal('gbho')" title="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <iframe src="https://heyzine.com/flip-book/ef8b8a55a7.html" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<style>
+.document-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.document-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.document-icon {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.document-icon i {
+    font-size: 3rem;
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.document-content h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.document-content p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.document-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.document-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+.document-meta i {
+    color: var(--primary);
+}
+
+.view-document-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.view-document-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+.document-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    position: relative;
+    background: var(--bg-primary);
+    margin: 2% auto;
+    width: 95%;
+    max-width: 1200px;
+    height: 90vh;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--card-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h3 {
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.modal-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.fullscreen-btn,
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fullscreen-btn:hover,
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.fullscreen-btn:hover {
+    background: rgba(79, 70, 229, 0.2);
+}
+
+.document-modal.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
+.document-modal.fullscreen .modal-content {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+}
+
+.modal-body {
+    height: calc(100% - 70px);
+    padding: 0;
+}
+
+.modal-body iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        width: 98%;
+        height: 95vh;
+        margin: 2.5% auto;
+    }
     
-<!-- isinya ADART, GBHO, dan SK kepengurusan -->
+    .document-card {
+        padding: 1rem;
+    }
+}
+</style>
+
+<script>
+function openModal(type) {
+    const modal = document.getElementById(type + 'Modal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Animation
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
+}
+
+function closeModal(type) {
+    const modal = document.getElementById(type + 'Modal');
+    modal.style.display = 'none';
+    modal.classList.remove('fullscreen');
+    document.body.style.overflow = 'auto';
+    
+    // Reset fullscreen button icon
+    const fullscreenBtn = modal.querySelector('.fullscreen-btn i');
+    fullscreenBtn.className = 'fas fa-expand';
+}
+
+function toggleFullscreen(modalId) {
+    const modal = document.getElementById(modalId);
+    const fullscreenBtn = modal.querySelector('.fullscreen-btn i');
+    
+    if (modal.classList.contains('fullscreen')) {
+        // Exit fullscreen
+        modal.classList.remove('fullscreen');
+        fullscreenBtn.className = 'fas fa-expand';
+    } else {
+        // Enter fullscreen
+        modal.classList.add('fullscreen');
+        fullscreenBtn.className = 'fas fa-compress';
+    }
+}
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const modals = document.querySelectorAll('.document-modal');
+        modals.forEach(modal => {
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+        document.body.style.overflow = 'auto';
+    }
+});
+</script>

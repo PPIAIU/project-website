@@ -6,7 +6,6 @@ module.exports.loginForm = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    console.log(req.user);
     req.flash('success_msg', 'You are now logged in');
     res.redirect('/home');
 }

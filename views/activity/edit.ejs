@@ -1,0 +1,478 @@
+<% layout('layouts/app') %>
+
+<style>
+    .activity-edit-container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 40px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .edit-header {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 3px solid #C41E3A;
+    }
+    
+    .edit-header h1 {
+        color: #1a1a1a;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .edit-header p {
+        color: #666;
+        font-size: 16px;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+    
+    .form-group label .required {
+        color: #C41E3A;
+        margin-left: 3px;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+    
+    .form-control:focus {
+        outline: none;
+        border-color: #C41E3A;
+        box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+        font-family: inherit;
+    }
+    
+    .current-image {
+        margin-top: 10px;
+        padding: 15px;
+        background: #f8f8f8;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .current-image img {
+        max-width: 150px;
+        max-height: 100px;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .current-image-info {
+        flex: 1;
+    }
+    
+    .current-image-info p {
+        margin: 0;
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .current-image-info .filename {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    #imagePreview {
+        margin-top: 15px;
+        display: none;
+    }
+    
+    #imagePreview img {
+        max-width: 300px;
+        max-height: 200px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    #imagePreview p {
+        margin-top: 8px;
+        font-size: 14px;
+        color: #C41E3A;
+        font-weight: 600;
+    }
+    
+    .helper-text {
+        font-size: 13px;
+        color: #777;
+        margin-top: 5px;
+    }
+    
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    
+    .checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .checkbox-wrapper input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+    
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 2px solid #f0f0f0;
+    }
+    
+    .btn {
+        padding: 14px 30px;
+        border-radius: 8px;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .btn-primary {
+        background: #C41E3A;
+        color: white;
+        flex: 1;
+    }
+    
+    .btn-primary:hover {
+        background: #a01830;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.3);
+    }
+    
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+        flex: 1;
+    }
+    
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+    
+    @media (max-width: 768px) {
+        .activity-edit-container {
+            margin: 20px;
+            padding: 25px;
+        }
+        
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+        
+        .btn-group {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="activity-edit-container">
+    <div class="edit-header">
+        <h1>Edit Activity</h1>
+        <p>Update the information for this activity</p>
+    </div>
+    
+    <form action="/activity/<%= activity._id %>" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="activity[_method]" value="PUT">
+        <div class="form-group">
+            <label for="title">Activity Title<span class="required">*</span></label>
+            <input type="text" class="form-control" id="title" name="activity[title]" value="<%= activity.title %>" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="tagline">Tagline<span class="required">*</span></label>
+            <input type="text" class="form-control" id="tagline" name="activity[tagline]" value="<%= activity.tagline %>" required>
+            <div class="helper-text">A short, catchy phrase that describes the activity</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Description<span class="required">*</span></label>
+            <textarea class="form-control" id="description" name="activity[description]" required><%= activity.description %></textarea>
+            <div class="helper-text">Provide a detailed description of the activity</div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="category">Category<span class="required">*</span></label>
+                <select class="form-control" id="category" name="activity[category]" required
+                        onchange="toggleArticleFields(this.value)">
+                    <option value="">Select Category</option>
+                    <option value="academic" <%= activity.category === 'academic' ? 'selected' : '' %>>📚 Academic</option>
+                    <option value="social" <%= activity.category === 'social' ? 'selected' : '' %>>👥 Social</option>
+                    <option value="sports" <%= activity.category === 'sports' ? 'selected' : '' %>>⚽ Sports</option>
+                    <option value="culture" <%= activity.category === 'culture' ? 'selected' : '' %>>🎨 Culture</option>
+                </select>
+            </div>
+            
+            <!-- Sub Category (for Academic) -->
+            <div class="form-group" id="subCategoryGroup" style="<%= activity.category === 'academic' ? 'display: block;' : 'display: none;' %>">
+                <label for="subCategory">Academic Type<span class="required">*</span></label>
+                <select class="form-control" id="subCategory" name="activity[subCategory]" 
+                        onchange="toggleSubCategoryFields()">
+                    <option value="">Select Academic Type</option>
+                    <option value="activity" <%= activity.subCategory === 'activity' ? 'selected' : '' %>>🎯 Academic Activity</option>
+                    <option value="article" <%= activity.subCategory === 'article' ? 'selected' : '' %>>📰 Article</option>
+                    <option value="journal" <%= activity.subCategory === 'journal' ? 'selected' : '' %>>📖 Journal</option>
+                    <option value="research" <%= activity.subCategory === 'research' ? 'selected' : '' %>>🔬 Research</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="department">Department<span class="required">*</span></label>
+                <select class="form-control" id="department" name="activity[department]" required>
+                    <option value="">Select Department</option>
+                    <option value="Department of Youth, Culture and Sports" <%= activity.department === 'Department of Youth, Culture and Sports' ? 'selected' : '' %>>Youth, Culture and Sports</option>
+                    <option value="Department of Education and Strategic Research" <%= activity.department === 'Department of Education and Strategic Research' ? 'selected' : '' %>>Education and Strategic Research</option>
+                    <option value="Department of Organizational Development and Advocacy" <%= activity.department === 'Department of Organizational Development and Advocacy' ? 'selected' : '' %>>Organizational Development and Advocacy</option>
+                    <option value="Media and Communication Team" <%= activity.department === 'Media and Communication Team' ? 'selected' : '' %>>Media and Communication Team</option>
+                    <option value="All Departments" <%= activity.department === 'All Departments' ? 'selected' : '' %>>All Departments</option>
+                    <option value="Executive Board" <%= activity.department === 'Executive Board' ? 'selected' : '' %>>Executive Board</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="departmentIcon">Department Icon (Optional)</label>
+            <select class="form-control" id="departmentIcon" name="activity[departmentIcon]">
+                <option value="">Select Icon</option>
+                <option value="fas fa-users" <%= activity.departmentIcon === 'fas fa-users' ? 'selected' : '' %>>👥 Users</option>
+                <option value="fas fa-graduation-cap" <%= activity.departmentIcon === 'fas fa-graduation-cap' ? 'selected' : '' %>>🎓 Graduation Cap</option>
+                <option value="fas fa-sitemap" <%= activity.departmentIcon === 'fas fa-sitemap' ? 'selected' : '' %>>🗂️ Sitemap</option>
+                <option value="fas fa-heart" <%= activity.departmentIcon === 'fas fa-heart' ? 'selected' : '' %>>❤️ Heart</option>
+                <option value="fas fa-comments" <%= activity.departmentIcon === 'fas fa-comments' ? 'selected' : '' %>>💬 Comments</option>
+                <option value="fas fa-microphone" <%= activity.departmentIcon === 'fas fa-microphone' ? 'selected' : '' %>>🎤 Microphone</option>
+                <option value="fas fa-trophy" <%= activity.departmentIcon === 'fas fa-trophy' ? 'selected' : '' %>>🏆 Trophy</option>
+                <option value="fas fa-hands-helping" <%= activity.departmentIcon === 'fas fa-hands-helping' ? 'selected' : '' %>>🤝 Hands Helping</option>
+                <option value="fas fa-bullhorn" <%= activity.departmentIcon === 'fas fa-bullhorn' ? 'selected' : '' %>>📢 Bullhorn</option>
+                <option value="fas fa-star" <%= activity.departmentIcon === 'fas fa-star' ? 'selected' : '' %>>⭐ Star</option>
+                <option value="fas fa-flag" <%= activity.departmentIcon === 'fas fa-flag' ? 'selected' : '' %>>🚩 Flag</option>
+                <option value="fas fa-award" <%= activity.departmentIcon === 'fas fa-award' ? 'selected' : '' %>>🏅 Award</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="image">Activity Image (Optional)</label>
+            
+            <% if (activity.hasImage) { %>
+            <div class="current-image">
+                <img src="<%= activity.image.path %>" alt="Current image">
+                <div class="current-image-info">
+                    <p class="filename">Current Image: <%= activity.image.filename %></p>
+                    <p>Upload a new image to replace the current one</p>
+                </div>
+            </div>
+            <% } %>
+            
+            <input type="file" class="form-control" id="image" name="activity[image]" accept="image/*" onchange="previewImage(event)" style="margin-top: 15px;">
+            <div class="helper-text">Maximum file size: 5MB. Supported formats: JPEG, PNG, GIF, WebP</div>
+            
+            <div id="imagePreview">
+                <p>New Image Preview:</p>
+                <img id="preview" src="" alt="Image preview">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="placeholderIcon">Placeholder Icon (shown if no image)</label>
+            <select class="form-control" id="placeholderIcon" name="activity[placeholderIcon]">
+                <option value="fas fa-calendar" <%= activity.placeholderIcon === 'fas fa-calendar' ? 'selected' : '' %>>📅 Calendar</option>
+                <option value="fas fa-star" <%= activity.placeholderIcon === 'fas fa-star' ? 'selected' : '' %>>⭐ Star</option>
+                <option value="fas fa-trophy" <%= activity.placeholderIcon === 'fas fa-trophy' ? 'selected' : '' %>>🏆 Trophy</option>
+                <option value="fas fa-award" <%= activity.placeholderIcon === 'fas fa-award' ? 'selected' : '' %>>🏅 Award</option>
+                <option value="fas fa-heart" <%= activity.placeholderIcon === 'fas fa-heart' ? 'selected' : '' %>>❤️ Heart</option>
+                <option value="fas fa-flag" <%= activity.placeholderIcon === 'fas fa-flag' ? 'selected' : '' %>>🚩 Flag</option>
+                <option value="fas fa-bookmark" <%= activity.placeholderIcon === 'fas fa-bookmark' ? 'selected' : '' %>>🔖 Bookmark</option>
+                <option value="fas fa-certificate" <%= activity.placeholderIcon === 'fas fa-certificate' ? 'selected' : '' %>>📜 Certificate</option>
+            </select>
+        </div>
+
+        <!-- Article/Journal Specific Fields -->
+        <div id="articleFields" style="<%= (activity.subCategory === 'article' || activity.subCategory === 'journal') ? 'display: block;' : 'display: none;' %>">
+            <!-- PDF Upload -->
+            <div class="form-group">
+                <label for="pdfFile">PDF Document</label>
+                <% if (activity.pdfFile && activity.pdfFile.originalName) { %>
+                    <div class="current-pdf">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Current PDF: <%= activity.pdfFile.originalName %></span>
+                        <span class="file-size">(<%= (activity.pdfFile.size / 1024 / 1024).toFixed(1) %>MB)</span>
+                    </div>
+                <% } %>
+                <input type="file" class="form-control" id="pdfFile" name="activity[pdfFile]" accept=".pdf">
+                <div class="helper-text">Upload new PDF file to replace current one (optional)</div>
+            </div>
+
+            <!-- Author -->
+            <div class="form-group">
+                <label for="author">Author(s)</label>
+                <input type="text" class="form-control" id="author" name="activity[author]" 
+                       value="<%= activity.author || '' %>" placeholder="e.g., Dr. John Doe, Prof. Jane Smith">
+            </div>
+
+            <!-- Publish Date -->
+            <div class="form-group">
+                <label for="publishDate">Publish Date</label>
+                <input type="date" class="form-control" id="publishDate" name="activity[publishDate]" 
+                       value="<%= activity.publishDate ? new Date(activity.publishDate).toISOString().split('T')[0] : '' %>">
+            </div>
+
+            <!-- Abstract -->
+            <div class="form-group">
+                <label for="abstract">Abstract/Summary</label>
+                <textarea class="form-control" id="abstract" name="activity[abstract]" rows="4" 
+                          placeholder="Brief summary or abstract of the article/journal..."><%= activity.abstract || '' %></textarea>
+            </div>
+
+            <!-- Keywords -->
+            <div class="form-group">
+                <label for="keywords">Keywords (comma separated)</label>
+                <input type="text" class="form-control" id="keywords" name="activity[keywords]" 
+                       value="<%= activity.keywords ? activity.keywords.join(', ') : '' %>" 
+                       placeholder="e.g., education, research, indonesia, academic">
+            </div>
+
+            <!-- Article Content -->
+            <div class="form-group">
+                <label for="articleContent">Article Content (Optional)</label>
+                <textarea class="form-control" id="articleContent" name="activity[articleContent]" rows="10" 
+                          placeholder="Full article content (optional if PDF is provided)..."><%= activity.articleContent || '' %></textarea>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="order">Display Order</label>
+                <input type="number" class="form-control" id="order" name="activity[order]" value="<%= activity.order %>" min="0">
+                <div class="helper-text">Lower numbers appear first (0 = highest priority)</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Status</label>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="isActive" name="activity[isActive]" <%= activity.isActive ? 'checked' : '' %>>
+                    <label for="isActive" style="margin: 0;">Active (visible on blog page)</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="btn-group">
+            <a href="/activity" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Update Activity</button>
+        </div>
+    </form>
+</div>
+
+<script>
+// Toggle subcategory and article fields
+function toggleArticleFields(category) {
+    const subCategoryGroup = document.getElementById('subCategoryGroup');
+    const subCategory = document.getElementById('subCategory');
+    const articleFields = document.getElementById('articleFields');
+    
+    if (category === 'academic') {
+        subCategoryGroup.style.display = 'block';
+        subCategory.required = true;
+    } else {
+        subCategoryGroup.style.display = 'none';
+        subCategory.required = false;
+        hideArticleFields();
+    }
+}
+
+// Toggle article/journal specific fields based on subcategory
+function toggleSubCategoryFields() {
+    const subCategory = document.getElementById('subCategory').value;
+    const articleFields = document.getElementById('articleFields');
+    const pdfFile = document.getElementById('pdfFile');
+    const author = document.getElementById('author');
+    
+    if (subCategory === 'article' || subCategory === 'journal') {
+        articleFields.style.display = 'block';
+        pdfFile.required = false; // Not required for edit (optional update)
+        author.required = false;
+    } else {
+        hideArticleFields();
+    }
+}
+
+function hideArticleFields() {
+    const articleFields = document.getElementById('articleFields');
+    const pdfFile = document.getElementById('pdfFile');
+    const author = document.getElementById('author');
+    
+    articleFields.style.display = 'none';
+    pdfFile.required = false;
+    author.required = false;
+}
+
+function previewImage(event) {
+    const preview = document.getElementById('imagePreview');
+    const previewImg = document.getElementById('preview');
+    const file = event.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+    } else {
+        preview.style.display = 'none';
+    }
+}
+
+// PDF file validation
+if (document.getElementById('pdfFile')) {
+    document.getElementById('pdfFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.type !== 'application/pdf') {
+                alert('Please select a PDF file only.');
+                this.value = '';
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                alert('PDF file size should not exceed 10MB.');
+                this.value = '';
+                return;
+            }
+        }
+    });
+}
+</script>

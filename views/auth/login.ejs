@@ -1,33 +1,21 @@
 <% layout('layouts/app') %>
 
-<link rel="stylesheet" href="/css/auth.css">
-<!-- 
-<div>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <label for="usesrname">username</label>
-        <input type="text" name="username" placeholder="username/email">
-        <label for="password">password</label>
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" value="Login">
-    </form>
-</div> -->
-<body>    
-<section class="sectionLogin" >
-<div class="wrapper">
-    <form action="/login" method="post">
-      <h2>Admin Login</h2>
-        <div class="input-field">
-        <input type="text" name="username"  required>
-        <label>Enter Username</label>
+<section class="section" style="padding-top:3rem;">
+  <div class="container-modern">
+    <div style="max-width:420px; margin:2rem auto;">
+      <div class="card" style="padding:2rem;">
+        <h2 style="margin:0 0 1rem; text-align:center;">Sign in to PPI AIU</h2>
+        <form action="/login" method="post">
+          <div style="display:flex; flex-direction:column; gap:.75rem;">
+            <label>Username or Email</label>
+            <input name="username" type="text" required style="padding:.6rem 1rem; border-radius:8px; border:1px solid rgba(0,0,0,0.08);">
+            <label>Password</label>
+            <input name="password" type="password" required style="padding:.6rem 1rem; border-radius:8px; border:1px solid rgba(0,0,0,0.08);">
+            <button type="submit" class="btn-modern primary" style="margin-top:.5rem;">Log In</button>
+          </div>
+        </form>
+        <p style="text-align:center; color:var(--text-light); margin-top:1rem;">Forgot password? Contact admin.</p>
       </div>
-      <div class="input-field">
-        <input type="password" name="password"  required>
-        <label>Enter your password</label>
-      </div>
-      <button type="submit">Log In</button>
-    </form>
+    </div>
   </div>
-  </body>
-
 </section>

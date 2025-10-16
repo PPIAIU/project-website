@@ -1,0 +1,63 @@
+<% layout('layouts/app') %>
+<link rel="stylesheet" href="/css/board-clean.css">
+
+<!-- Page Header -->
+<section class="page-header-clean">
+    <div class="container-clean">
+        <h1 class="page-title-clean">Our Board</h1>
+        <p class="page-subtitle-clean">Meet the leadership team of PPI AIU</p>
+    </div>
+</section>
+
+<!-- Cabinets Grid -->
+<section class="cabinets-section-clean">
+    <div class="container-clean">
+        <% if (periodes && periodes.length > 0) { %>
+            <div class="cabinets-grid-clean">
+                <% for (let periode of periodes) { %>
+                    <article class="cabinet-card-clean">
+                        <a href="/periode/<%= periode._id %>" class="cabinet-link-clean">
+                            <div class="cabinet-image-wrapper">
+                                <% if (periode.image && periode.image.length > 0) { %>
+                                    <% for(const image of periode.image) { %>
+                                        <img src="/image/periode/<%= image.filename %>" 
+                                             class="cabinet-image-clean" 
+                                             alt="<%= periode.name %>"
+                                             loading="lazy">
+                                    <% break; } %>
+                                <% } else { %>
+                                    <div class="cabinet-placeholder">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                <% } %>
+                                <div class="cabinet-overlay">
+                                    <span class="view-details">View Details →</span>
+                                </div>
+                            </div>
+                            <div class="cabinet-content-clean">
+                                <h2 class="cabinet-name-clean"><%= periode.name %></h2>
+                                <span class="cabinet-tag-clean">Leadership Board</span>
+                            </div>
+                        </a>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="no-data-message">
+                <i class="fas fa-inbox"></i>
+                <p>No cabinets available at the moment</p>
+            </div>
+        <% } %>
+        
+        <% if(currentUser) { %>
+            <div class="admin-actions-clean">
+                <a href="/periode/create" class="btn-admin-clean">
+                    <i class="fas fa-plus"></i>
+                    Add New Cabinet
+                </a>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<script src="/js/hidden.js"></script>

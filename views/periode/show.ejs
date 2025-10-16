@@ -1,33 +1,77 @@
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/board.css">
-<section class="slider_section ">
 
-  <h1 class="title">Welcome to <span><%= periode.name  %>'s</span> board</h1>
-
-<div class="divisi-divisi">
-  <% for (const divisi of periode.divisis ) { %>
-    <div class="divisi">
-         <h1 class="nama-divisi" ><%= divisi.name %></h1>
-        <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show">  
-        <% for (const image of divisi.image) { %>
-        <img class="imagePeriode" src="/image/divisi/<%= image.filename %>" alt="">
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Welcome to <span class="highlight"><%= periode.name %>'s</span> Board</h1>
+        <p class="page-subtitle">Meet our dedicated team and departments</p>
+        
+        <% if(currentUser && periode.author.equals(currentUser._id)) { %>
+            <div class="admin-controls" style="margin-top: var(--space-md);">
+                <a href="/divisi/<%= periode._id %>/create" class="btn-modern primary">
+                    <i class="fas fa-plus"></i> Add New Department
+                </a>
+                <a href="/periode/<%= periode._id %>/edit" class="btn-modern secondary">
+                    <i class="fas fa-edit"></i> Edit Cabinet
+                </a>
+                <form action="/periode/<%= periode._id %>?_method=delete" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this cabinet?')">
+                    <button type="submit" class="btn-modern delete">
+                        <i class="fas fa-trash"></i> Delete Cabinet
+                    </button>
+                </form>
+            </div>
         <% } %>
-      </a>
     </div>
-    <% } %>  
-      
-</div>
+</section>
 
-
-<% if(currentUser && periode.author.equals(currentUser._id)) { %>
-  <button class="new-periode-button"><a href="/divisi/<%= periode._id %>/create">create new division</a></button>  
- <button class="new-periode-button"> <a href="/periode/<%= periode._id %>/edit">edit this cabinet</a></button>   
-  
-  <form action="/periode/<%= periode._id %>?_method=delete" method="post" >
-    <button class="new-periode-button" type="submit">delete <%= periode.name%></button>
-  </form>
-
-  <% } %>
-
+<!-- Departments Section -->
+<section class="departments-section">
+    <div class="container">
+        <% if (periode.divisis && periode.divisis.length > 0) { %>
+            <div class="departments-grid">
+                <% for (const divisi of periode.divisis) { %>
+                    <div class="department-card">
+                        <div class="department-image">
+                            <% if (divisi.image && divisi.image.length > 0) { %>
+                                <% for (const image of divisi.image) { %>
+                                    <img src="/image/divisi/<%= image.filename %>" alt="<%= divisi.name %>">
+                                <% break; } %>
+                            <% } else { %>
+                                <div class="department-placeholder">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="department-content">
+                            <h3 class="department-title"><%= divisi.name %></h3>
+                            <div class="department-actions">
+                                <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/show" class="btn-modern primary">
+                                    <i class="fas fa-eye"></i> View Department
+                                </a>
+                                <% if(currentUser && periode.author.equals(currentUser._id)) { %>
+                                    <a href="/divisi/<%= periode._id %>/<%= divisi._id %>/edit" class="btn-modern edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+                <h3>No Departments Found</h3>
+                <p>Add departments to organize your cabinet structure</p>
+                <% if(currentUser && periode.author.equals(currentUser._id)) { %>
+                    <a href="/divisi/<%= periode._id %>/create" class="btn-modern primary">
+                        <i class="fas fa-plus"></i> Add First Department
+                    </a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
 </section>
   

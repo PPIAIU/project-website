@@ -11,10 +11,7 @@ let gfs, gridfsBucketPeriode, gridfsBucketDivisi, gridfsBucketMember;
 
 
 // Create a single connection to MongoDB
-const conn = mongoose.createConnection(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 30000,
-    connectTimeoutMS: 30000,
-});
+const conn = mongoose.createConnection(process.env.MONGO_URI);
 
 conn.once('open', () => {
     console.log('MongoDB connection opened.');
@@ -37,6 +34,10 @@ conn.on('error', (err) => {
 
 module.exports.index = async (req, res) => {
     const periodes = await Periode.find()
+    console.log('Found periodes:', periodes)
+    periodes.forEach(periode => {
+        console.log(`Periode ${periode.name}:`, periode.image)
+    })
     res.render('periode/index', {periodes})
 }
 
@@ -45,22 +46,34 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.store = async (req, res) => {
-    const image = req.file
-    console.log(image)
-    const periode = new Periode(req.body.periode)
-    periode.author = req.user._id
-    periode.image = image;
-    console.log(periode)
-    await periode.save()
-    // res.status(201).json(periode)
-    // .then(result => {
-        //     res.status(201).json(result)
-        // })
-        // .catch(err => {
-            //     res.status(500).json({err: "could not send"})
-            // })
-    req.flash('success_msg', 'Data is successfully stored')
-    res.redirect('/home')
+    try {
+        const image = req.file
+        console.log('Uploaded file:', image)
+        
+        const periode = new Periode(req.body.periode)
+        periode.author = req.user._id
+        
+        // Store image in correct format as array with url and filename
+        if (image) {
+            periode.image = [{
+                url: `/image/periode/${image.filename}`,
+                filename: image.filename
+            }];
+            console.log('Image stored as:', periode.image)
+        } else {
+            console.log('No image uploaded')
+        }
+        
+        console.log('Saving periode:', periode)
+        await periode.save()
+        console.log('Periode saved successfully')
+        req.flash('success_msg', 'Board period created successfully!')
+        res.redirect('/periode')
+    } catch (error) {
+        console.error('Error saving periode:', error)
+        req.flash('error_msg', 'Failed to create board period: ' + error.message)
+        res.redirect('/periode/create')
+    }
 }
 
 
@@ -112,12 +125,12 @@ module.exports.update = async (req, res) => {
             }
 
             // Add new images to GridFS and update the Periode document
-            const newImages = req.file//.map((file) => ({
-            //     filename: file.filename,
-            //     url: `/image/periode/${file.filename}` // Update this path as needed
-            // }));
-
-            periode.image = newImages;
+            if (req.file) {
+                periode.image = [{
+                    filename: req.file.filename,
+                    url: `/image/periode/${req.file.filename}`
+                }];
+            }
         
 
         // Save the updated Periode document with the new image references

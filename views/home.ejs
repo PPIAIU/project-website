@@ -1,379 +1,485 @@
 <% layout('layouts/app') %>
 
-<link rel="stylesheet" href="/js/hidden.js">
-
-<style>
-    .hidden{
-        opacity: 0;
-        transition: all 3s;
-        filter: blur(5px);
-        transform: translateX(-100%);
-        z-index: -1;
-        color: rgb(255, 255, 255);
-    }
-    .show{
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateX(0);
-    }
-
-    .bodyHome{
-        background-color: rgb(72, 4, 4);
-    }
-
-    
-
-    span {
-        color: #f65b22;
-        font-weight:900;
-    }
-
-
-
-    section {
-        display: grid;
-        place-items: center;
-        align-content: center;
-        min-width: 100vh;
-        z-index: -1;
-        position: relative;
-    }
-    .slider-container {
-        width: 500px;
-        height: 300px;
-        perspective: 1000px;
-        margin: 0 auto;
-    }
-    
-    .slider {
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-        animation: rotate 10s infinite linear;
-    }
-    
-    .slide {
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-    }
-    
-    .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        
-    }
-    .logo {
-        position: absolute;
-        z-index: -1;
-    }
-    .background {
-        height: 100px;
-    }
-    .section1 h1{
-        font-size: 20px;
-        text-align: center;
-    }
-    .section1{
-        margin-top: 50px;
-    }
-
-    .section2{
-        text-align: center;
-        margin-top: 50px;
-    }
-    .subSection2{
-        line-height: 25px;
-
-    }
-
-    /* COUNTER STYLE */
-    
-.counter-wrapper{
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 1.5rem;
-    padding: 7rem 15%;
-    margin-top: 5rem;
-    position: relative;
-}
-.counter-wrapper::before{
-    position: absolute;
-    content: '';
-    content: 0;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    z-index: 1;
-}
-.counter{
-   text-align: center;   
-   z-index: 2;
-   position: relative;
-}
-.counter::before{
-    position: absolute;
-    content: '';
-    bottom: -2rem;
-    left: 50%;
-    width: 20%;
-    height: .2rem;
-    background: #fe4d4d;
-    border-radius: .5rem;
-    -webkit-border-radius: .5rem;
-    -moz-border-radius: .5rem;
-    -ms-border-radius: .5rem;
-    -o-border-radius: .5rem;
-    transform: translateX(-50%);
-    -webkit-transform: translateX(-50%);
-    -moz-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-}
-.counter .count{
-    font-size: 5rem;
-    color: white;
-}
-.counter p{
-    font-size: 1.4rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-}
-    
-    @media (prefers-reduced-motion) {
-        .hidden{
-            transition: none;
-        }
-    }
-/* 
-    @media screen and (max-height: 1366px) and ( min-height: 1011px) {
-        .bodyHome{
-            background-size: contain;
-            width: 100%;
-            background-position: center;
-            color: #131316;
-            height: 100%;
-            width: 1366px;
-        }
-
-        .bodyHome::before{
-        margin: 0px;
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: -1;
-        width: 1000px;
-        height: 100%;
-    }
-        .imageBackground {
-            object-fit: cover;
-            min-height: 100vh;
-            width: 1000px;
-        }
-        .counter-wrapper{
-       grid-template-columns: repeat(2, 1fr);
-       grid-row-gap: 8rem;
-   }         .section1 , .section2{
-            margin: 20px 30px;
-        }
-
-        
-    } */
-    /* media query  tablet */
-    @media screen and ( max-width: 1010px) and (min-width: 769px) {
-
-        .imageBackground {
-            object-fit: cover;
-            min-height: 100vh;
-            width: 1000px;
-        }
-        .counter-wrapper{
-       grid-template-columns: repeat(2, 1fr);
-       grid-row-gap: 8rem;
-   }         .section1 , .section2{
-            margin: 20px 30px;
-        }
-
-    }
-    /* media query moble */
-    @media screen and (max-width: 768px) {
-
-        .section1 , .section2{
-            margin: 20px 30px;
-        }
-        .bodyHome{
-            background-size: contain;
-            width: 50px;
-            background-position: center;
-            color: #131316;
-            height: 100%;
-            width: 100%;
-        }
-
-
-        .hidden {
-            transform: none;
-            filter: none;
-            opacity: 1;
-        }
-
-        .slider-container {
-            width: 100%;
-            height: 200px;
-        }
-
-        .slide img {
-            object-fit: contain;
-        }
-
-        .logo {
-            width: 100px;
-        }
-
-        section {
-            min-width: 50px;
-        }
-        /* counter */
-        .counter-wrapper{
-       grid-template-columns: repeat(2, 1fr);
-       grid-row-gap: 8rem;
-   }
-    }
-    @keyframes rotate {
-        0% {
-            transform: rotateY(0deg);
-        }
-        100% {
-            transform: rotateY(360deg);
-        }
-    }
-</style>
-
-<body class="bodyHome" >
-    <div class="bodyHome">
+<!-- Hero Section - Enhanced -->
+<section class="hero-premium">
+    <div class="hero-video-container">
+        <video autoplay muted loop playsinline class="hero-video">
+            <source src="/image/welcome.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
     </div>
-
-    <!-- section1 -->
-<section class="hidden">
-    <div  class="section1">
-<div class="slider-container">
-    <div class="slider">    
-        <div class="slide">
-            <img class="logo"  src="/image/logo-ppi.png" alt="Image 1">
+    <div class="hero-content">
+        <div class="hero-logo-container">
+            <img src="/image/logo-ppi.png" alt="PPI AIU Logo" class="hero-logo">
         </div>
-    </div>
-</div>
-<h1>Persatuan Pelajar Indonesia Albukhary International University</h1>
-</div>
-</section>
-
-
-<!-- section 2 -->
-<section class="hidden">
-    <div class="section2">
-        <div  class="subSection2">
-            <h1 >Our <span >Vision</span> </h1>
-            <h3>Become an organization that gathers and advocates for its members as well as develop potential to become citizens who are useful for religion, nation, state, and campus community.</h3>
-        </div>
-        
-        <div class="subSection2" style="margin-top: 30px;">
-            <h1  > <span>Our</span>  Mission</h1>
-            <h3>1. Strengthen the sense of unity between members in a family atmosphere.</h3>
-           <h3>
-            2. Advocate for the rights of <span>PPI AIU</span>  members as AIU students.
-           </h3>
-           <h3>
-               3. Organizing useful activities that are in line with the nature of <span>PPI AIU</span>.
-           </h3>
-           <h3>
-               4. Provide a positive image of the Indonesian nation by the Code of Ethics for Indonesian Diplomats.</div>
-           </h3>
-        
-    </div>
-    
-</section>
-
-<!-- section 3 -->
-<section  class="hidden" style="margin-top: 30px;">
-    <div class="counter-wrapper">
-        <div class="counter">
-            <h1 class="count" data-target="195">0</h1>
-            <p>Male and Female Members</p>
-        </div>
-        <div class="counter">
-            <h1 class="count" data-target="70">0</h1>
-            <p>Male Members</p>
-        </div>
-        <div class="counter">
-            <h1 class="count" data-target="125">0</h1>
-            <p>Female Members</p>
-        </div>
-        <div class="counter">
-            <h1 class="count" data-target="51">0</h1>
-            <p>Total Current Staff</p>
+        <h1 class="hero-title">
+            <span class="hero-title-main"><%= t('hero.title_main') %></span>
+            <span class="hero-title-sub"><%= t('hero.title_sub') %></span>
+        </h1>
+        <p class="hero-description"><%= t('hero.description') %></p>
+        <div class="hero-actions">
+            <a href="#about" class="btn-hero primary">
+                <i class="fas fa-arrow-down"></i>
+                <%= t('hero.btn_discover') %>
+            </a>
+            <a href="/blog" class="btn-hero secondary">
+                <i class="fas fa-newspaper"></i>
+                <%= t('hero.btn_news') %>
+            </a>
         </div>
     </div>
 </section>
 
+<!-- About Section - Enhanced -->
+<section id="about" class="about-premium">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-badge"><%= t('about.badge') %></div>
+            <h2 class="section-title-large">
+                <%= t('about.title') %> <span class="text-gradient"><%= t('about.title_highlight') %></span>
+            </h2>
+            <p class="section-subtitle-large">
+                <%= t('about.description') %>
+            </p>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-cards-grid">
+                <div class="about-card-premium">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title"><%= t('about.vision.title') %></h3>
+                        <p class="card-text">
+                            <%= t('about.vision.description') %>
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="about-card-premium">
+                    <div class="card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title"><%= t('about.mission.title') %></h3>
+                        <ul class="mission-list">
+                            <% t('about.mission.items').forEach(function(item) { %>
+                                <li><i class="fas fa-check"></i> <%= item %></li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="about-card-premium">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title"><%= t('about.values.title') %></h3>
+                        <div class="values-grid">
+                            <div class="value-item">
+                                <span class="value-name"><%= t('about.values.unity.name') %></span>
+                                <span class="value-desc"><%= t('about.values.unity.description') %></span>
+                            </div>
+                            <div class="value-item">
+                                <span class="value-name"><%= t('about.values.excellence.name') %></span>
+                                <span class="value-desc"><%= t('about.values.excellence.description') %></span>
+                            </div>
+                            <div class="value-item">
+                                <span class="value-name"><%= t('about.values.integrity.name') %></span>
+                                <span class="value-desc"><%= t('about.values.integrity.description') %></span>
+                            </div>
+                            <div class="value-item">
+                                <span class="value-name"><%= t('about.values.culture.name') %></span>
+                                <span class="value-desc"><%= t('about.values.culture.description') %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- Statistics Section - Enhanced -->
+<section class="stats-premium">
+    <div class="stats-background">
+        <div class="stats-pattern"></div>
+        <div class="stats-particles"></div>
+    </div>
+    <div class="container">
+        <div class="section-header text-center">
+            <div class="section-badge light"><%= t('statistics.title') %></div>
+            <h2 class="section-title-large light">
+                <%= t('statistics.title_highlight') %> <span class="text-gradient-gold"><%= t('statistics.title') %></span>
+            </h2>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number"><%= t('statistics.members.number') %></div>
+                <div class="stat-label"><%= t('statistics.members.label') %></div>
+                <div class="stat-description"><%= t('statistics.members.description') %></div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-star"></i>
+                </div>
+                <div class="stat-number"><%= t('statistics.events.number') %></div>
+                <div class="stat-label"><%= t('statistics.events.label') %></div>
+                <div class="stat-description"><%= t('statistics.events.description') %></div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <div class="stat-number"><%= t('statistics.alumni.number') %></div>
+                <div class="stat-label"><%= t('statistics.alumni.label') %></div>
+                <div class="stat-description"><%= t('statistics.alumni.description') %></div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="stat-number"><%= t('statistics.years.number') %></div>
+                <div class="stat-label"><%= t('statistics.years.label') %></div>
+                <div class="stat-description"><%= t('statistics.years.description') %></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-</body>
-<script src="/js/hidden.js"></script>
+<!-- Services Section - Enhanced -->
+<section class="services-premium">
+    <div class="container">
+        <div class="section-header text-center">
+            <div class="section-badge"><%= t('services.badge') %></div>
+            <h2 class="section-title-large">
+                <%= t('services.title') %> <span class="text-gradient"><%= t('services.title_highlight') %></span>
+            </h2>
+            <p class="section-subtitle-large">
+                <%= t('services.description') %>
+            </p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title"><%= t('services.academic.title') %></h3>
+                    <p class="service-description">
+                        <%= t('services.academic.description') %>
+                    </p>
+                    <ul class="service-features">
+                        <% t('services.academic.features').forEach(function(feature) { %>
+                            <li><i class="fas fa-check-circle"></i> <%= feature %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-icon">
+                    <i class="fas fa-theater-masks"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title"><%= t('services.cultural.title') %></h3>
+                    <p class="service-description">
+                        <%= t('services.cultural.description') %>
+                    </p>
+                    <ul class="service-features">
+                        <% t('services.cultural.features').forEach(function(feature) { %>
+                            <li><i class="fas fa-check-circle"></i> <%= feature %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title"><%= t('services.social.title') %></h3>
+                    <p class="service-description">
+                        <%= t('services.social.description') %>
+                    </p>
+                    <ul class="service-features">
+                        <% t('services.social.features').forEach(function(feature) { %>
+                            <li><i class="fas fa-check-circle"></i> <%= feature %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="service-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title"><%= t('services.networking.title') %></h3>
+                    <p class="service-description">
+                        <%= t('services.networking.description') %>
+                    </p>
+                    <ul class="service-features">
+                        <% t('services.networking.features').forEach(function(feature) { %>
+                            <li><i class="fas fa-check-circle"></i> <%= feature %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="service-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Sports & Recreation</h3>
+                    <p class="service-description">
+                        Stay active and healthy with our sports programs and recreational activities.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Football tournaments</li>
+                        <li><i class="fas fa-check-circle"></i> Badminton competitions</li>
+                        <li><i class="fas fa-check-circle"></i> Outdoor adventures</li>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+            
+            <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="service-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Student Support</h3>
+                    <p class="service-description">
+                        Comprehensive support system to help you navigate student life at AIU.
+                    </p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Academic advising</li>
+                        <li><i class="fas fa-check-circle"></i> Personal counseling</li>
+                        <li><i class="fas fa-check-circle"></i> Emergency assistance</li>
+                    </ul>
+                </div>
+                <div class="service-hover-effect"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Access Section - Enhanced -->
+<section class="quick-access-premium">
+    <div class="container">
+        <div class="section-header text-center">
+            <div class="section-badge"><%= t('quick_access.badge') %></div>
+            <h2 class="section-title-large">
+                <%= t('quick_access.title') %> <span class="text-gradient"><%= t('quick_access.title_highlight') %></span>
+            </h2>
+            <p class="section-subtitle-large">
+                <%= t('quick_access.description') %>
+            </p>
+        </div>
+        
+        <div class="quick-access-grid">
+            <a href="/periode" class="quick-access-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-icon-large">
+                    <i class="fas fa-users-cog"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title"><%= t('quick_access.board.title') %></h3>
+                    <p class="card-description"><%= t('quick_access.board.description') %></p>
+                    <div class="card-features">
+                        <% t('quick_access.board.features').forEach(function(feature) { %>
+                            <span class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <%= feature %>
+                            </span>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="/blog" class="quick-access-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-icon-large">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title"><%= t('quick_access.activities.title') %></h3>
+                    <p class="card-description"><%= t('quick_access.activities.description') %></p>
+                    <div class="card-features">
+                        <% t('quick_access.activities.features').forEach(function(feature) { %>
+                            <span class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <%= feature %>
+                            </span>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="/blog" class="quick-access-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-icon-large">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title"><%= t('quick_access.news.title') %></h3>
+                    <p class="card-description"><%= t('quick_access.news.description') %></p>
+                    <div class="card-features">
+                        <% t('quick_access.news.features').forEach(function(feature) { %>
+                            <span class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <%= feature %>
+                            </span>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+            
+            <a href="/fondasi" class="quick-access-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="card-icon-large">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title"><%= t('quick_access.foundation.title') %></h3>
+                    <p class="card-description"><%= t('quick_access.foundation.description') %></p>
+                    <div class="card-features">
+                        <% t('quick_access.foundation.features').forEach(function(feature) { %>
+                            <span class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <%= feature %>
+                            </span>
+                        <% }); %>
+                    </div>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-premium">
+    <div class="container">
+        <div class="cta-content">
+            <div class="cta-text">
+                <h2 class="cta-title"><%= t('cta.title') %></h2>
+                <p class="cta-description">
+                    <%= t('cta.description') %>
+                </p>
+            </div>
+            <div class="cta-actions">
+                <a href="#contact" class="btn-cta primary">
+                    <i class="fas fa-user-plus"></i>
+                    <%= t('cta.btn_join') %>
+                </a>
+                <a href="/blog" class="btn-cta secondary">
+                    <i class="fas fa-info-circle"></i>
+                    <%= t('cta.btn_contact') %>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
 <script>
-    // Get all elements with the class "hidden"
-    // const observer = new IntersectionObserver((entries) => {
-    //     entries.forEach((entry) => {
-    //         console.log(entry)
-    //         if(entry.isIntersecting) {
-    //             entry.target.classList.add('show');
-    //         } else {
-    //             entry.target.classList.remove('show')
-    //         }
-    //     })
-    // })
-
-    // const hiddenElements = document.querySelectorAll('.hidden');
-    // hiddenElements.forEach((el) => observer.observe(el));
-
-
-    //rotation of the logo
-
-    const slider = document.querySelector('.slider');
-    let rotateY = 0;
+// Enhanced Homepage Interactions
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
     
-    function rotateSlider() {
-        rotateY += 120;
-        slider.style.transform = `rotateY(${rotateY}deg)`;
+    // Statistics animation on scroll
+    const observeElements = (selector, callback) => {
+        const elements = document.querySelectorAll(selector);
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    callback(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        elements.forEach(el => observer.observe(el));
+    };
+    
+    // Animate statistics numbers
+    observeElements('.stat-number', (element) => {
+        const target = parseInt(element.textContent.replace(/[^\d]/g, ''));
+        animateCounter(element, target);
+    });
+    
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            const suffix = element.textContent.includes('+') ? '+' : '';
+            element.textContent = Math.floor(current) + suffix;
+        }, 30);
     }
     
-    setInterval(rotateSlider, 5000);
-
-    // COUNTER 
-    const counts = document.querySelectorAll('.count')
-const speed = 50
-
-counts.forEach((counter) => {
-    function upDate(){
-        const target = Number(counter.getAttribute('data-target'))
-        const count = Number(counter.innerText)
-        const inc = target / speed        
-        if(count < target){
-            counter.innerText = Math.floor(inc + count) 
-            setTimeout(upDate, 15)
-        }else{
-            counter.innerText = target
-        }
-    }
-    upDate()
-})
+    // Service cards hover effects
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Quick access cards hover effects
+    document.querySelectorAll('.quick-access-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const arrow = this.querySelector('.card-arrow');
+            arrow.style.transform = 'translateX(10px)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            const arrow = this.querySelector('.card-arrow');
+            arrow.style.transform = 'translateX(0)';
+        });
+    });
+});
 </script>
-<!-- visi misi ppi aiu, a glimpse of ppi aiu, lokasi geometri ppi aiu, dan rekapitulasi jumlah mahasiswa indonesia di aiu  -->

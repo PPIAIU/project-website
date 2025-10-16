@@ -4,10 +4,7 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const User = require('../models/user.js')
 require('dotenv').config();
 
-mongoose.connect(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 30000, // Increase timeout to 30 seconds
-    connectTimeoutMS: 30000
-  })
+mongoose.connect(process.env.MONGO_URI)
 	.then((result) => {
 		console.log('connected to mongodb')
 	}).catch((err) => {

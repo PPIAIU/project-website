@@ -1,0 +1,36 @@
+Project Website (PP IAIU)
+=========================
+
+Quick start
+-----------
+
+1. Install dependencies:
+
+```powershell
+npm install
+```
+
+2. Create a `.env` file in the project root (or set environment variables). At minimum add:
+
+```
+MONGO_URI="mongodb://<user>:<pass>@host:port/<dbname>"
+# Optional: PORT=3000
+```
+
+3. Start the server:
+
+```powershell
+npm start
+```
+
+4. Open in browser: http://localhost:3000
+
+Troubleshooting
+---------------
+- If you see an error from `multer-gridfs-storage` about "At least one of url or db option must be provided", ensure `MONGO_URI` is set in your environment or `.env`.
+- If you get authentication issues with MongoDB Atlas, make sure your IP is whitelisted and credentials are correct.
+
+Notes
+-----
+- `package.json` includes `start` and `dev` scripts. `dev` uses `nodemon` (install globally if needed).
+- The project uses GridFS for file uploads; the bucket names used are `uploadMember`, `uploadDivisi`, `uploadPeriode`.

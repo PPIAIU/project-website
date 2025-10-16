@@ -1,0 +1,232 @@
+{
+    "site": {
+        "title": "PPI AIU - Persatuan Pelajar Indonesia",
+        "description": "Organisasi mahasiswa Indonesia di Albukhary International University"
+    },
+    "navigation": {
+        "home": "Beranda",
+        "about": "Tentang",
+        "activities": "Kegiatan",
+        "blog": "Blog",
+        "foundation": "Yayasan",
+        "members": "Anggota",
+        "contact": "Kontak"
+    },
+    "hero": {
+        "title_main": "Persatuan Pelajar Indonesia",
+        "title_sub": "Albukhary International University",
+        "description": "Membangun jembatan, mendorong keunggulan, dan memperkuat komunitas Indonesia di seluruh dunia",
+        "btn_discover": "Jelajahi Lebih",
+        "btn_news": "Berita Terbaru",
+        "scroll_text": "Gulir untuk menjelajah"
+    },
+    "about": {
+        "badge": "Siapa Kami",
+        "title": "Tentang",
+        "title_highlight": "PPI AIU",
+        "description": "Berdedikasi untuk membangun komunitas Indonesia yang kuat di Albukhary International University melalui persatuan, keunggulan, dan pelestarian budaya.",
+        "vision": {
+            "title": "Visi Kami",
+            "description": "Menjadi organisasi mahasiswa Indonesia terdepan yang menginspirasi keunggulan akademik dan memperkuat identitas budaya Indonesia di kancah internasional."
+        },
+        "mission": {
+            "title": "Misi Kami",
+            "items": [
+                "Memfasilitasi adaptasi mahasiswa Indonesia baru",
+                "Mengorganisir kegiatan budaya dan akademik berkualitas",
+                "Membangun jaringan alumni yang kuat",
+                "Mempromosikan nilai-nilai Indonesia di komunitas internasional",
+                "Memberikan dukungan akademik dan sosial"
+            ]
+        },
+        "values": {
+            "title": "Nilai-Nilai Kami",
+            "unity": {
+                "name": "Persatuan",
+                "description": "Bersatu dalam keberagaman"
+            },
+            "excellence": {
+                "name": "Keunggulan",
+                "description": "Mengejar prestasi terbaik"
+            },
+            "integrity": {
+                "name": "Integritas",
+                "description": "Jujur dan bertanggung jawab"
+            },
+            "culture": {
+                "name": "Budaya",
+                "description": "Melestarikan warisan Indonesia"
+            }
+        }
+    },
+    "statistics": {
+        "title": "Statistik",
+        "title_highlight": "Organisasi",
+        "description": "Pencapaian dan dampak PPI AIU dalam angka",
+        "members": {
+            "number": "150+",
+            "label": "Anggota Aktif",
+            "description": "Mahasiswa dari berbagai program studi"
+        },
+        "events": {
+            "number": "25+",
+            "label": "Acara Per Tahun",
+            "description": "Kegiatan budaya dan akademik"
+        },
+        "alumni": {
+            "number": "300+",
+            "label": "Alumni",
+            "description": "Lulusan yang tersebar di berbagai bidang"
+        },
+        "years": {
+            "number": "8+",
+            "label": "Tahun Berdiri",
+            "description": "Melayani komunitas Indonesia"
+        }
+    },
+    "services": {
+        "badge": "Layanan Kami",
+        "title": "Apa Yang",
+        "title_highlight": "Kami Lakukan",
+        "description": "Berbagai program dan layanan untuk mendukung mahasiswa Indonesia di AIU",
+        "academic": {
+            "title": "Dukungan Akademik",
+            "description": "Bimbingan belajar, tutor, dan program mentoring untuk membantu kesuksesan akademik mahasiswa.",
+            "features": [
+                "Program tutor sebaya",
+                "Bimbingan skripsi",
+                "Workshop akademik",
+                "Perpustakaan digital"
+            ]
+        },
+        "cultural": {
+            "title": "Kegiatan Budaya",
+            "description": "Acara-acara untuk melestarikan dan memperkenalkan budaya Indonesia kepada komunitas internasional.",
+            "features": [
+                "Festival budaya Indonesia",
+                "Perayaan hari nasional",
+                "Pertunjukan seni tradisional",
+                "Kelas bahasa Indonesia"
+            ]
+        },
+        "social": {
+            "title": "Dukungan Sosial",
+            "description": "Membantu adaptasi dan integrasi mahasiswa baru dalam komunitas AIU.",
+            "features": [
+                "Program buddy system",
+                "Orientasi mahasiswa baru",
+                "Kegiatan sosial reguler",
+                "Konseling dan dukungan"
+            ]
+        },
+        "networking": {
+            "title": "Jaringan Alumni",
+            "description": "Menghubungkan mahasiswa dengan alumni untuk peluang karir dan pengembangan profesional.",
+            "features": [
+                "Database alumni",
+                "Career mentoring",
+                "Job placement assistance",
+                "Professional workshops"
+            ]
+        }
+    },
+    "quick_access": {
+        "badge": "Akses Cepat",
+        "title": "Navigasi",
+        "title_highlight": "Utama",
+        "description": "Akses langsung ke informasi dan layanan penting",
+        "board": {
+            "title": "Pengurus",
+            "description": "Temui tim pengurus PPI AIU dan struktur organisasi",
+            "features": [
+                "Profil pengurus",
+                "Struktur organisasi",
+                "Kontak langsung"
+            ]
+        },
+        "activities": {
+            "title": "Kegiatan & Acara",
+            "description": "Jelajahi berbagai kegiatan dan acara yang telah dan akan dilaksanakan",
+            "features": [
+                "Kalender acara",
+                "Galeri foto",
+                "Laporan kegiatan"
+            ]
+        },
+        "news": {
+            "title": "Berita & Artikel",
+            "description": "Baca berita terbaru, artikel, dan update dari komunitas PPI AIU",
+            "features": [
+                "Berita terkini",
+                "Artikel opini",
+                "Newsletter"
+            ]
+        },
+        "foundation": {
+            "title": "Dokumen Yayasan",
+            "description": "Akses dokumen penting seperti AD/ART, peraturan, dan panduan organisasi",
+            "features": [
+                "AD/ART organisasi",
+                "Panduan anggota",
+                "Formulir resmi"
+            ]
+        }
+    },
+    "cta": {
+        "title": "Bergabunglah Dengan Kami",
+        "description": "Jadilah bagian dari komunitas Indonesia yang dinamis di AIU dan rasakan pengalaman berorganisasi yang berharga.",
+        "btn_join": "Daftar Sekarang",
+        "btn_contact": "Hubungi Kami"
+    },
+    "footer": {
+        "about": {
+            "title": "PPI AIU",
+            "description": "Persatuan Pelajar Indonesia di Albukhary International University, membangun komunitas yang kuat melalui persatuan dan keunggulan."
+        },
+        "quick_links": {
+            "title": "Tautan Cepat",
+            "home": "Beranda",
+            "about": "Tentang",
+            "activities": "Kegiatan",
+            "contact": "Kontak"
+        },
+        "contact": {
+            "title": "Kontak",
+            "address": "Albukhary International University, Alor Setar, Kedah, Malaysia",
+            "email": "ppi@aiu.edu.my",
+            "phone": "+60 4-730 5000"
+        },
+        "follow": {
+            "title": "Ikuti Kami",
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "youtube": "YouTube",
+            "twitter": "Twitter"
+        },
+        "copyright": "© 2024 PPI AIU. Semua hak cipta dilindungi."
+    },
+    "blog": {
+        "title": "Blog & Berita",
+        "subtitle": "Baca berita terbaru, artikel, dan update dari komunitas PPI AIU",
+        "search_placeholder": "Cari artikel...",
+        "filter": {
+            "all": "Semua",
+            "news": "Berita",
+            "events": "Acara",
+            "academic": "Akademik"
+        },
+        "read_more": "Baca Selengkapnya",
+        "no_articles": "Tidak ada artikel ditemukan"
+    },
+    "foundation": {
+        "title": "Dokumen Yayasan",
+        "subtitle": "Akses dokumen penting organisasi",
+        "view_document": "Lihat Dokumen",
+        "download": "Unduh",
+        "fullscreen": "Layar Penuh"
+    },
+    "language": {
+        "switch": "Ganti Bahasa",
+        "current": "Bahasa saat ini: {{language}}"
+    }
+}

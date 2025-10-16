@@ -1,0 +1,67 @@
+<% layout('layouts/app') %>
+
+<div class="container-modern" style="padding:2rem 0;">
+  <div class="card" style="max-width:1000px; margin:0 auto;">
+    <div style="display:flex; justify-content:space-between; gap:1rem; align-items:flex-start;">
+      <div>
+        <h1 style="margin:0; color:var(--secondary-dark);"><%= activity.title %></h1>
+        <p style="margin:.25rem 0; color:var(--primary-red); font-style:italic;">"<%= activity.tagline %>"</p>
+        <div style="display:flex; gap:.5rem; margin-top:.5rem;">
+          <span style="background:linear-gradient(135deg,var(--primary-red),#ff6b6b); color:#fff; padding:.35rem .6rem; border-radius:999px; font-weight:700;"><%= activity.category %></span>
+          <span style="background:#e9ecef; padding:.25rem .5rem; border-radius:999px; color: var(--text-light);"> <%= activity.isActive ? 'Active' : 'Inactive' %></span>
+        </div>
+      </div>
+      <div style="display:flex; gap:.5rem;">
+        <a href="/activity/<%= activity._id %>/edit" class="btn-modern edit">Edit</a>
+        <a href="/activity" class="btn-modern secondary">Back</a>
+      </div>
+    </div>
+
+    <div style="margin-top:1.25rem; text-align:center;">
+      <% if (activity.hasImage) { %>
+        <img src="<%= activity.image.path %>" alt="<%= activity.title %>" style="width:100%; max-height:500px; object-fit:cover; border-radius:10px;">
+      <% } else { %>
+        <div style="height:420px; border-radius:10px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#f3f4f6,#e9ecef);">
+          <i class="<%= activity.placeholderIcon || 'fas fa-calendar' %>" style="font-size:5rem; color:rgba(0,0,0,0.12);"></i>
+        </div>
+      <% } %>
+    </div>
+
+    <div style="margin-top:1.25rem; background:#f8f9fa; padding:1rem; border-radius:8px; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">
+      <div>
+        <h4 style="margin:0; color:var(--text-light);">Department</h4>
+        <p style="margin:0; font-weight:600;"><i class="<%= activity.departmentIcon || 'fas fa-users' %>"></i> <%= activity.department %></p>
+      </div>
+      <div>
+        <h4 style="margin:0; color:var(--text-light);">Category</h4>
+        <p style="margin:0; font-weight:600;"><%= activity.category %></p>
+      </div>
+      <div>
+        <h4 style="margin:0; color:var(--text-light);">Display Order</h4>
+        <p style="margin:0; font-weight:600;"><%= activity.order %></p>
+      </div>
+      <div>
+        <h4 style="margin:0; color:var(--text-light);">Created</h4>
+        <p style="margin:0; font-weight:600;"><%= activity.createdAt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %></p>
+      </div>
+    </div>
+
+    <div style="margin-top:1.25rem;">
+      <h3 style="margin:0 0 .5rem;">Description</h3>
+      <p style="color:var(--text-light);"><%= activity.description %></p>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem;">
+      <div style="color:var(--text-light);">Last updated: <%= activity.updatedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></div>
+      <div style="display:flex; gap:.5rem;">
+        <form action="/activity/<%= activity._id %>/toggle" method="POST">
+          <button type="submit" class="btn-modern" style="background:<%= activity.isActive ? '#ffc107' : '#17a2b8' %>; color:#fff;"><i class="fas fa-<%= activity.isActive ? 'eye-slash' : 'eye' %>"></i> <%= activity.isActive ? 'Deactivate' : 'Activate' %></button>
+        </form>
+        <form action="/activity/<%= activity._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this activity? This action cannot be undone.');">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn-modern delete">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

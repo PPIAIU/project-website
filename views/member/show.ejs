@@ -1,33 +1,31 @@
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/board.css">
-<section class="slider_section">
-    <% for(const imagage of member.image ) { %>
 
-        <img class="imageMember" src="/image/member/<%= imagage.filename %>" alt="image">
-        
-        <% } %>
-        
-        <div>
-            <h1 class="nameMember">
-             <span><%= member.name %></span>   
-            </h1>
-            <h2 class="text-normal">
-              Position:  <%= member.jabatan %>
-            </h2>
-            <h3 class="text-normal">
-             Major:   <%= member.background %>
-            </h3>
-        
+<section class="section">
+    <div class="container-modern">
+        <div class="card" style="max-width:900px; margin:0 auto; display:grid; grid-template-columns: 300px 1fr; gap:1rem; align-items:start;">
+            <div>
+                <% if (member.image && member.image.length > 0) { %>
+                    <% for (const img of member.image) { %>
+                        <img src="/image/member/<%= img.filename %>" alt="<%= member.name %>" style="width:100%; height:300px; object-fit:cover; border-radius:8px;">
+                        <% break; } %>
+                <% } else { %>
+                    <div style="width:100%; height:300px; background:linear-gradient(135deg,var(--primary-red),#ff6b6b); border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:2rem;"></div>
+                <% } %>
+            </div>
+            <div>
+                <h1 style="margin:0;"><%= member.name %></h1>
+                <p style="color:var(--text-light); margin:.5rem 0;">Position: <strong><%= member.jabatan %></strong></p>
+                <p style="color:var(--text-light); margin:.25rem 0;">Major: <strong><%= member.background %></strong></p>
+                <div style="margin-top:1rem; display:flex; gap:.5rem;">
+                    <% if(currentUser && member.author.equals(currentUser._id)) { %>
+                        <form action="/member/<%= member._id%>?_method=delete" method="post" onsubmit="return confirm('Delete member?');">
+                            <button class="btn-modern delete">Delete</button>
+                        </form>
+                        <a href="/member/<%= periode_id %>/<%= divisi_id %>/<%= member_id %>/edit" class="btn-modern edit">Edit</a>
+                    <% } %>
+                    <a href="/periode" class="btn-modern secondary">Back to periods</a>
+                </div>
+            </div>
         </div>
-
-<% if(currentUser && member.author.equals(currentUser._id)) { %>
-
-<form action="/member/<%= member._id%>?_method=delete" method="post">
-    <button class="new-periode-button">delete <%= member.name %></button>
-</form>
-
-<button class="new-periode-button"><a href="/member/<%= periode_id %>/<%= divisi_id %>/<%= member_id %>/edit">edit member</a></button>
-<button class="new-periode-button"><a href="/periode">back to all periode</a></button> 
-
-<% } %>
+    </div>
 </section>

@@ -10,10 +10,7 @@ const mongoose = require('mongoose')
 
 let gridfsBucketDivisi, gridfsBucketMember, gfs;
 
-const conn = mongoose.createConnection(process.env.MONGO_URI, {
-    serverSelectionTimeoutMS: 30000,
-    connectTimeoutMS: 30000,
-});
+const conn = mongoose.createConnection(process.env.MONGO_URI);
 
 conn.once('open', () => {
     gridfsBucketDivisi  = new GridFSBucket(conn.db, {bucketName: 'uploadDivisi'})     
@@ -48,13 +45,15 @@ module.exports.store = async (req, res) => {
     const image = req.file
     const periode = await Periode.findById(periode_id)
     divisi.author = req.user._id
-    divisi.image = image
-    // .then(result => {
-    //     res.status(201).json(result)
-    // .catch(err => {
-    //     res.status(500).json({err: "unsuccess"})
-    // })
-    // })
+    
+    // Store image in correct format as array with url and filename
+    if (image) {
+        divisi.image = [{
+            url: `/image/divisi/${image.filename}`,
+            filename: image.filename
+        }];
+    }
+    
     console.log(divisi)
     console.log(periode)
     periode.divisis.push(divisi)
@@ -115,13 +114,13 @@ module.exports.update = async (req, res) => {
                 }));
             }
 
-            // Add new images to GridFS and update the Periode document
-            const newImages = req.file//.map((file) => ({
-            //     filename: file.filename,
-            //     url: `/image/periode/${file.filename}` // Update this path as needed
-            // }));
-
-            divisi.image = newImages;
+            // Add new images to GridFS and update the Divisi document
+            if (req.file) {
+                divisi.image = [{
+                    filename: req.file.filename,
+                    url: `/image/divisi/${req.file.filename}`
+                }];
+            }
         
 
         // Save the updated Periode document with the new image references

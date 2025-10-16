@@ -1,0 +1,232 @@
+{
+    "site": {
+        "title": "PPI AIU - Indonesian Students Association",
+        "description": "Indonesian student organization at Albukhary International University"
+    },
+    "navigation": {
+        "home": "Home",
+        "about": "About",
+        "activities": "Activities",
+        "blog": "Blog",
+        "foundation": "Foundation",
+        "members": "Members",
+        "contact": "Contact"
+    },
+    "hero": {
+        "title_main": "Indonesian Students Association",
+        "title_sub": "Albukhary International University",
+        "description": "Building bridges, fostering excellence, and strengthening Indonesian community worldwide",
+        "btn_discover": "Discover More",
+        "btn_news": "Latest News"
+       
+    },
+    "about": {
+        "badge": "Who We Are",
+        "title": "About",
+        "title_highlight": "PPI AIU",
+        "description": "Dedicated to building a strong Indonesian community at Albukhary International University through unity, excellence, and cultural preservation.",
+        "vision": {
+            "title": "Our Vision",
+            "description": "To become the leading Indonesian student organization that inspires academic excellence and strengthens Indonesian cultural identity on the international stage."
+        },
+        "mission": {
+            "title": "Our Mission",
+            "items": [
+                "Facilitate adaptation of new Indonesian students",
+                "Organize quality cultural and academic activities",
+                "Build a strong alumni network",
+                "Promote Indonesian values in the international community",
+                "Provide academic and social support"
+            ]
+        },
+        "values": {
+            "title": "Our Values",
+            "unity": {
+                "name": "Unity",
+                "description": "United in diversity"
+            },
+            "excellence": {
+                "name": "Excellence",
+                "description": "Pursuing the best achievements"
+            },
+            "integrity": {
+                "name": "Integrity",
+                "description": "Honest and responsible"
+            },
+            "culture": {
+                "name": "Culture",
+                "description": "Preserving Indonesian heritage"
+            }
+        }
+    },
+    "statistics": {
+        "title": "Organization",
+        "title_highlight": "Statistics",
+        "description": "PPI AIU achievements and impact in numbers",
+        "members": {
+            "number": "150+",
+            "label": "Active Members",
+            "description": "Students from various study programs"
+        },
+        "events": {
+            "number": "25+",
+            "label": "Events Per Year",
+            "description": "Cultural and academic activities"
+        },
+        "alumni": {
+            "number": "300+",
+            "label": "Alumni",
+            "description": "Graduates spread across various fields"
+        },
+        "years": {
+            "number": "8+",
+            "label": "Years Established",
+            "description": "Serving the Indonesian community"
+        }
+    },
+    "services": {
+        "badge": "Our Services",
+        "title": "What We",
+        "title_highlight": "Do",
+        "description": "Various programs and services to support Indonesian students at AIU",
+        "academic": {
+            "title": "Academic Support",
+            "description": "Tutoring, mentoring programs, and study guidance to help students achieve academic success.",
+            "features": [
+                "Peer tutoring program",
+                "Thesis guidance",
+                "Academic workshops",
+                "Digital library"
+            ]
+        },
+        "cultural": {
+            "title": "Cultural Activities",
+            "description": "Events to preserve and introduce Indonesian culture to the international community.",
+            "features": [
+                "Indonesian cultural festival",
+                "National day celebrations",
+                "Traditional art performances",
+                "Indonesian language classes"
+            ]
+        },
+        "social": {
+            "title": "Social Support",
+            "description": "Helping new students adapt and integrate into the AIU community.",
+            "features": [
+                "Buddy system program",
+                "New student orientation",
+                "Regular social activities",
+                "Counseling and support"
+            ]
+        },
+        "networking": {
+            "title": "Alumni Network",
+            "description": "Connecting students with alumni for career opportunities and professional development.",
+            "features": [
+                "Alumni database",
+                "Career mentoring",
+                "Job placement assistance",
+                "Professional workshops"
+            ]
+        }
+    },
+    "quick_access": {
+        "badge": "Quick Access",
+        "title": "Main",
+        "title_highlight": "Navigation",
+        "description": "Direct access to important information and services",
+        "board": {
+            "title": "Board Members",
+            "description": "Meet the PPI AIU board team and organizational structure",
+            "features": [
+                "Board profiles",
+                "Organizational structure",
+                "Direct contact"
+            ]
+        },
+        "activities": {
+            "title": "Activities & Events",
+            "description": "Explore various activities and events that have been and will be held",
+            "features": [
+                "Event calendar",
+                "Photo gallery",
+                "Activity reports"
+            ]
+        },
+        "news": {
+            "title": "News & Articles",
+            "description": "Read the latest news, articles, and updates from the PPI AIU community",
+            "features": [
+                "Latest news",
+                "Opinion articles",
+                "Newsletter"
+            ]
+        },
+        "foundation": {
+            "title": "Foundation Documents",
+            "description": "Access important documents such as bylaws, regulations, and organizational guidelines",
+            "features": [
+                "Organization bylaws",
+                "Member guidelines",
+                "Official forms"
+            ]
+        }
+    },
+    "cta": {
+        "title": "Join Us Today",
+        "description": "Become part of the dynamic Indonesian community at AIU and experience valuable organizational experience.",
+        "btn_join": "Join Now",
+        "btn_contact": "Contact Us"
+    },
+    "footer": {
+        "about": {
+            "title": "PPI AIU",
+            "description": "Indonesian Students Association at Albukhary International University, building a strong community through unity and excellence."
+        },
+        "quick_links": {
+            "title": "Quick Links",
+            "home": "Home",
+            "about": "About",
+            "activities": "Activities",
+            "contact": "Contact"
+        },
+        "contact": {
+            "title": "Contact",
+            "address": "Albukhary International University, Alor Setar, Kedah, Malaysia",
+            "email": "ppi@aiu.edu.my",
+            "phone": "+60 4-730 5000"
+        },
+        "follow": {
+            "title": "Follow Us",
+            "facebook": "Facebook",
+            "instagram": "Instagram",
+            "youtube": "YouTube",
+            "twitter": "Twitter"
+        },
+        "copyright": "© 2024 PPI AIU. All rights reserved."
+    },
+    "blog": {
+        "title": "Blog & News",
+        "subtitle": "Read the latest news, articles, and updates from the PPI AIU community",
+        "search_placeholder": "Search articles...",
+        "filter": {
+            "all": "All",
+            "news": "News",
+            "events": "Events",
+            "academic": "Academic"
+        },
+        "read_more": "Read More",
+        "no_articles": "No articles found"
+    },
+    "foundation": {
+        "title": "Foundation Documents",
+        "subtitle": "Access important organizational documents",
+        "view_document": "View Document",
+        "download": "Download",
+        "fullscreen": "Fullscreen"
+    },
+    "language": {
+        "switch": "Switch Language",
+        "current": "Current language: {{language}}"
+    }
+}

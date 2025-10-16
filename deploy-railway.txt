@@ -1,0 +1,10 @@
+# Railway Deployment Steps
+
+# 1. Daftar di railway.app
+# 2. Connect dengan GitHub repository
+# 3. Set environment variables:
+#    - NODE_ENV=production
+#    - MONGODB_URI=your_mongodb_connection
+#    - SESSION_SECRET=your_secret_key
+# 4. Deploy otomatis dari GitHub
+# 5. Custom domain tersedia

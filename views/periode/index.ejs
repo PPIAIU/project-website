@@ -1,26 +1,67 @@
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/board.css">
 
-<section class="slider_section">
-  <h1 class="title">Our <span>Cabinets</span> </h1>
-
-    <div class="periode-list">
-        <% for (let periode of periodes) { %>
-                <a style="margin-left: 20px;" href="/periode/<%= periode._id %>">
-                  <% for(const image of periode.image) { %>
-                      <div> <img src="/image/periode/<%= image.filename %>" class="imagePeriode"  alt="no-image"></div> 
-                  <% }  %>  
-                   <div> <h2 class="titleNameCabinet"> <%= periode.name %></h2> </div>
-                  <div class="namecabinet">Our board</div>  
-                </a>  
+<section class="page-header">
+    <div class="container">
+        <h1 class="page-title">Our Board</h1>
+        <p class="page-subtitle">Meet the leadership team of PPI AIU</p>
+        
+        <% if (currentUser) { %>
+            <div class="admin-controls" style="margin-top: var(--space-md);">
+                <a href="/periode/create" class="btn-modern primary">
+                    <i class="fas fa-plus"></i> Add New Board Period
+                </a>
+            </div>
         <% } %>
     </div>
-    <% if(currentUser) { %>
-        <button class="new-periode-button">
-            <a href="/periode/create">New Cabinet</a>
-        </button>
-        
+</section>
+
+<section class="board-section">
+    <div class="container">
+        <% if (periodes && periodes.length > 0) { %>
+            <div class="board-grid">
+                <% for (let periode of periodes) { %>
+                    <div class="board-card">
+                        <div class="board-card-image">
+                            <% if (periode.image && periode.image.length > 0) { %>
+                                <% for(const image of periode.image) { %>
+                                    <img src="/image/periode/<%= image.filename %>" alt="<%= periode.name %>">
+                                <% break; } %>
+                            <% } else { %>
+                                <div class="board-placeholder">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            <% } %>
+                        </div>
+                        <div class="board-card-content">
+                            <h3 class="board-card-title"><%= periode.name %></h3>
+                            <p class="board-card-subtitle">Leadership Board</p>
+                            <div class="board-card-actions">
+                                <a href="/periode/<%= periode._id %>" class="btn-modern primary">
+                                    <i class="fas fa-eye"></i> View Board
+                                </a>
+                                <% if (currentUser) { %>
+                                    <a href="/periode/<%= periode._id %>/edit" class="btn-modern edit">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>No Board Periods Found</h3>
+                <p>Create your first board period to get started</p>
+                <% if (currentUser) { %>
+                    <a href="/periode/create" class="btn-modern primary">
+                        <i class="fas fa-plus"></i> Create First Board Period
+                    </a>
+                <% } %>
+            </div>
         <% } %>
-
-
-<script src="/js/hidden.js"></script>
+    </div>
+</section>

@@ -1,0 +1,336 @@
+<% layout('layouts/app') %>
+
+<div class="container" style="padding: 2rem; margin-top: 80px; max-width: 800px;">
+    <h1 style="color: #C41E3A; font-size: 2.5rem; font-weight: 700; margin-bottom: 2rem;">
+        <i class="fas fa-plus-circle"></i> Add New Activity
+    </h1>
+
+    <form action="/activity" method="POST" enctype="multipart/form-data" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        
+        <!-- Title -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="title" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Activity Title <span style="color: #dc3545;">*</span>
+            </label>
+            <input type="text" id="title" name="activity[title]" required
+                   placeholder="e.g., Leadership Workshop 2024"
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; transition: all 0.3s;">
+        </div>
+
+        <!-- Tagline -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="tagline" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Tagline/Slogan <span style="color: #dc3545;">*</span>
+            </label>
+            <input type="text" id="tagline" name="activity[tagline]" required
+                   placeholder="e.g., Empowering Future Leaders"
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+        </div>
+
+        <!-- Description -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="description" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Description <span style="color: #dc3545;">*</span>
+            </label>
+            <textarea id="description" name="activity[description]" required rows="6"
+                      placeholder="Describe the activity, its goals, who can participate, and what makes it special..."
+                      style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical;"></textarea>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="category" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Category <span style="color: #dc3545;">*</span>
+            </label>
+            <select id="category" name="activity[category]" required
+                    style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;"
+                    onchange="toggleArticleFields(this.value)">
+                <option value="">-- Select Category --</option>
+                <option value="academic">📚 Academic</option>
+                <option value="social">👥 Social</option>
+                <option value="sports">⚽ Sports</option>
+                <option value="culture">🎨 Culture</option>
+            </select>
+        </div>
+
+        <!-- Sub Category (for Academic) -->
+        <div class="form-group" id="subCategoryGroup" style="margin-bottom: 1.5rem; display: none;">
+            <label for="subCategory" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Academic Type <span style="color: #dc3545;">*</span>
+            </label>
+            <select id="subCategory" name="activity[subCategory]" onchange="toggleSubCategoryFields()"
+                    style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">-- Select Academic Type --</option>
+                <option value="activity">🎯 Academic Activity</option>
+                <option value="article">📰 Article</option>
+                <option value="journal">📖 Journal</option>
+                <option value="research">🔬 Research</option>
+            </select>
+        </div>
+
+        <!-- Department -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="department" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Department <span style="color: #dc3545;">*</span>
+            </label>
+            <select id="department" name="activity[department]" required
+                    style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="">-- Select Department --</option>
+                <option value="Department of Youth, Culture and Sports">Department of Youth, Culture and Sports</option>
+                <option value="Department of Education and Strategic Research">Department of Education and Strategic Research</option>
+                <option value="Department of Organizational Development and Advocacy">Department of Organizational Development and Advocacy</option>
+                <option value="Media and Communication Team">Media and Communication Team</option>
+                <option value="External Relations Department">External Relations Department</option>
+                <option value="All Departments">All Departments</option>
+            </select>
+        </div>
+
+        <!-- Department Icon -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="departmentIcon" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Department Icon
+            </label>
+            <select id="departmentIcon" name="activity[departmentIcon]"
+                    style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="fas fa-users" selected>👥 Users (Team/Community)</option>
+                <option value="fas fa-graduation-cap">🎓 Graduation Cap (Academic)</option>
+                <option value="fas fa-sitemap">🏢 Sitemap (Organizational)</option>
+                <option value="fas fa-microphone">🎤 Microphone (Media/Podcast)</option>
+                <option value="fas fa-handshake">🤝 Handshake (Partnership)</option>
+                <option value="fas fa-heart">❤️ Heart (Community/Care)</option>
+                <option value="fas fa-trophy">🏆 Trophy (Sports/Achievement)</option>
+                <option value="fas fa-briefcase">💼 Briefcase (Professional)</option>
+                <option value="fas fa-comments">💬 Comments (Discussion)</option>
+                <option value="fas fa-lightbulb">💡 Lightbulb (Innovation)</option>
+                <option value="fas fa-book">📚 Book (Education)</option>
+                <option value="fas fa-award">🏅 Award (Achievement)</option>
+            </select>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="image" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Activity Image (Optional)
+            </label>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                Upload an image for this activity. Max 5MB. Accepted formats: JPG, PNG, GIF, WebP
+            </p>
+            <input type="file" id="image" name="activity[image]" accept="image/*"
+                   style="width: 100%; padding: 0.75rem; border: 2px dashed #e0e0e0; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+            <div id="imagePreview" style="margin-top: 1rem; display: none;">
+                <img id="previewImg" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+
+        <!-- Article/Journal Specific Fields -->
+        <div id="articleFields" style="display: none;">
+            <!-- PDF Upload -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="pdfFile" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    PDF Document <span style="color: #dc3545;">*</span>
+                </label>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    Upload the article/journal PDF file. Max 10MB.
+                </p>
+                <input type="file" id="pdfFile" name="activity[pdfFile]" accept=".pdf"
+                       style="width: 100%; padding: 0.75rem; border: 2px dashed #e0e0e0; border-radius: 8px; font-size: 1rem; cursor: pointer;">
+            </div>
+
+            <!-- Author -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="author" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    Author(s) <span style="color: #dc3545;">*</span>
+                </label>
+                <input type="text" id="author" name="activity[author]"
+                       placeholder="e.g., Dr. John Doe, Prof. Jane Smith"
+                       style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+
+            <!-- Publish Date -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="publishDate" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    Publish Date
+                </label>
+                <input type="date" id="publishDate" name="activity[publishDate]"
+                       style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+
+            <!-- Abstract -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="abstract" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    Abstract/Summary
+                </label>
+                <textarea id="abstract" name="activity[abstract]" rows="4"
+                          placeholder="Brief summary or abstract of the article/journal..."
+                          style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+
+            <!-- Keywords -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="keywords" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    Keywords (comma separated)
+                </label>
+                <input type="text" id="keywords" name="activity[keywords]"
+                       placeholder="e.g., education, research, indonesia, academic"
+                       style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            </div>
+
+            <!-- Article Content -->
+            <div class="form-group" style="margin-bottom: 1.5rem;">
+                <label for="articleContent" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                    Article Content (Optional)
+                </label>
+                <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">
+                    You can paste the full text content here or just upload the PDF above
+                </p>
+                <textarea id="articleContent" name="activity[articleContent]" rows="10"
+                          placeholder="Full article content (optional if PDF is provided)..."
+                          style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+        </div>
+
+        <!-- Placeholder Icon (if no image) -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="placeholderIcon" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Placeholder Icon (if no image uploaded)
+            </label>
+            <select id="placeholderIcon" name="activity[placeholderIcon]"
+                    style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                <option value="fas fa-calendar">📅 Calendar</option>
+                <option value="fas fa-trophy">🏆 Trophy</option>
+                <option value="fas fa-award">🏅 Award</option>
+                <option value="fas fa-star">⭐ Star</option>
+                <option value="fas fa-lightbulb">💡 Lightbulb</option>
+                <option value="fas fa-rocket">🚀 Rocket</option>
+                <option value="fas fa-fire">🔥 Fire</option>
+                <option value="fas fa-heart">❤️ Heart</option>
+            </select>
+        </div>
+
+        <!-- Order -->
+        <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="order" style="display: block; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a;">
+                Display Order
+            </label>
+            <input type="number" id="order" name="activity[order]" value="0" min="0"
+                   placeholder="0"
+                   style="width: 100%; padding: 0.75rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+            <p style="color: #666; font-size: 0.9rem; margin-top: 0.25rem;">
+                Lower numbers appear first. 0 = default order.
+            </p>
+        </div>
+
+        <!-- Is Active -->
+        <div class="form-group" style="margin-bottom: 2rem;">
+            <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="checkbox" name="activity[isActive]" value="true" checked
+                       style="width: 20px; height: 20px; margin-right: 0.5rem; cursor: pointer;">
+                <span style="font-weight: 600; color: #1a1a1a;">Active (Show on website)</span>
+            </label>
+        </div>
+
+        <!-- Buttons -->
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+            <a href="/activity" style="padding: 0.75rem 1.5rem; background: #6c757d; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s;">
+                Cancel
+            </a>
+            <button type="submit" style="padding: 0.75rem 1.5rem; background: #C41E3A; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                <i class="fas fa-save"></i> Create Activity
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: #C41E3A;
+        box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+
+    button[type="submit"]:hover {
+        background: #8B0000;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+    }
+
+    a[href="/activity"]:hover {
+        background: #5a6268;
+    }
+</style>
+
+<script>
+    // Toggle subcategory and article fields
+    function toggleArticleFields(category) {
+        const subCategoryGroup = document.getElementById('subCategoryGroup');
+        const subCategory = document.getElementById('subCategory');
+        const articleFields = document.getElementById('articleFields');
+        
+        if (category === 'academic') {
+            subCategoryGroup.style.display = 'block';
+            subCategory.required = true;
+        } else {
+            subCategoryGroup.style.display = 'none';
+            subCategory.required = false;
+            hideArticleFields();
+        }
+    }
+    
+    // Toggle article/journal specific fields based on subcategory
+    function toggleSubCategoryFields() {
+        const subCategory = document.getElementById('subCategory').value;
+        const articleFields = document.getElementById('articleFields');
+        const pdfFile = document.getElementById('pdfFile');
+        const author = document.getElementById('author');
+        
+        if (subCategory === 'article' || subCategory === 'journal') {
+            articleFields.style.display = 'block';
+            pdfFile.required = true;
+            author.required = true;
+        } else {
+            hideArticleFields();
+        }
+    }
+    
+    function hideArticleFields() {
+        const articleFields = document.getElementById('articleFields');
+        const pdfFile = document.getElementById('pdfFile');
+        const author = document.getElementById('author');
+        
+        articleFields.style.display = 'none';
+        pdfFile.required = false;
+        author.required = false;
+    }
+
+    // Image preview
+    document.getElementById('image').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('previewImg').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            document.getElementById('imagePreview').style.display = 'none';
+        }
+    });
+
+    // PDF file validation
+    document.getElementById('pdfFile').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.type !== 'application/pdf') {
+                alert('Please select a PDF file only.');
+                this.value = '';
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+                alert('PDF file size should not exceed 10MB.');
+                this.value = '';
+                return;
+            }
+        }
+    });
+</script>

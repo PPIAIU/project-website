@@ -1,47 +1,44 @@
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/board.css">
-<section class="slider_section">
-        <h1 class="title"><%= divisi.name %></h1>
-            <% for(const imagage of divisi.image) { %>
-                <img class="imagePeriode" src="/image/divisi/<%= imagage.filename %>" alt="image">
-                <% } %>
-        <h4 class="text-normal" style="margin: 30px 0px 0px 0px;">What's <span><%= divisi.name %></span></h4>
-    <h5 class="text-description"><%= divisi.deskripsi %></h5>
-    
-<h2 class="text-normal" style="margin: 0px 0 30px 0px;">Member of <%= divisi.name %></h2>
-    <div class="divisi-divisi">
-        <% for (const member of divisi.members) {%>
-        <div class = "card">
-            <% for(const imagage of member.image ) { %>
-            <img src="/image/member/<%= imagage.filename %>" alt="">
-            <% } %>
-            <div class="card-content">
-              <h2>
-                <%= member.name %>
-              </h2>
-              <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show" class="button">
-                Find out more 
-              </a>
-            </div>
-          </div>
-          <% } %>
-        </div>
 
-<% if(currentUser && divisi.author.equals(currentUser._id)) { %>
-    <!-- delete divisi -->
-    <form action="/divisi/<%= divisi._id %>?_method=delete" method="post">
-        <button class="new-periode-button">delete this <%= divisi.name %></button>
-    </form>
-    <br>
-    <!-- create member -->
-    <button class="new-periode-button"><a href="/member/<%= periode_id %>/<%= divisi._id %>/create">create new member of <%= divisi.name %></a></button>
-    <!-- edit division -->
-    <button class="new-periode-button"><a href="/divisi/<%= divisi._id %>/edit">edit <%= divisi.name %></a></button>
-    <br>
-    <div style="margin-top: 1em;">
-    <!-- back to all periode -->
-   <button class="new-periode-button"><a href="/periode">back to all periode</a></button> 
-</div>
-<% } %>
+<section class="section">
+  <div class="container-modern">
+    <h1 class="section-title"><%= divisi.name %></h1>
+    <% if (divisi.image && divisi.image.length > 0) { %>
+      <div style="margin:1rem 0;">
+        <% for(const imagage of divisi.image) { %>
+          <img src="/image/divisi/<%= imagage.filename %>" alt="<%= divisi.name %>" style="width:100%; max-height:340px; object-fit:cover; border-radius:8px;">
+          <% break; } %>
+      </div>
+    <% } %>
+
+    <p style="color:var(--text-light); margin-bottom:1rem;"><%= divisi.deskripsi %></p>
+
+    <h2 style="margin:1rem 0;">Members of <%= divisi.name %></h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:1rem;">
+      <% for (const member of divisi.members) { %>
+        <div class="card" style="text-align:center;">
+          <% if (member.image && member.image.length > 0) { %>
+            <img src="/image/member/<%= member.image[0].filename %>" alt="<%= member.name %>" style="width:100%; height:160px; object-fit:cover; border-radius:8px;">
+          <% } else { %>
+            <div style="width:100%; height:160px; background:linear-gradient(135deg,var(--primary-red),#ff6b6b); border-radius:8px;"></div>
+          <% } %>
+          <h3 style="margin-top:.5rem;"><%= member.name %></h3>
+          <p style="color:var(--text-light);"><%= member.jabatan %></p>
+          <a href="/member/<%= periode_id %>/<%= divisi_id%>/<%= member._id %>/show" class="btn-modern secondary" style="margin-top:.5rem;">Find out more</a>
+        </div>
+      <% } %>
+    </div>
+
+    <% if(currentUser && divisi.author.equals(currentUser._id)) { %>
+      <div style="margin-top:1rem; display:flex; gap:.5rem; flex-wrap:wrap;">
+        <form action="/divisi/<%= divisi._id %>?_method=delete" method="post" onsubmit="return confirm('Delete division?');">
+          <button class="btn-modern delete">Delete this <%= divisi.name %></button>
+        </form>
+        <a href="/member/<%= periode_id %>/<%= divisi._id %>/create" class="btn-modern primary">Create Member</a>
+        <a href="/divisi/<%= divisi._id %>/edit" class="btn-modern edit">Edit Division</a>
+        <a href="/periode" class="btn-modern secondary">Back to all periods</a>
+      </div>
+    <% } %>
+  </div>
 </section>
    

@@ -1,33 +1,37 @@
-<% layout("layouts/app") %>
-<link rel="stylesheet" href="/css/form.css">
-<!-- <div  class="form-container">
-    <h1>Create New Periode</h1>
+<% layout('layouts/app') %>
 
-    <form action="/periode" method="post" class="form" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="name" >Name</label>
-            <input type="text" name="periode[name]" id="name" class="input" required>
-            <label for="image">image</label>
-            <input type="file" name="image" accept="image/*" required>
+<section class="sectionForm">
+    <div class="form">
+        <h1 class="title">Create New Board Period</h1>
+        <p style="color: rgba(255,255,255,0.8); text-align: center; margin-bottom: var(--space-lg);">
+            Add a new leadership cabinet to your organization
+        </p>
+        
+        <form action="/periode" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Period Name</label>
+                <input type="text" name="periode[name]" id="name" placeholder="e.g., Board 2024-2025" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="image">Cabinet Photo</label>
+                <input type="file" name="image" id="image" accept="image/*" required>
+                <small style="color: rgba(255,255,255,0.7); font-size: var(--font-size-xs);">
+                    Upload a group photo of the cabinet members
+                </small>
+            </div>
+            
+            <button type="submit" class="btn-modern primary" style="width: 100%; margin-top: var(--space-md);">
+                <i class="fas fa-plus"></i> Create Board Period
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: var(--space-md);">
+            <a href="/periode" style="color: rgba(255,255,255,0.8); font-size: var(--font-size-sm);">
+                <i class="fas fa-arrow-left"></i> Back to Board
+            </a>
         </div>
-        <button type="submit" class="button">Submit</button>
-    </form>
-</div> -->
-<section  class="sectionForm">
-<div class="form">
-    <form action="/periode" method="post" enctype="multipart/form-data">
-    <div class="title">Welcome</div>
-    <div class="subtitle">Let's create new periode!</div>
-    <div class="input-container ic1">
-      <input type="text" name="periode[name]" id="name" class="input" required>
-      <div class="cut"></div>
-      <label for="name" class="placeholder">Name of periode</label>
     </div>
-    <div class="input-container ic2">
-      <input type="file" name="image" accept="image/*" required>
-      <label for="image" class="placeholder">Image of periode</label>
-    </div>
-    <button type="text" class="submit">submit</button>
 </form>
 </div>
 

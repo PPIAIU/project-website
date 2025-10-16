@@ -1,160 +1,147 @@
+
 <% layout('layouts/app') %>
-<link rel="stylesheet" href="/css/blog.css">
 
-<body class="main">
-  
-<h1 class="dov title" >Our <span>Blogs</span> </h1>
-
-<section class="container1">
-  
+<!-- Modern Page Header -->
+<section class="page-header">
     <div class="container">
-        <div class="card">
-          <div class="front">
-            <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-            <h1 class="subtitle">Sportfusion</h1>
-          </div>
-          <div class="back">
-            <img class="image"  src="/image/sportfusion.jpeg" alt="">
-            <h1 class="theme">Sportfusion<span>"Unity in Motion, Victory in Passion”</span></h1>
-            <p class="description">We, the Albukhary International University Indonesian Student Association, are moving sincerely and enthusiastically through the SPORTFUSION FEST 2024 program by opening opportunities and platforms for all students at Albukhary International University to develop education and sports-based interests through the Test Your International Knowledge, Tradition and Intelligence (TITANIC), Sports & E-sports Competition. This activity was held with the aim of developing a competitive spirit, increasing creativity and self-confidence, strengthening relations between international students as well as a forum for implementing talents for all Albukhary International University students based on the practice of 5A Core Values: Aqidah, Akhlak, Adab, Amanah and Practice.</p>
-            <ul class="ul">
-              <li class="li">Department of Youth, Culture and Sports</li>
-              </ul>
-          </div>
-          </div>
+        <h1 class="page-title">Activities & Events</h1>
+        <p class="page-subtitle">Discover the latest news, events, and achievements from PPI AIU</p>
+    </div>
+</section>
+
+<!-- Modern Toolbar & Filter -->
+<section class="toolbar-modern">
+    <div class="container-modern toolbar-flex">
+        <% if (currentUser) { %>
+            <div class="admin-controls-modern">
+                <a href="/activity/new" class="btn-modern primary"><i class="fas fa-plus"></i> Add Activity</a>
+                <a href="/activity" class="btn-modern"><i class="fas fa-list"></i> Manage</a>
+            </div>
+        <% } %>
+        <div class="search-filter-modern">
+            <input type="text" class="search-modern" placeholder="Search activities..." onkeyup="filterActivities(this.value)">
+            <div class="filter-group-modern">
+                <button onclick="filterByCategory('all')" class="filter-btn-modern active" data-category="all"><i class="fas fa-th"></i> All</button>
+                <button onclick="filterByCategory('academic')" class="filter-btn-modern" data-category="academic"><i class="fas fa-graduation-cap"></i> Academic</button>
+                <button onclick="filterByCategory('social')" class="filter-btn-modern" data-category="social"><i class="fas fa-users"></i> Social</button>
+                <button onclick="filterByCategory('sports')" class="filter-btn-modern" data-category="sports"><i class="fas fa-futbol"></i> Sports</button>
+                <button onclick="filterByCategory('culture')" class="filter-btn-modern" data-category="culture"><i class="fas fa-palette"></i> Culture</button>
+            </div>
         </div>
     </div>
 </section>
 
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">INDIVERSION 2.0</h1>
-          </div>
-          <div class="back">
-            <img class="image"  src="/image/DSC_0428 (1).JPG" alt="">
-            <h1 class="theme">INDIVERSION 2.0<span>"Paradise of Culture and Boundless of Natural Beauty"</span></h1>
-            <p class="description">The INDIVERSION (Indonesian Independence and Diversity Exhibition) event, which is an international standard cultural festival, will be held as a means for all students at Albukhary International University to get to know more about the traditions and culture of Indonesia and also coincides with the realization of positive activities to fill independence. On the other hand, this event is also in line with the principles of Albukhary International University, namely, Adab, Akhlak, Aqidah, Practice and Trust.</p>
-            <ul class="ul">
-              <li class="li">Department of Youth, Culture and Sports</li>
-              </ul>
-          </div>
-          </div>
+<!-- Modern Activities Grid -->
+<section class="activities-modern">
+    <div class="container-modern">
+        <% if (activities && activities.length > 0) { %>
+            <div class="activities-grid-modern">
+                <% activities.forEach((activity, index) => { %>
+                    <div class="activity-card-modern" data-category="<%= activity.category %>" data-title="<%= activity.title.toLowerCase() %>" data-department="<%= activity.department.toLowerCase() %>">
+                        <div class="activity-image-modern">
+                            <% if (activity.hasImage) { %>
+                                <img src="<%= activity.image.path %>" alt="<%= activity.title %>">
+                            <% } else { %>
+                                <div class="activity-placeholder-modern"><i class="<%= activity.placeholderIcon || 'fas fa-calendar' %>"></i></div>
+                            <% } %>
+                            <span class="activity-category-modern"><%= activity.category === 'academic' ? (activity.subCategory || 'academic') : activity.category %></span>
+                        </div>
+                        <div class="activity-content-modern">
+                            <h2 class="activity-title-modern"><%= activity.title %></h2>
+                            <% if (activity.subCategory === 'article' || activity.subCategory === 'journal') { %>
+                                <div class="activity-article-info-modern">
+                                    <% if (activity.author) { %>
+                                        <p><i class="fas fa-user-edit"></i> <strong>Author(s):</strong> <%= activity.author %></p>
+                                    <% } %>
+                                    <% if (activity.publishDate) { %>
+                                        <p><i class="fas fa-calendar-alt"></i> <strong>Published:</strong> <%= new Date(activity.publishDate).toLocaleDateString() %></p>
+                                    <% } %>
+                                    <% if (activity.pdfFile && activity.pdfFile.path) { %>
+                                        <p><a href="/activity/<%= activity._id %>/pdf" target="_blank" class="pdf-link-modern"><i class="fas fa-file-pdf"></i> Download PDF</a></p>
+                                    <% } else if (activity.subCategory === 'article' || activity.subCategory === 'journal') { %>
+                                        <p class="pdf-not-available-modern"><i class="fas fa-info-circle"></i> PDF file not available</p>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                            <% if (activity.subCategory !== 'article' && activity.subCategory !== 'journal') { %>
+                                <p class="activity-tagline-modern">"<%= activity.tagline %>"</p>
+                            <% } %>
+                            <p class="activity-excerpt-modern"><%= (activity.subCategory === 'article' || activity.subCategory === 'journal') && activity.abstract ? activity.abstract : activity.description %></p>
+                            <% if ((activity.subCategory === 'article' || activity.subCategory === 'journal') && activity.keywords && activity.keywords.length > 0) { %>
+                                <div class="activity-keywords-modern">
+                                    <span><i class="fas fa-tags"></i> Keywords:</span>
+                                    <% activity.keywords.forEach((keyword, i) => { %>
+                                        <span class="keyword-modern"><%= keyword %></span>
+                                    <% }) %>
+                                </div>
+                            <% } %>
+                            <div class="activity-meta-modern">
+                                <span class="activity-department-modern"><i class="<%= activity.departmentIcon || 'fas fa-users' %>"></i> <%= activity.department %></span>
+                            </div>
+                            <% if (currentUser) { %>
+                                <div class="activity-controls-modern">
+                                    <a href="/activity/<%= activity._id %>/edit" class="btn-modern edit"><i class="fas fa-edit"></i> Edit</a>
+                                    <form method="POST" action="/activity/<%= activity._id %>?_method=DELETE" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this activity?')">
+                                        <button type="submit" class="btn-modern delete"><i class="fas fa-trash-alt"></i> Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="empty-modern">
+                <i class="fas fa-calendar-times"></i>
+                <h2>No Activities Yet</h2>
+                <p>Check back soon for upcoming events and activities!</p>
+                <% if (currentUser) { %>
+                    <a href="/activity/new" class="btn-modern primary">Add First Activity</a>
+                <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<!-- Modern CTA -->
+<section class="cta-modern">
+    <div class="container-modern">
+        <h2 class="cta-heading-modern">Want to Join Our Activities?</h2>
+        <p class="cta-text-modern">Stay updated with our latest events and programs</p>
+        <div class="cta-buttons-modern">
+            <a href="#contact" class="btn-modern primary">Contact Us</a>
+            <a href="/periode" class="btn-modern secondary">Meet The Team</a>
         </div>
     </div>
 </section>
 
-
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">Model ASEAN Meeting</h1>
-          </div>
-          <div class="back">
-            <img class="image"  src="/image/MAM.jpeg" alt="">
-            <h1 class="theme">Model ASEAN Meeting<span>"Strengthening ASEAN Economic Resilience and Integration."</span></h1>
-            <p class="description">The AIU Model ASEAN Meeting serves as both an agenda and a platform for observing how ideal diplomacy should be conducted with ethics and discipline. This aligns with the UN's goal of making it a forum for learning the principles of the United Nations and understanding how all its functions work. The AIU Model ASEAN Meeting is a concrete agenda for gathering diverse solutions and ideas from the ASEAN community, promoting the establishment of positive relations between nations to create world peace, moving beyond mere discourse, through the academic perspective of future leaders.</p>
-            <ul class="ul">
-              <li class="li">Department of Education and Strategic Research</li>
-              </ul>
-          </div>
-          </div>
-        </div>
-    </div>
-</section>
-
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">PREAMBULE</h1>
-          </div>
-          <div class="back">
-            <h1 class="theme">PREAMBULE<span>"Equip Yourself with Self-Reliance Insight"</span></h1>
-            <p class="description">This activity is a means of cadre formation for the relay desire in the PPI AIU management for the next period. This series of events is filled with several activities such as seminars, games and performances designed by the committee to achieve the initial objectives of this event.</p>
-            <ul class="ul">
-              <li class="li">Department of Organizational Development and Advocacy</li>
-              </ul>
-          </div>
-          </div>
-        </div>
-    </div>
-</section>
-
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">Bond Day</h1>
-          </div>
-          <div class="back">
-            <img class="image" src="/image/bondday.jpeg" alt="">
-            <h1 class="theme">Bond Day<span>"Educating Indonesian children in Malaysia by honing soft skills and increasing religious insight."</span></h1>
-            <p class="description">Indonesia has a large diaspora in Malaysia, especially in the Kulim area, so the Kulim Tutoring Studio has long been a gathering place for Indonesian students in Malaysia. We want to provide opportunities for students to hone soft skills such as team building, communication and team work, through educational games appropriate to their age, as well as educating them on religious knowledge that will be useful in the future.</p>
-            <ul class="ul">
-              <li class="li">Department of Religion and Community Social Welfare</li>
-              </ul>
-          </div>
-          </div>
-        </div>
-    </div>
-</section>
-
-
-
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">Podcast PPI AIU</h1>
-          </div>
-          <div class="back">
-            <img class="image" src="/image/podcast.jpg" alt="">
-
-            <h1 class="theme">Podcast PPI AIU<span> </span></h1>
-            <ul class="ul">
-              <li class="li">Department of Media, Communication and Information</li>
-              </ul>
-          </div>
-          </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="container1">
-  
-    <div class="container">
-        <div class="card">
-          <div class="front">
-              <div class="logo"><img class="logo" src="/image/logo-ppi.png" alt=""><span></span></div>
-              <h1 class="subtitle">Kewira Talks</h1>
-          </div>
-          <div class="back">
-            <img class="image" src="/image/kewiratalk.jpeg" alt="">
-            <h1 class="theme">Kewira Talks<span>"Student Financial Management" </span></h1>
-            <p class="description"> Based on a needs analysis, many PPI AIU and Albukhary International University students experience difficulties in managing their pocket money or pocket money. Therefore, we from the Kewira department present speakers who are experienced in this field, who are expected to provide insight and practical benefits, as well as concrete steps in effective financial management. Thus, it is hoped that the Kewira Talks event can become a meaningful effort in supporting the growth and development of students in facing challenges and opportunities in the world of entrepreneurship and the global economy.</p>
-            <ul class="ul">
-              <li class="li">Department of Economic Partnership and Entrepreneurship</li>
-              </ul>
-          </div>
-          </div>
-        </div>
-    </div>
-</section>
-
-
-
-</body>
+<script>
+    // Filter Activities by Category
+    function filterByCategory(category) {
+        const articles = document.querySelectorAll('.activity-card-modern');
+        const filterButtons = document.querySelectorAll('.filter-btn-modern');
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[data-category="${category}"]`).classList.add('active');
+        articles.forEach(article => {
+            if (category === 'all' || article.dataset.category === category) {
+                article.classList.remove('activity-hidden');
+            } else {
+                article.classList.add('activity-hidden');
+            }
+        });
+    }
+    // Search Activities
+    function filterActivities(searchTerm) {
+        const articles = document.querySelectorAll('.activity-card-modern');
+        const term = searchTerm.toLowerCase();
+        articles.forEach(article => {
+            const title = article.dataset.title;
+            const department = article.dataset.department;
+            if (title.includes(term) || department.includes(term)) {
+                article.classList.remove('activity-hidden');
+            } else {
+                article.classList.add('activity-hidden');
+            }
+        });
+    }
+</script>

@@ -38,7 +38,10 @@ const crypto = require('crypto');
 const path = require('path');
 const {GridFsStorage} = require('multer-gridfs-storage');
 require('dotenv').config();
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+if (!process.env.MONGO_URI) {
+	throw new Error('MONGO_URI is not set. Please create a .env file or set the environment variable MONGO_URI');
+}
+mongoose.connect(process.env.MONGO_URI);
 // const connection = mongoose.connection;
 const storage = new GridFsStorage({
   url: process.env.MONGO_URI,

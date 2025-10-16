@@ -1,188 +1,161 @@
-<style>
-    
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 62.5%;
-    font-family: 'Roboto', sans-serif;
-}
-
-li {
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-}
-
-
-.header {
-    border-bottom: 1px solid #E2E8F0;
-    background-color: #222;
-}
-
-.navbar {
-    display: flex;  
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 1.5rem;
-}
-
-.hamburger {
-    display: none;
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    /* background-color: #101010; */
-    background-color: #fff;
-}
-
-.nav-menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nav-item {
-    margin-left: 5rem;
-}
-
-.nav-link {
-    /* font-size: 1.6rem; */
-    font-size: 2rem;
-    font-weight: 400;
-    /* color: #475569; */
-    color: #fff;
-    /* change */
-}
-
-.nav-link:hover {
-    color: red;
-}
-
-.nav-logo {
-    /* font-size: 2.1rem; */
-    font-size: 3rem;
-    font-weight: 500;
-    /* color: #482ff7; */
-    color: #fff;
-}
-
-@media only screen and (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 5rem;
-        flex-direction: column;
-        /* background-color: #fff; */
-        background-color: #222;
-        width: 100%;
-        border-radius: 10px;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow:
-            0 10px 27px rgba(0, 0, 0, 0.05);
-    }
-
-    .nav-link {
-        color: #fff;
-    }
-
-    .nav-menu.active {
-        left: 0;
-        margin-top: 50px;
-    }
-
-    .nav-item {
-        margin: 2.5rem 0;
-        color: #ffff;
-    }
-
-    .hamburger {
-        display: block;
-        cursor: pointer;
-        
-    }
-
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-}
-
-</style>
-<header class="header">
-            <nav class="navbar">
-                <div class="header-logo">
-                    <a href="/">
-                        <img src="/image/logo-ppi.png" alt="PPI AIU Logo">
-                    </a>
-                    <span class="header-logo-name">PPI AIU</span>
+<header class="modern-header">
+    <nav class="container navbar-modern">
+        <div class="header-logo">
+            <a href="/">
+                <img src="/image/logo-ppi.png" alt="PPI AIU Logo">
+            </a>
+            <span class="header-logo-name">PPI AIU</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="/" class="nav-link"><%= t('navigation.home') %></a></li>
+            <li class="nav-item"><a href="/periode" class="nav-link"><%= t('navigation.members') %></a></li>
+            <li class="nav-item"><a href="/blog" class="nav-link"><%= t('navigation.blog') %></a></li>
+            <li class="nav-item"><a href="/fondasi" class="nav-link"><%= t('navigation.foundation') %></a></li>
+            
+            <!-- Language Switcher -->
+            <li class="nav-item language-switcher">
+                <div class="language-dropdown">
+                    <button class="language-btn" type="button">
+                        <% 
+                        const currentFlag = availableLocales.find(l => l.code === locale)?.flag || '🌐';
+                        const currentName = availableLocales.find(l => l.code === locale)?.name || locale.toUpperCase();
+                        %>
+                        <span class="current-lang">
+                            <%= currentFlag %> <%= currentName %>
+                        </span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="language-menu">
+                        <% availableLocales.forEach(function(lang) { %>
+                            <button class="language-option <%= locale === lang.code ? 'active' : '' %>" 
+                                    data-lang="<%= lang.code %>">
+                                <span class="lang-flag"><%= lang.flag %></span>
+                                <span class="lang-name"><%= lang.name %></span>
+                                <% if (locale === lang.code) { %>
+                                    <i class="fas fa-check lang-check"></i>
+                                <% } %>
+                            </button>
+                        <% }); %>
+                    </div>
                 </div>
-                <ul class="nav-menu">
-                    <li class="nav-item"><a href="/home" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="/periode" class="nav-link">Board</a></li>
-                    <li class="nav-item"><a href="/blog" class="nav-link">Blogs</a></li>
-                    <li class="nav-item"><a href="/foundation" class="nav-link">Foundation</a></li>
-                    <% if(currentUser) { %>
-                    <li class="nav-item"><a href="/logout" class="nav-link" onclick="
-                    event.preventDefault();
-                    document.getElementById('logout-form').submit();"
-                        >Logout</a>
-                    <form id="logout-form" action="/logout" method="post" style="display: none;" >
-                    </form>
-                    </li>
-                    <% } else { %>
-                    <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-                        <% } %>
- 
-                </ul>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </nav>
+            </li>
+            
+            <% if(currentUser) { %>
+            <li class="nav-item"><a href="/logout" class="nav-link" onclick="
+            event.preventDefault();
+            document.getElementById('logout-form').submit();"
+                >Logout</a>
+            <form id="logout-form" action="/logout" method="post" style="display: none;" >
+            </form>
+            </li>
+            <% } else { %>
+            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+                <% } %>
 
-    <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
+        </ul>
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </nav>
 
-        hamburger.addEventListener('click', mobileMenu);
-        function mobileMenu() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        }
+<script>
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    hamburger.addEventListener('click', mobileMenu);
+    function mobileMenu() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    }
 
 // when we click on hamburger icon its close 
-        const headerLink = document.querySelectorAll('.nav-link');
-        headerLink.forEach(n => n.addEventListener('click', closeMenu)) 
+    const headerLink = document.querySelectorAll('.nav-link');
+    headerLink.forEach(n => n.addEventListener('click', closeMenu)) 
 
-        function closeMenu() {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
 
+    // Language Switcher functionality
+    const languageBtn = document.querySelector('.language-btn');
+    const languageMenu = document.querySelector('.language-menu');
+    const languageOptions = document.querySelectorAll('.language-option');
 
-    </script>
+    if (languageBtn && languageMenu) {
+        languageBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            languageMenu.classList.toggle('active');
+        });
+
+        // Close language menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!languageBtn.contains(e.target) && !languageMenu.contains(e.target)) {
+                languageMenu.classList.remove('active');
+            }
+        });
+
+        // Handle language selection
+        languageOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const selectedLang = this.dataset.lang;
+                const currentUrl = window.location.pathname + window.location.search;
+                
+                // Create form data
+                const formData = new FormData();
+                formData.append('language', selectedLang);
+                formData.append('returnUrl', currentUrl);
+                
+                // Send AJAX request
+                fetch('/switch-language', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Reload the page to apply new language
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Language switch error:', error);
+                    // Fallback: submit form normally
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '/switch-language';
+                    form.style.display = 'none';
+                    
+                    const langInput = document.createElement('input');
+                    langInput.type = 'hidden';
+                    langInput.name = 'language';
+                    langInput.value = selectedLang;
+                    
+                    const urlInput = document.createElement('input');
+                    urlInput.type = 'hidden';
+                    urlInput.name = 'returnUrl';
+                    urlInput.value = currentUrl;
+                    
+                    form.appendChild(langInput);
+                    form.appendChild(urlInput);
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+                
+                languageMenu.classList.remove('active');
+            });
+        });
+    }
+
+</script>
 </header>
-
 
