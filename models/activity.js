@@ -29,12 +29,12 @@ const activitySchema = new mongoose.Schema({
         type: String,
         required: [true, 'Department is required'],
         enum: [
-            'Department of Youth, Culture and Sports',
-            'Department of Education and Strategic Research',
+            'Department of Youth and Sports',
+            'Department of Strategic Research',
             'Department of Organizational Development and Advocacy',
-            'Media and Communication Team',
-            'External Relations Department',
-            'All Departments'
+            'Department of Media and Communication',
+            'External Events',
+            'Badan Pengurus Harian'
         ]
     },
     departmentIcon: {
