@@ -29,6 +29,7 @@ const activitySchema = new mongoose.Schema({
         type: String,
         required: [true, 'Department is required'],
         enum: [
+            'Department of Education and Culture',
             'Department of Youth and Sports',
             'Department of Strategic Research',
             'Department of Organizational Development and Advocacy',

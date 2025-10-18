@@ -256,6 +256,7 @@
                 <label for="department">Department<span class="required">*</span></label>
                 <select class="form-control" id="department" name="activity[department]" required>
                     <option value="">Select Department</option>
+                    <option value="Department of Education and Culture" <%= activity.department === 'Department of Education and Culture' ? 'selected' : '' %>>Department of Education and Culture</option>
                     <option value="Department of Youth and Sports" <%= activity.department === 'Department of Youth and Sports' ? 'selected' : '' %>>Department of Youth and Sports</option>
                     <option value="Department of Strategic Research" <%= activity.department === 'Department of Strategic Research' ? 'selected' : '' %>>Department of Strategic Research</option>
                     <option value="Department of Organizational Development and Advocacy" <%= activity.department === 'Department of Organizational Development and Advocacy' ? 'selected' : '' %>>Department of Organizational Development and Advocacy</option>
