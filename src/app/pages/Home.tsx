@@ -11,12 +11,20 @@ import {
 import { motion } from "motion/react";
 import heroVideo from "../../imports/hero_background-1.mp4";
 import communityPhoto from "../../imports/mubes-1-1.jpeg";
-import { getRecentPosts } from "../data/blogPosts";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useData } from "../contexts/DataContext";
+import { useEffect } from "react";
 
 export function Home() {
   const { t, language } = useLanguage();
-  const recentPosts = getRecentPosts(3);
+  const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
+  useEffect(() => {
+    fetchBlogPosts();
+  }, [fetchBlogPosts]);
+  const recentPosts = blogPosts
+    .slice()
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
 
   // Video URLs - Ganti dengan link yang sebenarnya
   const indiversionVideoUrl =
