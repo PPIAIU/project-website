@@ -1,4 +1,7 @@
 import { Code, Github, Linkedin, Mail } from "lucide-react";
+import abidinPhoto from "../../imports/abidin.jpg";
+import nardiPhoto from "../../imports/nardi.jpg";
+import ariaPhoto from "../../imports/aria.png";
 
 interface Developer {
   name: string;
@@ -15,29 +18,29 @@ export function Developers() {
     {
       name: "Muhammad Zulfan Abidin",
       role: "Fullstack Web Developer — Secretary General PPI AIU 2023/2024",
-      photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
+      photo: abidinPhoto,
       bio: "This website helps people learn more about PPI AIU and aims to be sustainable for future generations.",
-      github: "https://github.com/username1",
-      linkedin: "https://linkedin.com/in/username1",
-      email: "dev1@example.com",
+      github: "https://github.com/Zulfan20",
+      linkedin: "https://www.linkedin.com/in/muhammad-zulfan-abidin-b4427b212/",
+      email: "zulfanisious20@gmail.com",
     },
     {
       name: "Nardi",
       role: "Fullstack Web Developer — Secretary Department of Penkastrat PPI AIU 2023/2024",
-      photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+      photo: nardiPhoto,
       bio: "A Computer Science student who contributed to developing this platform to connect people with PPI AIU.",
-      github: "https://github.com/username2",
-      linkedin: "https://linkedin.com/in/username2",
-      email: "dev2@example.com",
+      github: "https://github.com/nardi-nardi",
+      linkedin: "https://www.linkedin.com/in/nardinardi/",
+      email: "700nardi@gmail.com",
     },
     {
       name: "Aria Firmansyah",
-      role: "Full Stack Web Developer — Wakil Ketua Umum 2 PPI AIU 2024/2025",
-      photo: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400",
+      role: "Full Stack Web Developer — Vice Precident 2 PPI AIU 2024/2025",
+      photo: ariaPhoto,
       bio: "Passionate about creating user-friendly interfaces and enhancing the user experience of the website.",
-      github: "https://github.com/username3",
-      linkedin: "https://linkedin.com/in/username3",
-      email: "dev3@example.com",
+      github: "https://github.com/waltercoy",
+      linkedin: "https://www.linkedin.com/in/aria-firmansyah-0b1a87286/",
+      email: "ariafms00@gmail.com",
     },
   ];
 
