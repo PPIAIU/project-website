@@ -68,12 +68,12 @@ export function Members() {
               "Error fetching divisions:",
               divisionsError,
             );
-            return {
-              year: year.year,
-              group_photo_url:
-                "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
-              divisions: [],
-            };
+          return {
+            year: year.year,
+            group_photo_url:
+              (year as any).group_photo_url || "",
+            divisions: [],
+          };
           }
 
           // For each division, fetch members
@@ -108,7 +108,7 @@ export function Members() {
                     position: m.position,
                     photo_url:
                       m.photo_url ||
-                      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400",
+                      "",
                   })),
                 };
               }),
@@ -117,7 +117,7 @@ export function Members() {
           return {
             year: year.year,
             group_photo_url:
-              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800",
+              (year as any).group_photo_url || "",
             divisions: divisionsWithMembers,
           };
         }),

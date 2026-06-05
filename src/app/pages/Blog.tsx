@@ -38,7 +38,7 @@ export function Blog() {
         id: post.id,
         title: post.title,
         excerpt: post.excerpt || '',
-        image_url: post.image_url || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+        image_url: post.image_url || '',
         author: post.author || 'PPI AIU',
         date: post.published_at || post.created_at,
       }));

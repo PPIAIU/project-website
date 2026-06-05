@@ -92,7 +92,7 @@ export function AdminDashboard() {
             console.error('Error fetching divisions:', divisionsError);
             return {
               year: year.year,
-              group_photo_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800',
+              group_photo_url: '',
               members: [],
             };
           }
@@ -111,7 +111,7 @@ export function AdminDashboard() {
                   name: m.name,
                   position: m.position,
                   division: division.name,
-                  photo_url: m.photo_url || 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
+                  photo_url: m.photo_url || '',
                 }))
               );
             }
@@ -119,7 +119,7 @@ export function AdminDashboard() {
 
           return {
             year: year.year,
-            group_photo_url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800',
+            group_photo_url: year.group_photo_url || '',
             members: allMembers,
           };
         })
@@ -150,7 +150,7 @@ export function AdminDashboard() {
           excerpt: post.excerpt || '',
           author: post.author || 'PPI AIU',
           date: post.published_at || post.created_at,
-          image_url: post.image_url || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+          image_url: post.image_url || '',
         }))
       );
     } catch (error) {
@@ -201,11 +201,31 @@ export function AdminDashboard() {
   const handleSaveYear = async (data: { year: string; group_photo_url: string }) => {
     try {
       if (editingYear) {
-        // Update existing year - not implemented yet for group photo
-        alert('Update foto group akan segera tersedia');
-        setShowYearForm(false);
-        setEditingYear(undefined);
-        return;
+        // Update existing year's group photo
+        const { data: yearRecord, error: findError } = await supabase
+          .from('years')
+          .select('id')
+          .eq('year', editingYear.year)
+          .single();
+
+        if (findError || !yearRecord) {
+          console.error('Error finding year:', findError);
+          alert('Gagal menemukan tahun');
+          return;
+        }
+
+        const { error: updateError } = await supabase
+          .from('years')
+          .update({ group_photo_url: data.group_photo_url })
+          .eq('id', yearRecord.id);
+
+        if (updateError) {
+          console.error('Error updating year photo:', updateError);
+          alert('Gagal mengupdate foto grup: ' + updateError.message);
+          return;
+        }
+
+        await fetchYearsData();
       } else {
         // Add new year
         if (yearsData.some((y) => y.year === data.year)) {
@@ -215,7 +235,7 @@ export function AdminDashboard() {
 
         const { error } = await supabase
           .from('years')
-          .insert([{ year: data.year }]);
+          .insert([{ year: data.year, group_photo_url: data.group_photo_url }]);
 
         if (error) {
           console.error('Error adding year:', error);

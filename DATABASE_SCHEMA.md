@@ -1,21 +1,25 @@
 # Database Schema untuk PPI AIU Website
 
 ## Overview
+
 Database ini dirancang dengan struktur relasional yang efisien untuk mendukung semua kebutuhan fungsional website PPI AIU.
 
 ## Struktur Tabel
 
 ### 1. years (Tahun Kepengurusan)
+
 ```sql
 CREATE TABLE years (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   year VARCHAR(4) NOT NULL UNIQUE,
+  group_photo_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ```
 
 ### 2. divisions (Divisi)
+
 ```sql
 CREATE TABLE divisions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -29,6 +33,7 @@ CREATE TABLE divisions (
 ```
 
 ### 3. members (Anggota Kepengurusan)
+
 ```sql
 CREATE TABLE members (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -46,6 +51,7 @@ CREATE TABLE members (
 ```
 
 ### 4. blog_posts (Artikel/Aktivitas)
+
 ```sql
 CREATE TABLE blog_posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -63,6 +69,7 @@ CREATE TABLE blog_posts (
 ```
 
 ### 5. documents (Dokumen Organisasi)
+
 ```sql
 CREATE TABLE documents (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -103,6 +110,7 @@ CREATE INDEX idx_documents_published ON documents(published);
 ## Row Level Security (RLS) Policies
 
 ### Public Access (Read-Only)
+
 ```sql
 -- Enable RLS
 ALTER TABLE years ENABLE ROW LEVEL SECURITY;
@@ -120,6 +128,7 @@ CREATE POLICY "Public can view published documents" ON documents FOR SELECT USIN
 ```
 
 ### Admin Access (Full CRUD)
+
 ```sql
 -- Admin dapat melakukan semua operasi (memerlukan autentikasi Supabase)
 CREATE POLICY "Admins can do everything on years" ON years FOR ALL USING (auth.role() = 'authenticated');
@@ -161,7 +170,7 @@ INSERT INTO years (year) VALUES ('2024'), ('2023'), ('2022');
 -- Insert sample divisions (untuk tahun 2024)
 WITH year_2024 AS (SELECT id FROM years WHERE year = '2024')
 INSERT INTO divisions (year_id, name, description)
-SELECT 
+SELECT
   year_2024.id,
   name,
   description
@@ -173,6 +182,13 @@ FROM year_2024, (VALUES
 ) AS divisions(name, description);
 
 -- Insert sample members akan dilakukan melalui admin dashboard
+```
+
+## Migration: Menambah kolom group_photo_url ke tabel years
+
+```sql
+-- Jalankan jika tabel years sudah ada tanpa kolom group_photo_url
+ALTER TABLE years ADD COLUMN IF NOT EXISTS group_photo_url TEXT;
 ```
 
 ## Cara Menjalankan Migration
@@ -198,6 +214,7 @@ documents (independent)
 ## Notes untuk NFR-02 (Database Architecture)
 
 Desain ini memenuhi NFR-02 dengan:
+
 - ✅ Relasi yang jelas dan efisien (Year → Division → Members)
 - ✅ Indexes untuk query performance
 - ✅ Cascade delete untuk data integrity

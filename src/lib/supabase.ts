@@ -11,6 +11,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export interface YearData {
   id: string;
   year: string;
+  group_photo_url: string | null;
   created_at: string;
   updated_at: string;
 }

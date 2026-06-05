@@ -50,7 +50,7 @@ export function BlogDetail() {
         title: data.title,
         excerpt: data.excerpt || '',
         content: data.content || data.excerpt || '',
-        image_url: data.image_url || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800',
+        image_url: data.image_url || '',
         author: data.author || 'PPI AIU',
         date: data.published_at || data.created_at,
       });
