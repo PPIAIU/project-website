@@ -53,8 +53,18 @@ export function Blog() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <p className="text-lg">Memuat aktivitas...</p>
+      <div className="min-h-screen bg-background">
+        <div className="bg-primary text-primary-foreground py-12">
+          <div className="container mx-auto px-4">
+            <h1 className="text-4xl font-bold text-center">Rekam Jejak Aktivitas</h1>
+            <p className="text-center mt-4 opacity-90">
+              Kegiatan dan program kerja PPI AIU
+            </p>
+          </div>
+        </div>
+        <div className="container mx-auto px-4 py-16 flex justify-center">
+          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
       </div>
     );
   }
