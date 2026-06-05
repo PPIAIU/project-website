@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { motion } from "motion/react";
 import heroVideo from "../../imports/hero_background-1.mp4";
-import communityPhoto from "../../imports/DSC_0428__1_.JPG";
+import communityPhoto from "../../imports/mubes-1-1.jpeg";
 import { getRecentPosts } from "../data/blogPosts";
 import { useLanguage } from "../contexts/LanguageContext";
 
