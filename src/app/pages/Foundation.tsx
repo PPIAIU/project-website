@@ -142,10 +142,32 @@ export function Foundation() {
               {expandedDoc === doc.id && (
                 <div className="mt-6 border-t border-border pt-6">
                   <h3 className="font-bold text-lg mb-3">Preview Dokumen</h3>
-                  <div className="bg-muted/30 rounded-lg p-6 max-h-96 overflow-y-auto">
-                    <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
-                      {doc.content}
-                    </pre>
+                  <div className="bg-muted/30 rounded-lg overflow-hidden" style={{ height: '600px' }}>
+                    {doc.file_url && doc.file_url.endsWith('.pdf') ? (
+                      <iframe
+                        src={doc.file_url}
+                        className="w-full h-full border-0"
+                        title={`Preview: ${doc.title}`}
+                      />
+                    ) : doc.file_url && (doc.file_url.endsWith('.jpg') || doc.file_url.endsWith('.jpeg') || doc.file_url.endsWith('.png') || doc.file_url.endsWith('.gif') || doc.file_url.endsWith('.webp')) ? (
+                      <div className="flex items-center justify-center h-full p-4">
+                        <img
+                          src={doc.file_url}
+                          alt={doc.title}
+                          className="max-w-full max-h-full object-contain rounded"
+                        />
+                      </div>
+                    ) : doc.content ? (
+                      <div className="p-6 max-h-full overflow-y-auto">
+                        <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
+                          {doc.content}
+                        </pre>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center h-full text-muted-foreground">
+                        <p>Preview tidak tersedia untuk tipe file ini. Klik "Unduh Dokumen" untuk melihat.</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
