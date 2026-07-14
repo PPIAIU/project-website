@@ -40,6 +40,18 @@ function SkeletonDetail() {
   );
 }
 
+const getObjectPosition = (url: string | null) => {
+  if (!url) return "center";
+  try {
+    const urlObj = new URL(url);
+    const pos = urlObj.searchParams.get("pos");
+    return pos ? `center ${pos}%` : "center";
+  } catch (e) {
+    const match = url.match(/[?&]pos=(\d+)/);
+    return match ? `center ${match[1]}%` : "center";
+  }
+};
+
 export function BlogDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -179,6 +191,7 @@ export function BlogDetail() {
             <img
               src={post.image_url}
               alt={post.title}
+              style={{ objectPosition: getObjectPosition(post.image_url) }}
               className="w-full h-96 object-cover rounded-lg shadow-lg mb-8"
             />
           )}

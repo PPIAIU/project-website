@@ -16,6 +16,18 @@ function SkeletonCard() {
   );
 }
 
+const getObjectPosition = (url: string | null) => {
+  if (!url) return "center";
+  try {
+    const urlObj = new URL(url);
+    const pos = urlObj.searchParams.get("pos");
+    return pos ? `center ${pos}%` : "center";
+  } catch (e) {
+    const match = url.match(/[?&]pos=(\d+)/);
+    return match ? `center ${match[1]}%` : "center";
+  }
+};
+
 export function Blog() {
   const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
 
@@ -48,6 +60,7 @@ export function Blog() {
                     <img
                       src={post.image_url}
                       alt={post.title}
+                      style={{ objectPosition: getObjectPosition(post.image_url) }}
                       className="w-full h-48 object-cover"
                       loading="lazy"
                     />

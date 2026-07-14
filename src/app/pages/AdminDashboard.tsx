@@ -40,15 +40,15 @@ interface Document {
   file_url: string;
 }
 
-const getObjectPosition = (url: string | null) => {
-  if (!url) return "center top";
+const getObjectPosition = (url: string | null, defaultPos = "center top") => {
+  if (!url) return defaultPos;
   try {
     const urlObj = new URL(url);
     const pos = urlObj.searchParams.get("pos");
-    return pos ? `center ${pos}%` : "center top";
+    return pos ? `center ${pos}%` : defaultPos;
   } catch (e) {
     const match = url.match(/[?&]pos=(\d+)/);
-    return match ? `center ${match[1]}%` : "center top";
+    return match ? `center ${match[1]}%` : defaultPos;
   }
 };
 
@@ -843,6 +843,7 @@ export function AdminDashboard() {
                       <img
                         src={post.image_url}
                         alt={post.title}
+                        style={{ objectPosition: getObjectPosition(post.image_url, "center") }}
                         className="w-24 h-24 rounded object-cover"
                       />
                       <div className="flex-1">
