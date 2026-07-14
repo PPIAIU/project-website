@@ -135,7 +135,7 @@ export function Members() {
                               <span>Kembali ke foto bersama</span>
                             </button>
                           </div>
-                          {yearData.divisions.map((division) => (
+                          {yearData.divisions.filter(division => division.members.length > 0).map((division) => (
                             <div
                               key={division.id}
                               className="border-b border-border last:border-b-0"

@@ -372,6 +372,13 @@ export function AdminDashboard() {
       }
 
       if (memberData.id) {
+        // Fetch old division_id to clean it up if it becomes empty
+        const { data: oldMember } = await supabase
+          .from('members')
+          .select('division_id')
+          .eq('id', memberData.id)
+          .maybeSingle();
+
         // Update existing member
         const { error: updateError } = await supabase
           .from('members')
@@ -387,6 +394,21 @@ export function AdminDashboard() {
           console.error('Error updating member:', updateError);
           alert('Gagal mengupdate anggota: ' + updateError.message);
           return;
+        }
+
+        // Clean up old division if it is empty and changed
+        if (oldMember?.division_id && oldMember.division_id !== divisionId) {
+          const { data: remaining } = await supabase
+            .from('members')
+            .select('id')
+            .eq('division_id', oldMember.division_id);
+
+          if (!remaining || remaining.length === 0) {
+            await supabase
+              .from('divisions')
+              .delete()
+              .eq('id', oldMember.division_id);
+          }
         }
       } else {
         // Add new member
@@ -422,6 +444,13 @@ export function AdminDashboard() {
     }
 
     try {
+      // Fetch member's division_id to clean it up if it becomes empty
+      const { data: memberData } = await supabase
+        .from('members')
+        .select('division_id')
+        .eq('id', memberId)
+        .maybeSingle();
+
       const { error } = await supabase
         .from('members')
         .delete()
@@ -431,6 +460,21 @@ export function AdminDashboard() {
         console.error('Error deleting member:', error);
         alert('Gagal menghapus anggota: ' + error.message);
         return;
+      }
+
+      // Clean up division if empty
+      if (memberData?.division_id) {
+        const { data: remainingMembers } = await supabase
+          .from('members')
+          .select('id')
+          .eq('division_id', memberData.division_id);
+
+        if (!remainingMembers || remainingMembers.length === 0) {
+          await supabase
+            .from('divisions')
+            .delete()
+            .eq('id', memberData.division_id);
+        }
       }
 
       await fetchYearsData();
