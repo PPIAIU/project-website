@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { X, Upload, Loader2 } from "lucide-react";
 import type { BlogPost } from "../data/blogPosts";
 import { uploadFile } from "../../lib/storage";
