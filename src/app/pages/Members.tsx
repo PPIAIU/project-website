@@ -18,6 +18,18 @@ function SkeletonCard() {
   );
 }
 
+const getObjectPosition = (url: string | null) => {
+  if (!url) return "center top";
+  try {
+    const urlObj = new URL(url);
+    const pos = urlObj.searchParams.get("pos");
+    return pos ? `center ${pos}%` : "center top";
+  } catch (e) {
+    const match = url.match(/[?&]pos=(\d+)/);
+    return match ? `center ${match[1]}%` : "center top";
+  }
+};
+
 export function Members() {
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [showMembersDetail, setShowMembersDetail] = useState<string | null>(null);
@@ -153,7 +165,8 @@ export function Members() {
                                             <img
                                               src={member.photo_url}
                                               alt={member.name}
-                                              className="w-full h-full object-cover object-top"
+                                              style={{ objectPosition: getObjectPosition(member.photo_url) }}
+                                              className="w-full h-full object-cover"
                                               loading="lazy"
                                             />
                                           ) : (

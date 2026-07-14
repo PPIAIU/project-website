@@ -9,14 +9,42 @@ interface BlogPostFormProps {
   onSave: (post: Omit<BlogPost, "id"> & { id?: string }) => void;
 }
 
+const convertHtmlToText = (html: string): string => {
+  if (!html) return "";
+  if (!html.includes("<p>") && !html.includes("<h3>") && !html.includes("<ul>")) {
+    return html;
+  }
+  
+  return html
+    .replace(/<h3>(.*?)<\/h3>/g, "## $1")
+    .replace(/<li>(.*?)<\/li>/g, "- $1")
+    .replace(/<\/?ul>\n?/g, "")
+    .replace(/<\/p>\n?/g, "\n\n")
+    .replace(/<p>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+};
+
+const formatDateForInput = (dateStr?: string): string => {
+  if (!dateStr) return new Date().toISOString().split("T")[0];
+  try {
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) 
+      ? new Date().toISOString().split("T")[0] 
+      : d.toISOString().split("T")[0];
+  } catch (e) {
+    return new Date().toISOString().split("T")[0];
+  }
+};
+
 export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
   const [formData, setFormData] = useState({
     title: post?.title || "",
     excerpt: post?.excerpt || "",
-    content: post?.content || "",
+    content: post?.content ? convertHtmlToText(post.content) : "",
     author: post?.author || "",
     image_url: post?.image_url || "",
-    date: post?.date || new Date().toISOString().split("T")[0],
+    date: formatDateForInput(post?.date),
   });
   const [uploading, setUploading] = useState(false);
 

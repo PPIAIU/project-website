@@ -27,6 +27,7 @@ interface BlogPost {
   id: string;
   title: string;
   excerpt: string;
+  content: string;
   author: string;
   date: string;
   image_url: string;
@@ -38,6 +39,18 @@ interface Document {
   description: string;
   file_url: string;
 }
+
+const getObjectPosition = (url: string | null) => {
+  if (!url) return "center top";
+  try {
+    const urlObj = new URL(url);
+    const pos = urlObj.searchParams.get("pos");
+    return pos ? `center ${pos}%` : "center top";
+  } catch (e) {
+    const match = url.match(/[?&]pos=(\d+)/);
+    return match ? `center ${match[1]}%` : "center top";
+  }
+};
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("members");
@@ -148,6 +161,7 @@ export function AdminDashboard() {
           id: post.id,
           title: post.title,
           excerpt: post.excerpt || '',
+          content: post.content || '',
           author: post.author || 'PPI AIU',
           date: post.published_at || post.created_at,
           image_url: post.image_url || '',
@@ -500,6 +514,10 @@ export function AdminDashboard() {
         .replace(/\s+/g, '-')
         .replace(/-+/g, '-');
 
+      const published_at = postData.date 
+        ? new Date(postData.date).toISOString() 
+        : new Date().toISOString();
+
       if (postData.id) {
         // Update existing post
         const { error } = await supabase
@@ -507,10 +525,11 @@ export function AdminDashboard() {
           .update({
             title: postData.title,
             excerpt: postData.excerpt,
+            content: postData.content,
             author: postData.author,
             image_url: postData.image_url,
             published: true,
-            published_at: new Date().toISOString(),
+            published_at: published_at,
           })
           .eq('id', postData.id);
 
@@ -527,10 +546,11 @@ export function AdminDashboard() {
             title: postData.title,
             slug: slug,
             excerpt: postData.excerpt,
+            content: postData.content,
             author: postData.author,
             image_url: postData.image_url,
             published: true,
-            published_at: new Date().toISOString(),
+            published_at: published_at,
           }]);
 
         if (error) {
@@ -752,6 +772,7 @@ export function AdminDashboard() {
                                     <img
                                       src={member.photo_url}
                                       alt={member.name}
+                                      style={{ objectPosition: getObjectPosition(member.photo_url) }}
                                       className="w-full h-32 object-cover"
                                     />
                                     <div className="p-3">
