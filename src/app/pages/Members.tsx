@@ -165,8 +165,11 @@ export function Members() {
                                             <img
                                               src={member.photo_url}
                                               alt={member.name}
-                                              style={{ objectPosition: getObjectPosition(member.photo_url) }}
-                                              className="w-full h-full object-cover"
+                                              style={{ 
+                                                objectPosition: getObjectPosition(member.photo_url),
+                                                transform: 'translateZ(0)'
+                                              }}
+                                              className="w-full h-full object-cover will-change-transform"
                                               loading="lazy"
                                             />
                                           ) : (

@@ -350,8 +350,11 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
                     <img
                       src={formData.image_url}
                       alt="Preview"
-                      style={{ objectPosition: `center ${imagePosition}%` }}
-                      className="w-full h-full object-cover pointer-events-none"
+                      style={{ 
+                        objectPosition: `center ${imagePosition}%`,
+                        transform: 'translateZ(0)'
+                      }}
+                      className="w-full h-full object-cover pointer-events-none will-change-transform"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                       }}
