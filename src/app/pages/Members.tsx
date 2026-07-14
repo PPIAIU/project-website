@@ -30,6 +30,18 @@ const getObjectPosition = (url: string | null) => {
   }
 };
 
+const getScaleTransform = (url: string | null) => {
+  if (!url) return "scale(1)";
+  try {
+    const urlObj = new URL(url);
+    const scale = urlObj.searchParams.get("scale");
+    return scale ? `scale(${scale})` : "scale(1)";
+  } catch (e) {
+    const match = url.match(/[?&]scale=([0-9.]+)/);
+    return match ? `scale(${match[1]})` : "scale(1)";
+  }
+};
+
 export function Members() {
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [showMembersDetail, setShowMembersDetail] = useState<string | null>(null);
@@ -167,7 +179,8 @@ export function Members() {
                                               alt={member.name}
                                               style={{ 
                                                 objectPosition: getObjectPosition(member.photo_url),
-                                                transform: 'translateZ(0)'
+                                                transform: `${getScaleTransform(member.photo_url)} translateZ(0)`,
+                                                transformOrigin: 'center'
                                               }}
                                               className="w-full h-full object-cover will-change-transform"
                                               loading="lazy"

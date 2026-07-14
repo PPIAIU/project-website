@@ -24,6 +24,12 @@ export function MemberForm({ member, year, onClose, onSave }: MemberFormProps) {
     return match ? parseInt(match[1], 10) : 0;
   };
 
+  const getInitialScale = (url: string | null): number => {
+    if (!url) return 1; // Default scale is 1x (100%)
+    const match = url.match(/[?&]scale=([0-9.]+)/);
+    return match ? parseFloat(match[1]) : 1;
+  };
+
   const [formData, setFormData] = useState({
     name: member?.name || "",
     position: member?.position || "",
@@ -32,6 +38,9 @@ export function MemberForm({ member, year, onClose, onSave }: MemberFormProps) {
   });
   const [imagePosition, setImagePosition] = useState<number>(() =>
     getInitialPosition(member?.photo_url || null)
+  );
+  const [imageScale, setImageScale] = useState<number>(() =>
+    getInitialScale(member?.photo_url || null)
   );
   const [uploading, setUploading] = useState(false);
 
@@ -137,16 +146,17 @@ export function MemberForm({ member, year, onClose, onSave }: MemberFormProps) {
       return;
     }
 
-    // Append/update position query parameter in photo_url
+    // Append/update position and scale query parameters in photo_url
     let finalPhotoUrl = formData.photo_url;
     try {
       const urlObj = new URL(finalPhotoUrl);
       urlObj.searchParams.set("pos", imagePosition.toString());
+      urlObj.searchParams.set("scale", imageScale.toString());
       finalPhotoUrl = urlObj.toString();
     } catch (err) {
-      const cleanUrl = finalPhotoUrl.replace(/[?&]pos=\d+/, "");
+      const cleanUrl = finalPhotoUrl.replace(/[?&](pos|scale)=[^&]+/g, "");
       const separator = cleanUrl.includes("?") ? "&" : "?";
-      finalPhotoUrl = `${cleanUrl}${separator}pos=${imagePosition}`;
+      finalPhotoUrl = `${cleanUrl}${separator}pos=${imagePosition}&scale=${imageScale}`;
     }
 
     onSave({
@@ -281,9 +291,10 @@ export function MemberForm({ member, year, onClose, onSave }: MemberFormProps) {
                       alt="Preview"
                       style={{ 
                         objectPosition: `center ${imagePosition}%`,
-                        transform: 'translateZ(0)'
+                        transform: `scale(${imageScale}) translateZ(0)`,
+                        transformOrigin: 'center'
                       }}
-                      className="w-full h-full object-cover pointer-events-none will-change-transform"
+                      className="w-full h-full object-cover pointer-events-none will-change-transform transition-transform duration-100"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                       }}
@@ -298,18 +309,33 @@ export function MemberForm({ member, year, onClose, onSave }: MemberFormProps) {
                     </div>
                   </div>
                   
-                  <div className="flex-1 w-full space-y-2">
+                  <div className="flex-1 w-full space-y-3">
                     <p className="text-sm font-medium">Instruksi Penyelarasan:</p>
                     <ul className="text-xs text-muted-foreground list-disc list-inside space-y-1">
-                      <li>Arahkan mouse ke atas foto anggota di sebelah kiri.</li>
-                      <li><strong>Klik dan tahan</strong> tombol mouse, lalu <strong>geser ke atas atau ke bawah</strong> untuk menyelaraskan wajah anggota agar pas di tengah.</li>
-                      <li>Posisi fokus saat ini: <strong className="text-primary">{imagePosition}%</strong></li>
+                      <li>Gunakan slider <strong>Ukuran Foto (Zoom)</strong> untuk memperbesar wajah.</li>
+                      <li><strong>Klik dan seret foto</strong> ke atas/bawah untuk memposisikan wajah tepat di tengah.</li>
                     </ul>
                     
-                    <div className="pt-2">
+                    <div className="pt-1">
                       <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
-                        <span>Atas (0%)</span>
-                        <span>Bawah (100%)</span>
+                        <span>Ukuran Foto (Zoom):</span>
+                        <span className="text-primary font-bold">{Math.round(imageScale * 100)}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="3"
+                        step="0.05"
+                        value={imageScale}
+                        onChange={(e) => setImageScale(parseFloat(e.target.value))}
+                        className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
+                        <span>Posisi Vertikal ({imagePosition}%):</span>
+                        <span>0% (Atas) - 100% (Bawah)</span>
                       </div>
                       <input
                         type="range"

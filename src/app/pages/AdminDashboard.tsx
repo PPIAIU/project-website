@@ -52,6 +52,18 @@ const getObjectPosition = (url: string | null, defaultPos = "center top") => {
   }
 };
 
+const getScaleTransform = (url: string | null) => {
+  if (!url) return "scale(1)";
+  try {
+    const urlObj = new URL(url);
+    const scale = urlObj.searchParams.get("scale");
+    return scale ? `scale(${scale})` : "scale(1)";
+  } catch (e) {
+    const match = url.match(/[?&]scale=([0-9.]+)/);
+    return match ? `scale(${match[1]})` : "scale(1)";
+  }
+};
+
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("members");
   const [yearsData, setYearsData] = useState<YearData[]>([]);
@@ -816,8 +828,12 @@ export function AdminDashboard() {
                                     <img
                                       src={member.photo_url}
                                       alt={member.name}
-                                      style={{ objectPosition: getObjectPosition(member.photo_url) }}
-                                      className="w-full h-32 object-cover"
+                                      style={{ 
+                                        objectPosition: getObjectPosition(member.photo_url),
+                                        transform: `${getScaleTransform(member.photo_url)} translateZ(0)`,
+                                        transformOrigin: 'center'
+                                      }}
+                                      className="w-full h-32 object-cover will-change-transform"
                                     />
                                     <div className="p-3">
                                       <h5 className="font-semibold">{member.name}</h5>

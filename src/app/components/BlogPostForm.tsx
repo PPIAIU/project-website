@@ -44,6 +44,12 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
     return match ? parseInt(match[1], 10) : 50;
   };
 
+  const getInitialScale = (url: string | null): number => {
+    if (!url) return 1;
+    const match = url.match(/[?&]scale=([0-9.]+)/);
+    return match ? parseFloat(match[1]) : 1;
+  };
+
   const [formData, setFormData] = useState({
     title: post?.title || "",
     excerpt: post?.excerpt || "",
@@ -54,6 +60,9 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
   });
   const [imagePosition, setImagePosition] = useState<number>(() =>
     getInitialPosition(post?.image_url || null)
+  );
+  const [imageScale, setImageScale] = useState<number>(() =>
+    getInitialScale(post?.image_url || null)
   );
   const [uploading, setUploading] = useState(false);
 
@@ -159,16 +168,17 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
       return;
     }
 
-    // Append/update position query parameter in image_url
+    // Append/update position and scale query parameters in image_url
     let finalImageUrl = formData.image_url;
     try {
       const urlObj = new URL(finalImageUrl);
       urlObj.searchParams.set("pos", imagePosition.toString());
+      urlObj.searchParams.set("scale", imageScale.toString());
       finalImageUrl = urlObj.toString();
     } catch (err) {
-      const cleanUrl = finalImageUrl.replace(/[?&]pos=\d+/, "");
+      const cleanUrl = finalImageUrl.replace(/[?&](pos|scale)=[^&]+/g, "");
       const separator = cleanUrl.includes("?") ? "&" : "?";
-      finalImageUrl = `${cleanUrl}${separator}pos=${imagePosition}`;
+      finalImageUrl = `${cleanUrl}${separator}pos=${imagePosition}&scale=${imageScale}`;
     }
 
     // Convert plain text content to simple HTML
@@ -352,9 +362,10 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
                       alt="Preview"
                       style={{ 
                         objectPosition: `center ${imagePosition}%`,
-                        transform: 'translateZ(0)'
+                        transform: `scale(${imageScale}) translateZ(0)`,
+                        transformOrigin: 'center'
                       }}
-                      className="w-full h-full object-cover pointer-events-none will-change-transform"
+                      className="w-full h-full object-cover pointer-events-none will-change-transform transition-transform duration-100"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                       }}
@@ -368,16 +379,29 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
                     </div>
                   </div>
                   
-                  <div className="w-full sm:w-64 space-y-2">
-                    <p className="text-xs font-semibold">Geser Foto Sampul:</p>
-                    <p className="text-[11px] text-muted-foreground">
-                      Klik dan seret foto ke atas/bawah untuk menempatkan wajah atau bagian penting artikel tepat di tengah.
-                    </p>
+                  <div className="w-full sm:w-64 space-y-3">
+                    <p className="text-xs font-semibold">Penyelarasan Foto:</p>
+                    
                     <div className="pt-1">
-                      <div className="flex justify-between text-[9px] text-muted-foreground mb-1">
-                        <span>Atas (0%)</span>
-                        <span>Tengah (50%)</span>
-                        <span>Bawah (100%)</span>
+                      <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
+                        <span>Ukuran Foto (Zoom):</span>
+                        <span className="text-primary font-bold">{Math.round(imageScale * 100)}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="3"
+                        step="0.05"
+                        value={imageScale}
+                        onChange={(e) => setImageScale(parseFloat(e.target.value))}
+                        className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-[10px] text-muted-foreground mb-1">
+                        <span>Posisi Vertikal ({imagePosition}%):</span>
+                        <span>0% (Atas) - 100% (Bawah)</span>
                       </div>
                       <input
                         type="range"
@@ -387,9 +411,6 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
                         onChange={(e) => setImagePosition(parseInt(e.target.value))}
                         className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                       />
-                      <p className="text-[10px] text-muted-foreground text-center mt-1">
-                        Posisi fokus: {imagePosition}%
-                      </p>
                     </div>
                   </div>
                 </div>

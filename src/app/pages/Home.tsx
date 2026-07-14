@@ -27,6 +27,18 @@ const getObjectPosition = (url: string | null) => {
   }
 };
 
+const getScaleTransform = (url: string | null) => {
+  if (!url) return "scale(1)";
+  try {
+    const urlObj = new URL(url);
+    const scale = urlObj.searchParams.get("scale");
+    return scale ? `scale(${scale})` : "scale(1)";
+  } catch (e) {
+    const match = url.match(/[?&]scale=([0-9.]+)/);
+    return match ? `scale(${match[1]})` : "scale(1)";
+  }
+};
+
 export function Home() {
   const { t, language } = useLanguage();
   const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
@@ -342,8 +354,12 @@ export function Home() {
                 <img
                   src={post.image_url}
                   alt={post.title}
-                  style={{ objectPosition: getObjectPosition(post.image_url) }}
-                  className="w-full h-48 object-cover"
+                  style={{ 
+                    objectPosition: getObjectPosition(post.image_url),
+                    transform: `${getScaleTransform(post.image_url)} translateZ(0)`,
+                    transformOrigin: 'center'
+                  }}
+                  className="w-full h-48 object-cover will-change-transform"
                   loading="lazy"
                 />
                 <div className="p-6">
