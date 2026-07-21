@@ -181,9 +181,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("*")
+        .select("id, title, excerpt, image_url, author, published_at, created_at")
         .eq("published", true)
-        .order("published_at", { ascending: false });
+        .order("published_at", { ascending: false })
+        .limit(20);
 
       if (error) {
         console.error("Error fetching blog posts:", error);
@@ -215,9 +216,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
     try {
       const { data, error } = await supabase
         .from("documents")
-        .select("*")
+        .select("id, title, description, file_url, file_size, updated_at")
         .eq("published", true)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false })
+        .limit(20);
 
       if (error) {
         console.error("Error fetching documents:", error);
