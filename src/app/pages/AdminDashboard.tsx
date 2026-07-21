@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { LogOut, Users, BookOpen, FileText, Plus, Edit, Trash2, ChevronDown, ChevronRight } from "lucide-react";
+import { LogOut, Users, BookOpen, FileText, Plus, Edit, Trash2, ChevronDown, ChevronRight, ShieldCheck, Shield, UserCheck, Key, UserPlus } from "lucide-react";
 import { BlogPostForm } from "../components/BlogPostForm";
 import { MemberForm } from "../components/MemberForm";
 import { YearForm } from "../components/YearForm";
 import { DocumentForm } from "../components/DocumentForm";
+import { AdminUserForm } from "../components/AdminUserForm";
 import { supabase } from "../../lib/supabase";
+import {
+  AdminUser,
+  getCurrentAdminSession,
+  fetchAdminUsers,
+  saveAdminUser,
+  deleteAdminUser,
+  clearAdminSession,
+} from "../../lib/adminUsers";
 
-type Tab = "members" | "blog" | "documents";
+type Tab = "members" | "blog" | "documents" | "users";
 
 interface Member {
   id: string;
@@ -78,6 +87,13 @@ export function AdminDashboard() {
   const [editingYear, setEditingYear] = useState<{ year: string; group_photo_url: string } | undefined>();
   const [showDocumentForm, setShowDocumentForm] = useState(false);
   const [editingDocument, setEditingDocument] = useState<Document | undefined>();
+  
+  // Admin User Management State
+  const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
+  const [adminUsersList, setAdminUsersList] = useState<AdminUser[]>([]);
+  const [showAdminUserForm, setShowAdminUserForm] = useState(false);
+  const [editingAdminUser, setEditingAdminUser] = useState<AdminUser | undefined>();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,8 +103,17 @@ export function AdminDashboard() {
       return;
     }
 
+    const session = getCurrentAdminSession();
+    setCurrentUser(session);
+
     fetchAllData();
+    loadAdminUsersList();
   }, [navigate]);
+
+  const loadAdminUsersList = async () => {
+    const users = await fetchAdminUsers();
+    setAdminUsersList(users);
+  };
 
   const fetchAllData = async () => {
     await Promise.all([fetchYearsData(), fetchBlogPosts(), fetchDocuments()]);
@@ -210,8 +235,60 @@ export function AdminDashboard() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
+    clearAdminSession();
     navigate("/login");
+  };
+
+  const handleAddAdminUser = () => {
+    setEditingAdminUser(undefined);
+    setShowAdminUserForm(true);
+  };
+
+  const handleEditAdminUser = (user: AdminUser) => {
+    setEditingAdminUser(user);
+    setShowAdminUserForm(true);
+  };
+
+  const handleSaveAdminUser = async (data: {
+    name: string;
+    email: string;
+    password?: string;
+    role: "super_admin" | "editor";
+  }) => {
+    try {
+      await saveAdminUser({
+        id: editingAdminUser?.id,
+        ...data,
+      });
+      await loadAdminUsersList();
+      setShowAdminUserForm(false);
+      setEditingAdminUser(undefined);
+    } catch (err: any) {
+      alert(err.message || "Gagal menyimpan akun admin");
+    }
+  };
+
+  const handleDeleteAdminUser = async (user: AdminUser) => {
+    if (user.email.toLowerCase() === "adm.ppi.aiu@gmail.com") {
+      alert("Akun Utama Super Admin tidak dapat dihapus!");
+      return;
+    }
+
+    if (currentUser && currentUser.id === user.id) {
+      alert("Anda tidak dapat menghapus akun Anda sendiri saat sedang login!");
+      return;
+    }
+
+    if (!confirm(`Apakah Anda yakin ingin menghapus akun admin "${user.name}" (${user.email})?`)) {
+      return;
+    }
+
+    try {
+      await deleteAdminUser(user.id);
+      await loadAdminUsersList();
+    } catch (err: any) {
+      alert(err.message || "Gagal menghapus akun admin");
+    }
   };
 
   const handleAddYear = () => {
@@ -687,27 +764,58 @@ export function AdminDashboard() {
   return (
     <div className="min-h-screen bg-secondary">
       <div className="bg-primary text-primary-foreground py-6">
-        <div className="container mx-auto px-4 flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Dashboard Admin</h1>
-          <button
-            onClick={handleLogout}
-            className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors"
-          >
-            <LogOut size={20} />
-            <span>Keluar</span>
-          </button>
+        <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold">Dashboard Admin</h1>
+            <p className="text-primary-foreground/80 text-sm mt-1">
+              Sistem Manajemen Konten & Akses Website PPI AIU
+            </p>
+          </div>
+
+          <div className="flex items-center gap-4">
+            {currentUser && (
+              <div className="flex items-center gap-3 bg-white/10 px-4 py-2 rounded-lg border border-white/20">
+                <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center font-bold text-white uppercase">
+                  {currentUser.name.charAt(0)}
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-semibold flex items-center gap-1.5">
+                    {currentUser.name}
+                    {currentUser.role === "super_admin" ? (
+                      <span className="bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <ShieldCheck size={12} /> Super Admin
+                      </span>
+                    ) : (
+                      <span className="bg-blue-400 text-blue-950 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <Shield size={12} /> Editor
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-xs text-primary-foreground/70">{currentUser.email}</div>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors border border-white/20 text-sm font-medium"
+            >
+              <LogOut size={18} />
+              <span>Keluar</span>
+            </button>
+          </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 py-8">
         <div className="bg-card border border-border rounded-lg shadow-lg overflow-hidden">
           <div className="border-b border-border">
-            <div className="flex">
+            <div className="flex overflow-x-auto">
               <button
                 onClick={() => setActiveTab("members")}
-                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors ${
+                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "members"
-                    ? "border-primary text-primary"
+                    ? "border-primary text-primary font-semibold"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -716,26 +824,39 @@ export function AdminDashboard() {
               </button>
               <button
                 onClick={() => setActiveTab("blog")}
-                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors ${
+                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "blog"
-                    ? "border-primary text-primary"
+                    ? "border-primary text-primary font-semibold"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <BookOpen size={20} />
-                <span>Artikel</span>
+                <span>Artikel & Blog</span>
               </button>
               <button
                 onClick={() => setActiveTab("documents")}
-                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors ${
+                className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
                   activeTab === "documents"
-                    ? "border-primary text-primary"
+                    ? "border-primary text-primary font-semibold"
                     : "border-transparent text-muted-foreground hover:text-foreground"
                 }`}
               >
                 <FileText size={20} />
                 <span>Dokumen</span>
               </button>
+              {currentUser?.role === "super_admin" && (
+                <button
+                  onClick={() => setActiveTab("users")}
+                  className={`flex items-center space-x-2 px-6 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                    activeTab === "users"
+                      ? "border-primary text-primary font-semibold"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <ShieldCheck size={20} className="text-amber-500" />
+                  <span>Kelola Admin</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -759,21 +880,25 @@ export function AdminDashboard() {
                       key={yearData.year}
                       className="bg-muted/30 border border-border rounded-lg overflow-hidden"
                     >
-                      <div className="flex items-center justify-between p-4 bg-muted/50">
-                        <button
-                          onClick={() => toggleYear(yearData.year)}
-                          className="flex items-center space-x-2 flex-1 text-left"
-                        >
-                          {selectedYear === yearData.year ? (
-                            <ChevronDown className="w-5 h-5 text-primary" />
-                          ) : (
-                            <ChevronRight className="w-5 h-5 text-primary" />
-                          )}
-                          <h3 className="font-bold text-lg">Kepengurusan {yearData.year}</h3>
-                          <span className="text-sm text-muted-foreground">
-                            ({yearData.members.length} anggota)
-                          </span>
-                        </button>
+                      <div className="p-4 flex items-center justify-between bg-card">
+                        <div className="flex items-center space-x-4">
+                          <button
+                            onClick={() => toggleYear(yearData.year)}
+                            className="p-1 hover:bg-muted rounded transition-colors"
+                          >
+                            {selectedYear === yearData.year ? (
+                              <ChevronDown size={20} />
+                            ) : (
+                              <ChevronRight size={20} />
+                            )}
+                          </button>
+                          <div>
+                            <h3 className="text-lg font-bold">Tahun {yearData.year}</h3>
+                            <p className="text-sm text-muted-foreground">
+                              {yearData.members.length} Anggota
+                            </p>
+                          </div>
+                        </div>
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => handleEditYear(yearData.year, yearData.group_photo_url)}
@@ -783,82 +908,82 @@ export function AdminDashboard() {
                             <Edit size={18} className="text-primary" />
                           </button>
                           <button
-                            onClick={() => handleDeleteYear(yearData.year)}
-                            className="p-2 hover:bg-muted rounded transition-colors"
-                            title="Hapus Tahun"
+                            onClick={() => handleAddMember(yearData.year)}
+                            className="flex items-center space-x-1 text-sm bg-primary/10 text-primary hover:bg-primary/20 px-3 py-1.5 rounded transition-colors"
                           >
-                            <Trash2 size={18} className="text-destructive" />
+                            <Plus size={16} />
+                            <span>Tambah Anggota</span>
                           </button>
                         </div>
                       </div>
 
                       {selectedYear === yearData.year && (
-                        <div className="p-4">
-                          <div className="mb-4">
-                            <div className="flex items-center justify-between mb-2">
-                              <h4 className="font-semibold">Foto Grup</h4>
-                              <button
-                                onClick={() => handleAddMember(yearData.year)}
-                                className="flex items-center space-x-2 bg-primary text-primary-foreground px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
-                              >
-                                <Plus size={16} />
-                                <span>Tambah Anggota</span>
-                              </button>
+                        <div className="p-4 border-t border-border bg-muted/10 space-y-6">
+                          {yearData.group_photo_url && (
+                            <div>
+                              <h4 className="text-sm font-semibold mb-2">Foto Kepengurusan:</h4>
+                              <div className="relative h-64 rounded-lg overflow-hidden border border-border">
+                                <img
+                                  src={yearData.group_photo_url}
+                                  alt={`Foto Kepengurusan ${yearData.year}`}
+                                  style={{
+                                    objectPosition: getObjectPosition(yearData.group_photo_url, "center top"),
+                                    transform: getScaleTransform(yearData.group_photo_url),
+                                  }}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
                             </div>
-                            <img
-                              src={yearData.group_photo_url}
-                              alt={`Kepengurusan ${yearData.year}`}
-                              className="w-full max-w-md h-48 object-cover rounded-lg border border-border"
-                            />
-                          </div>
+                          )}
 
-                          <div className="mt-4">
-                            <h4 className="font-semibold mb-3">Daftar Anggota</h4>
+                          <div>
+                            <h4 className="text-sm font-semibold mb-3">Daftar Anggota:</h4>
                             {yearData.members.length === 0 ? (
-                              <p className="text-muted-foreground text-center py-8">
-                                Belum ada anggota. Klik "Tambah Anggota" untuk menambahkan.
+                              <p className="text-sm text-muted-foreground italic">
+                                Belum ada anggota untuk tahun {yearData.year}
                               </p>
                             ) : (
-                              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {yearData.members.map((member) => (
                                   <div
                                     key={member.id}
-                                    className="bg-card border border-border rounded-lg overflow-hidden"
+                                    className="bg-card p-4 border border-border rounded-lg flex items-center space-x-3"
                                   >
-                                    <img
-                                      src={member.photo_url}
-                                      alt={member.name}
-                                      style={{ 
-                                        objectPosition: getObjectPosition(member.photo_url),
-                                        transform: `${getScaleTransform(member.photo_url)} translateZ(0)`,
-                                        transformOrigin: 'center'
-                                      }}
-                                      className="w-full h-32 object-cover will-change-transform"
-                                    />
-                                    <div className="p-3">
-                                      <h5 className="font-semibold">{member.name}</h5>
-                                      <p className="text-sm text-muted-foreground">
-                                        {member.position}
-                                      </p>
-                                      <p className="text-xs text-muted-foreground">
-                                        {member.division}
-                                      </p>
-                                      <div className="flex items-center space-x-2 mt-2">
-                                        <button
-                                          onClick={() => handleEditMember(yearData.year, member)}
-                                          className="flex-1 p-1.5 hover:bg-muted rounded transition-colors text-center"
-                                          title="Edit"
-                                        >
-                                          <Edit size={16} className="text-primary mx-auto" />
-                                        </button>
-                                        <button
-                                          onClick={() => handleDeleteMember(yearData.year, member.id)}
-                                          className="flex-1 p-1.5 hover:bg-muted rounded transition-colors text-center"
-                                          title="Hapus"
-                                        >
-                                          <Trash2 size={16} className="text-destructive mx-auto" />
-                                        </button>
+                                    {member.photo_url ? (
+                                      <img
+                                        src={member.photo_url}
+                                        alt={member.name}
+                                        style={{
+                                          objectPosition: getObjectPosition(member.photo_url, "center top"),
+                                          transform: getScaleTransform(member.photo_url),
+                                        }}
+                                        className="w-12 h-12 rounded-full object-cover border border-border"
+                                      />
+                                    ) : (
+                                      <div className="w-12 h-12 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center">
+                                        {member.name.charAt(0)}
                                       </div>
+                                    )}
+                                    <div className="flex-1 min-w-0">
+                                      <h5 className="font-bold truncate">{member.name}</h5>
+                                      <p className="text-xs text-primary font-medium">{member.position}</p>
+                                      <p className="text-xs text-muted-foreground truncate">{member.division}</p>
+                                    </div>
+                                    <div className="flex items-center space-x-1">
+                                      <button
+                                        onClick={() => handleEditMember(yearData.year, member)}
+                                        className="p-1 hover:bg-muted rounded transition-colors text-muted-foreground hover:text-primary"
+                                        title="Edit"
+                                      >
+                                        <Edit size={16} />
+                                      </button>
+                                      <button
+                                        onClick={() => handleDeleteMember(yearData.year, member.id)}
+                                        className="p-1 hover:bg-muted rounded transition-colors text-muted-foreground hover:text-destructive"
+                                        title="Hapus"
+                                      >
+                                        <Trash2 size={16} />
+                                      </button>
                                     </div>
                                   </div>
                                 ))}
@@ -884,7 +1009,7 @@ export function AdminDashboard() {
             {activeTab === "blog" && (
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-bold">Kelola Artikel</h2>
+                  <h2 className="text-2xl font-bold">Kelola Artikel & Blog</h2>
                   <button
                     onClick={handleAddBlogPost}
                     className="flex items-center space-x-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
@@ -898,7 +1023,7 @@ export function AdminDashboard() {
                   {blogPosts.map((post) => (
                     <div
                       key={post.id}
-                      className="flex items-start space-x-4 p-4 border border-border rounded-lg"
+                      className="flex items-center justify-between p-4 border border-border rounded-lg gap-4"
                     >
                       <img
                         src={post.image_url}
@@ -984,12 +1109,121 @@ export function AdminDashboard() {
                 </div>
               </div>
             )}
+
+            {activeTab === "users" && currentUser?.role === "super_admin" && (
+              <div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                  <div>
+                    <h2 className="text-2xl font-bold flex items-center gap-2">
+                      <ShieldCheck className="text-amber-500" />
+                      Manajemen Akun Admin
+                    </h2>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      Kelola daftar akun yang dapat mengakses Dashboard Admin dan batasi hak aksesnya.
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleAddAdminUser}
+                    className="flex items-center space-x-2 bg-primary text-primary-foreground px-4 py-2.5 rounded-lg hover:bg-primary/90 transition-colors text-sm font-semibold shadow-sm"
+                  >
+                    <UserPlus size={18} />
+                    <span>Tambah Admin Baru</span>
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {adminUsersList.map((user) => {
+                    const isMainAdmin = user.email.toLowerCase() === "adm.ppi.aiu@gmail.com";
+                    const isSelf = currentUser?.id === user.id;
+
+                    return (
+                      <div
+                        key={user.id}
+                        className="bg-card border border-border rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-start justify-between gap-3 mb-3">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-lg border border-primary/20">
+                                {user.name.charAt(0).toUpperCase()}
+                              </div>
+                              <div>
+                                <h3 className="font-bold text-base flex items-center gap-2">
+                                  {user.name}
+                                  {isSelf && (
+                                    <span className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded font-normal">
+                                      (Anda)
+                                    </span>
+                                  )}
+                                </h3>
+                                <p className="text-xs text-muted-foreground">{user.email}</p>
+                              </div>
+                            </div>
+
+                            {user.role === "super_admin" ? (
+                              <span className="bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 border border-amber-300 dark:border-amber-800">
+                                <ShieldCheck size={14} /> Super Admin
+                              </span>
+                            ) : (
+                              <span className="bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1 border border-blue-300 dark:border-blue-800">
+                                <Shield size={14} /> Editor
+                              </span>
+                            )}
+                          </div>
+
+                          <div className="text-xs text-muted-foreground bg-muted/30 p-2.5 rounded-lg mb-4 flex items-center justify-between">
+                            <span>Dibuat pada:</span>
+                            <span className="font-medium text-foreground">
+                              {new Date(user.created_at).toLocaleDateString("id-ID", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-end space-x-2 pt-3 border-t border-border">
+                          <button
+                            onClick={() => handleEditAdminUser(user)}
+                            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium border border-border rounded-lg hover:bg-muted transition-colors text-primary"
+                          >
+                            <Edit size={14} />
+                            <span>Edit Role</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleDeleteAdminUser(user)}
+                            disabled={isMainAdmin || isSelf}
+                            className={`flex items-center gap-1 px-3 py-1.5 text-xs font-medium border border-border rounded-lg transition-colors ${
+                              isMainAdmin || isSelf
+                                ? "opacity-40 cursor-not-allowed text-muted-foreground"
+                                : "hover:bg-destructive/10 text-destructive border-destructive/20"
+                            }`}
+                            title={
+                              isMainAdmin
+                                ? "Akun Utama Super Admin tidak bisa dihapus"
+                                : isSelf
+                                ? "Tidak bisa menghapus akun sendiri"
+                                : "Hapus Akun Admin"
+                            }
+                          >
+                            <Trash2 size={14} />
+                            <span>Hapus</span>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="mt-8 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-          <p className="text-sm text-yellow-800">
-            <strong>Catatan:</strong> Ini adalah versi demo. Pada implementasi penuh dengan Supabase, semua operasi CRUD akan tersimpan di database.
+        <div className="mt-8 bg-muted/40 border border-border rounded-lg p-4 flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
+            Sistem Website PPI AIU — Menggunakan Supabase Database & Multi-Role Authentication.
           </p>
         </div>
       </div>
@@ -1037,6 +1271,17 @@ export function AdminDashboard() {
             setEditingDocument(undefined);
           }}
           onSave={handleSaveDocument}
+        />
+      )}
+
+      {showAdminUserForm && (
+        <AdminUserForm
+          user={editingAdminUser}
+          onClose={() => {
+            setShowAdminUserForm(false);
+            setEditingAdminUser(undefined);
+          }}
+          onSave={handleSaveAdminUser}
         />
       )}
     </div>

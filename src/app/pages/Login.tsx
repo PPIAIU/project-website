@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import { Lock, Mail } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
+import { getLocalAdminUsers, setCurrentAdminSession } from "../../lib/adminUsers";
+
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,23 +18,49 @@ export function Login() {
     setLoading(true);
 
     try {
+      // First attempt Supabase Auth
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (authError) {
+      // Check registered admin users list
+      const registeredUsers = getLocalAdminUsers();
+      const matchedUser = registeredUsers.find(
+        (u) => u.email.toLowerCase() === email.trim().toLowerCase()
+      );
+
+      // Check if password matches local admin user if Supabase Auth failed
+      let isSuccess = false;
+      let sessionUser = matchedUser;
+
+      if (!authError && data?.session) {
+        isSuccess = true;
+        localStorage.setItem("supabase_session", JSON.stringify(data.session));
+      } else if (matchedUser && matchedUser.password && matchedUser.password === password) {
+        isSuccess = true;
+      }
+
+      if (!isSuccess) {
         setError("Email atau password salah");
         setLoading(false);
         return;
       }
 
-      if (data.session) {
-        // Store session info for compatibility
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("supabase_session", JSON.stringify(data.session));
-        navigate("/admin");
+      // Default user profile if not matched
+      if (!sessionUser) {
+        sessionUser = {
+          id: data?.user?.id || "admin-session",
+          name: email.split("@")[0],
+          email: email.trim().toLowerCase(),
+          role: email.trim().toLowerCase() === "adm.ppi.aiu@gmail.com" ? "super_admin" : "editor",
+          created_at: new Date().toISOString(),
+        };
       }
+
+      localStorage.setItem("isAuthenticated", "true");
+      setCurrentAdminSession(sessionUser);
+      navigate("/admin");
     } catch (err) {
       setError("Terjadi kesalahan saat login");
       setLoading(false);
