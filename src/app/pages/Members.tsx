@@ -117,6 +117,7 @@ export function Members() {
                                 src={yearData.group_photo_url}
                                 alt={`Kepengurusan ${yearData.year}`}
                                 className="w-full h-auto object-cover"
+                                loading="lazy"
                               />
                             ) : (
                               <div className="w-full h-64 bg-muted flex items-center justify-center">

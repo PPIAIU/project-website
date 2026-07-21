@@ -209,6 +209,7 @@ export function BlogDetail() {
                 transformOrigin: 'center'
               }}
               className="w-full h-96 object-cover rounded-lg shadow-lg mb-8 will-change-transform"
+              loading="lazy"
             />
           )}
 

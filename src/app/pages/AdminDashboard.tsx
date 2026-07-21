@@ -7,6 +7,7 @@ import { YearForm } from "../components/YearForm";
 import { DocumentForm } from "../components/DocumentForm";
 import { AdminUserForm } from "../components/AdminUserForm";
 import { supabase } from "../../lib/supabase";
+import { deleteFile } from "../../lib/storage";
 import {
   AdminUser,
   getCurrentAdminSession,
@@ -533,12 +534,16 @@ export function AdminDashboard() {
     }
 
     try {
-      // Fetch member's division_id to clean it up if it becomes empty
+      // Fetch member's photo_url and division_id to clean them up
       const { data: memberData } = await supabase
         .from('members')
-        .select('division_id')
+        .select('division_id, photo_url')
         .eq('id', memberId)
         .maybeSingle();
+
+      if (memberData?.photo_url && memberData.photo_url.includes('supabase.co')) {
+        await deleteFile(memberData.photo_url, 'member-photos');
+      }
 
       const { error } = await supabase
         .from('members')
@@ -583,6 +588,16 @@ export function AdminDashboard() {
     }
 
     try {
+      const { data: postData } = await supabase
+        .from('blog_posts')
+        .select('image_url')
+        .eq('id', id)
+        .maybeSingle();
+
+      if (postData?.image_url && postData.image_url.includes('supabase.co')) {
+        await deleteFile(postData.image_url, 'blog-images');
+      }
+
       const { error } = await supabase
         .from('blog_posts')
         .delete()
@@ -607,6 +622,16 @@ export function AdminDashboard() {
     }
 
     try {
+      const { data: docData } = await supabase
+        .from('documents')
+        .select('file_url')
+        .eq('id', id)
+        .maybeSingle();
+
+      if (docData?.file_url && docData.file_url.includes('supabase.co')) {
+        await deleteFile(docData.file_url, 'documents');
+      }
+
       const { error } = await supabase
         .from('documents')
         .delete()

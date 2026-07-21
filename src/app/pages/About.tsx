@@ -58,6 +58,7 @@ export function About() {
                     src={mubesPhoto}
                     alt={t.about.story.photoCaption}
                     className="w-full h-auto"
+                    loading="lazy"
                   />
                   <div className="bg-primary text-primary-foreground p-4 text-center">
                     <p className="font-bold text-lg">
