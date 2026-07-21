@@ -69,7 +69,7 @@ export function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-input-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="admin@ppi-aiu.org"
+                  placeholder="adm.ppi.aiu@gmail.com"
                   required
                 />
               </div>
