@@ -98,12 +98,6 @@ export function Login() {
               {loading ? "Memproses..." : "Masuk"}
             </button>
           </form>
-
-          <div className="mt-6 p-4 bg-muted/50 rounded-lg text-sm text-muted-foreground">
-            <p className="font-semibold mb-1">Demo Credentials:</p>
-            <p>Email: admin@ppi-aiu.org</p>
-            <p>Password: admin123</p>
-          </div>
         </div>
       </div>
     </div>
