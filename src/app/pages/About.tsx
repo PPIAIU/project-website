@@ -14,11 +14,14 @@ import mubesPhoto from "../../imports/mubes-1-1.jpeg";
 import festivalBudayaPhoto from "../../imports/image-6.png";
 import aiuMamPhoto from "../../imports/image-7.png";
 import { useLanguage } from "../contexts/LanguageContext";
+import { SEO } from "../components/SEO";
 
 export function About() {
   const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Tentang Kami" description="Profil, sejarah, visi, misi, dan nilai-nilai organisasi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
+
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-16">
         <div className="container mx-auto px-4 text-center">

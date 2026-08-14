@@ -28,6 +28,7 @@ export interface CachedBlogPost {
   image_url: string;
   author: string;
   date: string;
+  category?: string;
   content?: string;
 }
 
@@ -181,7 +182,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, excerpt, image_url, author, published_at, created_at")
+        .select("id, title, excerpt, image_url, author, category, published_at, created_at")
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(20);
@@ -200,6 +201,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
           image_url: post.image_url || "",
           author: post.author || "PPI AIU",
           date: post.published_at || post.created_at,
+          category: post.category || undefined,
         }))
       );
       setBlogLoaded(true);

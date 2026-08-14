@@ -8,6 +8,7 @@ export interface BlogPost {
   author: string;
   date: string;
   image_url: string;
+  category?: string;
   content?: string;
 }
 
@@ -15,6 +16,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "1",
     title: "Kegiatan Bakti Sosial 2024",
+    category: "Sosial & Bakti",
     excerpt:
       "PPI AIU mengadakan kegiatan bakti sosial untuk membantu masyarakat sekitar kampus dengan memberikan bantuan sembako dan perlengkapan sekolah.",
     author: "Tim Media PPI AIU",
@@ -46,6 +48,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "2",
     title: "Webinar Beasiswa Luar Negeri",
+    category: "Akademik",
     excerpt:
       "Menghadirkan narasumber alumni yang berhasil mendapatkan beasiswa untuk melanjutkan studi S2 dan S3 di berbagai negara.",
     author: "Divisi Akademik",
@@ -73,6 +76,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "3",
     title: "Perayaan Hari Kemerdekaan Indonesia",
+    category: "Budaya & Seni",
     excerpt:
       "Merayakan HUT RI ke-79 dengan berbagai lomba dan acara budaya yang melibatkan seluruh mahasiswa Indonesia di AIU.",
     author: "Divisi Sosial",
@@ -82,6 +86,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "4",
     title: "Workshop Kewirausahaan",
+    category: "Ekonomi & Bisnis",
     excerpt:
       "Pelatihan dan workshop tentang memulai bisnis bagi mahasiswa dengan menghadirkan pengusaha muda sukses sebagai pembicara.",
     author: "Divisi Ekonomi",
@@ -91,6 +96,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "5",
     title: "Studi Banding ke Organisasi PPI Lain",
+    category: "Internal Organisasi",
     excerpt:
       "Kegiatan studi banding untuk bertukar pengalaman dan best practices dalam mengelola organisasi mahasiswa Indonesia di luar negeri.",
     author: "Ketua Umum",
@@ -100,6 +106,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "6",
     title: "Gathering Akhir Tahun 2023",
+    category: "Sosial & Bakti",
     excerpt:
       "Acara perpisahan dan silaturahmi antar anggota PPI AIU sebagai penutup kegiatan tahun 2023 sekaligus menyambut tahun baru.",
     author: "Panitia Acara",

@@ -39,6 +39,8 @@ const getScaleTransform = (url: string | null) => {
   }
 };
 
+import { SEO } from "../components/SEO";
+
 export function Home() {
   const { t, language } = useLanguage();
   const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
@@ -58,6 +60,8 @@ export function Home() {
 
   return (
     <div>
+      <SEO title="Beranda" description="Website resmi Perhimpunan Pelajar Indonesia di Albukhary International University (AIU), Kedah, Malaysia." />
+
       <section className="relative bg-primary text-primary-foreground min-h-[500px] md:min-h-[600px] flex items-center overflow-hidden">
         {/* Video Background */}
         <video

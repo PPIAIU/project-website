@@ -1,6 +1,7 @@
 import { FileText, Download, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useData } from "../contexts/DataContext";
+import { SEO } from "../components/SEO";
 
 function SkeletonCard() {
   return (
@@ -39,7 +40,9 @@ export function Foundation() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Dokumen Organisasi" description="Arsip dokumen AD/ART dan GBHO resmi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
       <div className="bg-primary text-primary-foreground py-12">
+
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold text-center">Dokumen Organisasi</h1>
           <p className="text-center mt-4 opacity-90">

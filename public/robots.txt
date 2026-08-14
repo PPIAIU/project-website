@@ -1,0 +1,8 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+
+# Sitemap location (Ganti domain sesuai domain aktif Anda)
+Sitemap: https://ppi-aiu.org/sitemap.xml

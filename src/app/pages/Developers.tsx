@@ -2,8 +2,10 @@ import { Code, Github, Linkedin, Mail } from "lucide-react";
 import abidinPhoto from "../../imports/abidin.jpg";
 import nardiPhoto from "../../imports/nardi.jpg";
 import ariaPhoto from "../../imports/aria.png";
+import { SEO } from "../components/SEO";
 
 interface Developer {
+
   name: string;
   role: string;
   photo: string;
@@ -46,7 +48,9 @@ export function Developers() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title="Pengembang Website" description="Tim pengembang website resmi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
       <div className="bg-primary text-primary-foreground py-12">
+
         <div className="container mx-auto px-4">
           <div className="text-center">
             <Code className="w-16 h-16 mx-auto mb-4" />

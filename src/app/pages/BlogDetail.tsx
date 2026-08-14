@@ -3,6 +3,8 @@ import { ArrowLeft, Calendar, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useData } from "../contexts/DataContext";
 import { supabase } from "../../lib/supabase";
+import { SEO } from "../components/SEO";
+
 
 interface BlogDetailPost {
   id: string;
@@ -167,7 +169,9 @@ export function BlogDetail() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO title={post.title} description={post.excerpt} />
       <div className="bg-primary text-primary-foreground py-8">
+
         <div className="container mx-auto px-4">
           <button
             onClick={() => navigate(-1)}

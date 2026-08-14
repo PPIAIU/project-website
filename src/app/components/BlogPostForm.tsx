@@ -52,6 +52,7 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
 
   const [formData, setFormData] = useState({
     title: post?.title || "",
+    category: post?.category || "Akademik",
     excerpt: post?.excerpt || "",
     content: post?.content ? convertHtmlToText(post.content) : "",
     author: post?.author || "",
@@ -275,6 +276,21 @@ export function BlogPostForm({ post, onClose, onSave }: BlogPostFormProps) {
                 <li>• <strong>List:</strong> Setiap baris mulai dengan <code className="bg-muted px-1">-</code></li>
               </ul>
             </div>
+          </div>
+
+          <div>
+            <label className="block mb-2 font-semibold">Kategori Aktivitas *</label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              className="w-full px-4 py-2 border border-border rounded-lg bg-input-background focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              <option value="Akademik">🎓 Akademik & Pendidikan</option>
+              <option value="Budaya & Seni">🎭 Budaya & Seni (Indiversion)</option>
+              <option value="Sosial & Bakti">🤝 Sosial & Bakti Masyarakat</option>
+              <option value="Ekonomi & Bisnis">💼 Ekonomi & Kewirausahaan</option>
+              <option value="Internal Organisasi">🏛️ Internal & Organisasi</option>
+            </select>
           </div>
 
           <div>
