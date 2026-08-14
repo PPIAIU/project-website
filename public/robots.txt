@@ -4,5 +4,5 @@ Allow: /
 Disallow: /admin
 Disallow: /login
 
-# Sitemap location (Ganti domain sesuai domain aktif Anda)
-Sitemap: https://ppi-aiu.org/sitemap.xml
+# Sitemap location
+Sitemap: https://ppi-aiu.vercel.app/sitemap.xml
