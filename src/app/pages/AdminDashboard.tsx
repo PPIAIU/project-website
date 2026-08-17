@@ -41,6 +41,7 @@ interface BlogPost {
   author: string;
   date: string;
   image_url: string;
+  category?: string;
 }
 
 interface Document {
@@ -195,7 +196,7 @@ export function AdminDashboard() {
       }
 
       setBlogPosts(
-        (data || []).map((post) => ({
+        (data || []).map((post: any) => ({
           id: post.id,
           title: post.title,
           excerpt: post.excerpt || '',
@@ -203,6 +204,7 @@ export function AdminDashboard() {
           author: post.author || 'PPI AIU',
           date: post.published_at || post.created_at,
           image_url: post.image_url || '',
+          category: post.category || undefined,
         }))
       );
     } catch (error) {
@@ -676,44 +678,47 @@ export function AdminDashboard() {
         ? new Date(postData.date).toISOString() 
         : new Date().toISOString();
 
+      const postPayload: any = {
+        title: postData.title,
+        excerpt: postData.excerpt,
+        content: postData.content,
+        author: postData.author,
+        image_url: postData.image_url,
+        category: postData.category || 'Akademik',
+        published: true,
+        published_at: published_at,
+      };
+
       if (postData.id) {
         // Update existing post
         const { error } = await supabase
           .from('blog_posts')
-          .update({
-            title: postData.title,
-            excerpt: postData.excerpt,
-            content: postData.content,
-            author: postData.author,
-            image_url: postData.image_url,
-            published: true,
-            published_at: published_at,
-          })
+          .update(postPayload)
           .eq('id', postData.id);
 
         if (error) {
           console.error('Error updating blog post:', error);
-          alert('Gagal mengupdate artikel: ' + error.message);
+          if (error.message?.includes('category') || (error as any)?.code === '42703') {
+            alert('⚠️ Kolom "category" belum ada di Supabase!\n\nSilakan buka Supabase SQL Editor dan jalankan:\nALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(100) DEFAULT \'Akademik\';');
+          } else {
+            alert('Gagal mengupdate artikel: ' + error.message);
+          }
           return;
         }
       } else {
         // Add new post
+        postPayload.slug = slug;
         const { error } = await supabase
           .from('blog_posts')
-          .insert([{
-            title: postData.title,
-            slug: slug,
-            excerpt: postData.excerpt,
-            content: postData.content,
-            author: postData.author,
-            image_url: postData.image_url,
-            published: true,
-            published_at: published_at,
-          }]);
+          .insert([postPayload]);
 
         if (error) {
           console.error('Error adding blog post:', error);
-          alert('Gagal menambahkan artikel: ' + error.message);
+          if (error.message?.includes('category') || (error as any)?.code === '42703') {
+            alert('⚠️ Kolom "category" belum ada di Supabase!\n\nSilakan buka Supabase SQL Editor dan jalankan:\nALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS category VARCHAR(100) DEFAULT \'Akademik\';');
+          } else {
+            alert('Gagal menambahkan artikel: ' + error.message);
+          }
           return;
         }
       }
@@ -721,6 +726,7 @@ export function AdminDashboard() {
       await fetchBlogPosts();
       setShowBlogForm(false);
       setEditingBlogPost(undefined);
+      alert('✅ Artikel dan kategori berhasil disimpan!');
     } catch (error) {
       console.error('Error saving blog post:', error);
       alert('Terjadi kesalahan saat menyimpan artikel');
@@ -1057,8 +1063,15 @@ export function AdminDashboard() {
                         className="w-24 h-24 rounded object-cover"
                       />
                       <div className="flex-1">
-                        <h3 className="font-bold mb-1">{post.title}</h3>
-                        <p className="text-sm text-muted-foreground mb-2">{post.excerpt}</p>
+                        <div className="flex items-center gap-2 mb-1 flex-wrap">
+                          <h3 className="font-bold">{post.title}</h3>
+                          {post.category && (
+                            <span className="text-[11px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium border border-primary/20">
+                              {post.category}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-2 line-clamp-2">{post.excerpt}</p>
                         <div className="text-sm text-muted-foreground">
                           {post.author} • {new Date(post.date).toLocaleDateString("id-ID")}
                         </div>

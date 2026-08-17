@@ -15,6 +15,7 @@ interface BlogDetailPost {
   image_url: string;
   author: string;
   date: string;
+  category?: string;
 }
 
 function SkeletonDetail() {
@@ -109,6 +110,7 @@ export function BlogDetail() {
           image_url: cached.image_url,
           author: cached.author,
           date: cached.date,
+          category: cached.category,
         });
         setLoading(false);
         return;
@@ -139,6 +141,7 @@ export function BlogDetail() {
         image_url: data.image_url || "",
         author: data.author || "PPI AIU",
         date: data.published_at || data.created_at,
+        category: (data as any).category || undefined,
       });
       setLoading(false);
     } catch (error) {

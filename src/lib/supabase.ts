@@ -43,6 +43,7 @@ export interface BlogPost {
   id: string;
   title: string;
   slug: string;
+  category: string | null;
   excerpt: string | null;
   content: string | null;
   author: string | null;

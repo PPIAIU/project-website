@@ -45,15 +45,15 @@ interface DataContextType {
   // Members
   yearsData: CachedYearData[];
   membersLoaded: boolean;
-  fetchMembers: () => Promise<void>;
+  fetchMembers: (force?: boolean) => Promise<void>;
   // Blog
   blogPosts: CachedBlogPost[];
   blogLoaded: boolean;
-  fetchBlogPosts: () => Promise<void>;
+  fetchBlogPosts: (force?: boolean) => Promise<void>;
   // Documents
   documents: CachedDocument[];
   documentsLoaded: boolean;
-  fetchDocuments: () => Promise<void>;
+  fetchDocuments: (force?: boolean) => Promise<void>;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -72,8 +72,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [documentsLoaded, setDocumentsLoaded] = useState(false);
 
   // ---- Fetch Members (optimized: 2 queries) ----
-  const fetchMembers = useCallback(async () => {
-    if (membersLoaded) return; // already cached
+  const fetchMembers = useCallback(async (force = false) => {
+    if (membersLoaded && !force) return; // already cached
 
     try {
       // Query 1: Get all years
@@ -176,13 +176,13 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [membersLoaded]);
 
   // ---- Fetch Blog Posts ----
-  const fetchBlogPosts = useCallback(async () => {
-    if (blogLoaded) return;
+  const fetchBlogPosts = useCallback(async (force = false) => {
+    if (blogLoaded && !force) return;
 
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, excerpt, image_url, author, published_at, created_at")
+        .select("*")
         .eq("published", true)
         .order("published_at", { ascending: false })
         .limit(20);
@@ -194,13 +194,14 @@ export function DataProvider({ children }: { children: ReactNode }) {
       }
 
       setBlogPosts(
-        (data || []).map((post) => ({
+        (data || []).map((post: any) => ({
           id: post.id,
           title: post.title,
           excerpt: post.excerpt || "",
           image_url: post.image_url || "",
           author: post.author || "PPI AIU",
           date: post.published_at || post.created_at,
+          category: post.category || undefined,
         }))
       );
       setBlogLoaded(true);
@@ -211,8 +212,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, [blogLoaded]);
 
   // ---- Fetch Documents ----
-  const fetchDocuments = useCallback(async () => {
-    if (documentsLoaded) return;
+  const fetchDocuments = useCallback(async (force = false) => {
+    if (documentsLoaded && !force) return;
 
     try {
       const { data, error } = await supabase

@@ -57,6 +57,7 @@ CREATE TABLE blog_posts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   title VARCHAR(500) NOT NULL,
   slug VARCHAR(500) NOT NULL UNIQUE,
+  category VARCHAR(100) DEFAULT 'Akademik',
   excerpt TEXT,
   content TEXT,
   author VARCHAR(255),

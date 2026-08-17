@@ -45,7 +45,7 @@ export function Home() {
   const { t, language } = useLanguage();
   const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
   useEffect(() => {
-    fetchBlogPosts();
+    fetchBlogPosts(true);
   }, [fetchBlogPosts]);
   const recentPosts = blogPosts
     .slice()

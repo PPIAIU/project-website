@@ -121,7 +121,7 @@ export function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("Semua");
 
   useEffect(() => {
-    fetchBlogPosts();
+    fetchBlogPosts(true);
   }, [fetchBlogPosts]);
 
   // Prepared posts with resolved categories
