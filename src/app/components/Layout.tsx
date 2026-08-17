@@ -117,23 +117,21 @@ export function Layout() {
                 className="h-16 w-auto mb-3"
               />
               <p className="text-sm opacity-90">
-                Persatuan Pelajar Indonesia di AIU
+                {t.footer.desc}
               </p>
             </div>
             <div>
-              <h3 className="font-bold mb-2">Lokasi</h3>
-              <p className="text-sm opacity-90">
-                Albukhary International University
-                <br />
-                Alor Setar, Kedah, Malaysia
+              <h3 className="font-bold mb-2">{t.footer.location}</h3>
+              <p className="text-sm opacity-90 whitespace-pre-line">
+                {t.footer.locationDetail}
               </p>
             </div>
             <div>
-              <h3 className="font-bold mb-2">Kontak</h3>
-              <p className="text-sm opacity-90">Email: adm.ppi.aiu@gmail.com</p>
+              <h3 className="font-bold mb-2">{t.footer.contact}</h3>
+              <p className="text-sm opacity-90">{t.footer.email}</p>
             </div>
             <div>
-              <h3 className="font-bold mb-2">Sosial Media</h3>
+              <h3 className="font-bold mb-2">{t.footer.social}</h3>
               <div className="flex items-center space-x-4">
                 <a
                   href="https://www.instagram.com/ppi_aiu"
@@ -175,14 +173,14 @@ export function Layout() {
             </div>
           </div>
           <div className="mt-8 pt-4 border-t border-white/20 text-center text-sm opacity-75">
-            <p>© {new Date().getFullYear()} PPI AIU. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} PPI AIU. {t.footer.rights}</p>
             <p className="mt-2">
-              Developed by{" "}
+              {t.footer.developedBy}{" "}
               <Link
                 to="/developers"
                 className="underline hover:opacity-70 transition-opacity"
               >
-                PPI AIU Tech Team
+                {t.footer.techTeam}
               </Link>
             </p>
           </div>

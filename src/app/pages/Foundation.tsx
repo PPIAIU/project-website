@@ -1,6 +1,7 @@
 import { FileText, Download, ChevronDown, ChevronUp } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useData } from "../contexts/DataContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { SEO } from "../components/SEO";
 
 function SkeletonCard() {
@@ -21,6 +22,7 @@ function SkeletonCard() {
 export function Foundation() {
   const [expandedDoc, setExpandedDoc] = useState<string | null>(null);
   const { documents, documentsLoaded, fetchDocuments } = useData();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     fetchDocuments();
@@ -34,19 +36,18 @@ export function Foundation() {
     if (fileUrl && fileUrl !== "#") {
       window.open(fileUrl, "_blank");
     } else {
-      alert(`Mengunduh: ${title}\nCatatan: File belum tersedia.`);
+      alert(`${t.foundation.download}: ${title}\n(File not available)`);
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="Dokumen Organisasi" description="Arsip dokumen AD/ART dan GBHO resmi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
+      <SEO title={t.foundation.title} description={t.foundation.subtitle} />
       <div className="bg-primary text-primary-foreground py-12">
-
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-center">Dokumen Organisasi</h1>
+          <h1 className="text-4xl font-bold text-center">{t.foundation.title}</h1>
           <p className="text-center mt-4 opacity-90">
-            Akses dokumen fundamental PPI AIU
+            {t.foundation.subtitle}
           </p>
         </div>
       </div>
@@ -54,7 +55,7 @@ export function Foundation() {
       <div className="container mx-auto px-4 py-12">
         {documentsLoaded && documents.length === 0 ? (
           <div className="max-w-4xl mx-auto text-center py-12">
-            <p className="text-muted-foreground">Belum ada dokumen yang tersedia.</p>
+            <p className="text-muted-foreground">{t.foundation.noDocuments}</p>
           </div>
         ) : (
           <div className="max-w-4xl mx-auto space-y-6">
@@ -73,11 +74,14 @@ export function Foundation() {
                         <h2 className="text-xl font-bold mb-2">{doc.title}</h2>
                         <p className="text-muted-foreground mb-4">{doc.description}</p>
                         <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-4">
-                          <span>Ukuran: {doc.file_size}</span>
+                          <span>{t.foundation.size}: {doc.file_size}</span>
                           <span>•</span>
                           <span>
-                            Terakhir diperbarui:{" "}
-                            {new Date(doc.last_updated).toLocaleDateString("id-ID")}
+                            {t.foundation.lastUpdated}:{" "}
+                            {new Date(doc.last_updated).toLocaleDateString(
+                              language === "id" ? "id-ID" : "en-US",
+                              { year: "numeric", month: "short", day: "numeric" }
+                            )}
                           </span>
                         </div>
                         <div className="flex gap-3">
@@ -86,7 +90,7 @@ export function Foundation() {
                             className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
                           >
                             <Download size={18} />
-                            <span>Unduh Dokumen</span>
+                            <span>{t.foundation.download}</span>
                           </button>
                           <button
                             onClick={() => toggleExpand(doc.id)}
@@ -95,12 +99,12 @@ export function Foundation() {
                             {expandedDoc === doc.id ? (
                               <>
                                 <ChevronUp size={18} />
-                                <span>Sembunyikan Preview</span>
+                                <span>{t.foundation.hidePreview}</span>
                               </>
                             ) : (
                               <>
                                 <ChevronDown size={18} />
-                                <span>Lihat Preview</span>
+                                <span>{t.foundation.showPreview}</span>
                               </>
                             )}
                           </button>
@@ -110,7 +114,7 @@ export function Foundation() {
 
                     {expandedDoc === doc.id && (
                       <div className="mt-6 border-t border-border pt-6">
-                        <h3 className="font-bold text-lg mb-3">Preview Dokumen</h3>
+                        <h3 className="font-bold text-lg mb-3">{t.foundation.previewTitle}</h3>
                         <div
                           className="bg-muted/30 rounded-lg overflow-hidden"
                           style={{ height: "600px" }}
@@ -137,10 +141,7 @@ export function Foundation() {
                             </div>
                           ) : (
                             <div className="flex items-center justify-center h-full text-muted-foreground">
-                              <p>
-                                Preview tidak tersedia untuk tipe file ini. Klik
-                                "Unduh Dokumen" untuk melihat.
-                              </p>
+                              <p>{t.foundation.previewUnavailable}</p>
                             </div>
                           )}
                         </div>
@@ -152,17 +153,11 @@ export function Foundation() {
         )}
 
         <div className="max-w-4xl mx-auto mt-12 bg-muted/50 border border-border rounded-lg p-6">
-          <h3 className="font-bold mb-2">Catatan Penting:</h3>
+          <h3 className="font-bold mb-2">{t.foundation.note}</h3>
           <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-            <li>Dokumen-dokumen ini merupakan pedoman resmi organisasi PPI AIU</li>
-            <li>
-              Setiap anggota diharapkan memahami dan mematuhi ketentuan yang
-              tertera
-            </li>
-            <li>
-              Untuk pertanyaan lebih lanjut, silakan hubungi pengurus melalui
-              email resmi
-            </li>
+            <li>{t.foundation.note1}</li>
+            <li>{t.foundation.note2}</li>
+            <li>{t.foundation.note3}</li>
           </ul>
         </div>
       </div>

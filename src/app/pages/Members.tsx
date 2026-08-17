@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, ChevronRight, Users } from "lucide-react";
 import { useData, CachedYearData } from "../contexts/DataContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { SEO } from "../components/SEO";
 
 interface Division {
-
   id: string;
   name: string;
   members: { id: string; name: string; position: string; photo_url: string }[];
@@ -49,6 +49,7 @@ export function Members() {
   const [showMembersDetail, setShowMembersDetail] = useState<string | null>(null);
   const [selectedDivision, setSelectedDivision] = useState<string | null>(null);
   const { yearsData, membersLoaded, fetchMembers } = useData();
+  const { t } = useLanguage();
 
   useEffect(() => {
     fetchMembers();
@@ -76,12 +77,12 @@ export function Members() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="Direktori Kepengurusan" description="Direktori struktur organisasi dan pengurus PPI AIU dari masa ke masa di Albukhary International University." />
+      <SEO title={t.members.title} description={t.members.subtitle} />
       <div className="bg-primary text-primary-foreground py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-center">Direktori Kepengurusan</h1>
+          <h1 className="text-4xl font-bold text-center">{t.members.title}</h1>
           <p className="text-center mt-4 opacity-90">
-            Arsip kepengurusan PPI AIU berdasarkan tahun angkatan
+            {t.members.subtitle}
           </p>
         </div>
       </div>
@@ -99,7 +100,7 @@ export function Members() {
                     onClick={() => toggleYear(yearData.year)}
                     className="w-full flex items-center justify-between p-6 hover:bg-muted/50 transition-colors"
                   >
-                    <h2 className="text-2xl font-bold">Kepengurusan {yearData.year}</h2>
+                    <h2 className="text-2xl font-bold">{t.members.yearPrefix} {yearData.year}</h2>
                     {selectedYear === yearData.year ? (
                       <ChevronDown className="w-6 h-6 text-primary" />
                     ) : (
@@ -118,7 +119,7 @@ export function Members() {
                             {yearData.group_photo_url ? (
                               <img
                                 src={yearData.group_photo_url}
-                                alt={`Kepengurusan ${yearData.year}`}
+                                alt={`${t.members.yearPrefix} ${yearData.year}`}
                                 className="w-full h-auto object-cover"
                                 loading="lazy"
                               />
@@ -130,12 +131,12 @@ export function Members() {
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-center">
                                 <Users className="w-16 h-16 mx-auto mb-3" />
-                                <p className="text-xl font-bold">Klik untuk lihat anggota</p>
+                                <p className="text-xl font-bold">{t.members.clickToView}</p>
                               </div>
                             </div>
                           </button>
                           <p className="text-center mt-4 text-lg font-semibold">
-                            Kepengurusan {yearData.year}
+                            {t.members.yearPrefix} {yearData.year}
                           </p>
                         </div>
                       </div>
@@ -148,7 +149,7 @@ export function Members() {
                               className="text-primary hover:underline flex items-center space-x-1"
                             >
                               <ChevronRight className="w-4 h-4 rotate-180" />
-                              <span>Kembali ke foto bersama</span>
+                              <span>{t.members.backToPhoto}</span>
                             </button>
                           </div>
                           {yearData.divisions.filter(division => division.members.length > 0).map((division) => (

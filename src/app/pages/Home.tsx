@@ -60,7 +60,12 @@ export function Home() {
 
   return (
     <div>
-      <SEO title="Beranda" description="Website resmi Perhimpunan Pelajar Indonesia di Albukhary International University (AIU), Kedah, Malaysia." />
+      <SEO 
+        title={t.nav.home} 
+        description={language === "id" 
+          ? "Website resmi Perhimpunan Pelajar Indonesia di Albukhary International University (AIU), Kedah, Malaysia." 
+          : "Official website of the Indonesian Student Association at Albukhary International University (AIU), Kedah, Malaysia."} 
+      />
 
       <section className="relative bg-primary text-primary-foreground min-h-[500px] md:min-h-[600px] flex items-center overflow-hidden">
         {/* Video Background */}

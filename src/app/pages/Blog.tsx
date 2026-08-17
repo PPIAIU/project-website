@@ -2,8 +2,9 @@ import { useEffect, useState, useMemo } from "react";
 import { Calendar, User, Search, X, Filter, Tag, BookOpen } from "lucide-react";
 import { Link } from "react-router";
 import { useData } from "../contexts/DataContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { TranslationKey } from "../i18n/translations";
 import { SEO } from "../components/SEO";
-
 
 function SkeletonCard() {
   return (
@@ -92,8 +93,30 @@ const CATEGORIES = [
   "Internal Organisasi",
 ];
 
+const getCategoryLabel = (category: string, t: TranslationKey): string => {
+  switch (category) {
+    case "Semua":
+      return t.blog.categories.all;
+    case "Akademik":
+      return t.blog.categories.academic;
+    case "Budaya & Seni":
+      return t.blog.categories.culture;
+    case "Sosial & Bakti":
+      return t.blog.categories.social;
+    case "Ekonomi & Bisnis":
+      return t.blog.categories.economy;
+    case "Internal Organisasi":
+      return t.blog.categories.internal;
+    case "Umum":
+      return t.blog.categories.general;
+    default:
+      return category;
+  }
+};
+
 export function Blog() {
   const { blogPosts, blogLoaded, fetchBlogPosts } = useData();
+  const { language, t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
 
@@ -150,14 +173,14 @@ export function Blog() {
 
   return (
     <div className="min-h-screen bg-background pb-16">
-      <SEO title="Rekam Jejak Aktivitas" description="Kumpulan berita, artikel, dan laporan kegiatan PPI AIU di Malaysia." />
-      {/* Header Banner */}
+      <SEO title={t.blog.title} description={t.blog.subtitle} />
 
+      {/* Header Banner */}
       <div className="bg-primary text-primary-foreground py-12">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold">Rekam Jejak Aktivitas</h1>
+          <h1 className="text-4xl md:text-5xl font-bold">{t.blog.title}</h1>
           <p className="text-center mt-3 text-lg opacity-90 max-w-2xl mx-auto">
-            Jelajahi berbagai kegiatan, program kerja, dan acara seru PPI AIU
+            {t.blog.subtitle}
           </p>
         </div>
       </div>
@@ -172,14 +195,14 @@ export function Blog() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari judul aktivitas, topik, atau penulis (misal: Bakti Sosial, Webinar, dll)..."
+              placeholder={t.blog.searchPlaceholder}
               className="w-full pl-12 pr-10 py-3 bg-input-background border border-border rounded-lg text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-base transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-muted rounded-full transition-colors text-muted-foreground"
-                title="Hapus pencarian"
+                title={t.blog.resetFilter}
               >
                 <X size={18} />
               </button>
@@ -190,12 +213,13 @@ export function Blog() {
           <div>
             <div className="flex items-center gap-2 mb-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               <Filter size={14} />
-              <span>Filter Berdasarkan Kategori:</span>
+              <span>{t.blog.filterCategory}</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 const count = categoryCounts[cat] || 0;
+                const label = getCategoryLabel(cat, t);
 
                 return (
                   <button
@@ -207,7 +231,7 @@ export function Blog() {
                         : "bg-muted/40 hover:bg-muted text-foreground border-border"
                     }`}
                   >
-                    <span>{cat}</span>
+                    <span>{label}</span>
                     <span
                       className={`text-xs px-2 py-0.5 rounded-full ${
                         isActive
@@ -228,17 +252,17 @@ export function Blog() {
         {(searchQuery || selectedCategory !== "Semua") && (
           <div className="max-w-5xl mx-auto flex items-center justify-between mb-6 px-1">
             <p className="text-sm text-muted-foreground">
-              Menampilkan <span className="font-bold text-foreground">{filteredPosts.length}</span> aktivitas
+              {t.blog.showing} <span className="font-bold text-foreground">{filteredPosts.length}</span> {t.blog.activities}
               {searchQuery && (
                 <>
                   {" "}
-                  untuk pencarian <span className="font-semibold text-primary">"{searchQuery}"</span>
+                  {t.blog.forSearch} <span className="font-semibold text-primary">"{searchQuery}"</span>
                 </>
               )}
               {selectedCategory !== "Semua" && (
                 <>
                   {" "}
-                  dalam kategori <span className="font-semibold text-primary">"{selectedCategory}"</span>
+                  {t.blog.inCategory} <span className="font-semibold text-primary">"{getCategoryLabel(selectedCategory, t)}"</span>
                 </>
               )}
             </p>
@@ -247,7 +271,7 @@ export function Blog() {
               onClick={handleResetFilters}
               className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
             >
-              <X size={14} /> Reset Filter
+              <X size={14} /> {t.blog.resetFilter}
             </button>
           </div>
         )}
@@ -261,15 +285,15 @@ export function Blog() {
               <div className="w-16 h-16 rounded-full bg-primary/10 text-primary mx-auto flex items-center justify-center mb-4">
                 <BookOpen size={32} />
               </div>
-              <h3 className="text-2xl font-bold mb-2">Aktivitas Tidak Ditemukan</h3>
+              <h3 className="text-2xl font-bold mb-2">{t.blog.notFoundTitle}</h3>
               <p className="text-muted-foreground max-w-md mx-auto mb-6">
-                Maaf, tidak ada aktivitas atau berita yang cocok dengan kriteria pencarian Anda.
+                {t.blog.notFoundDesc}
               </p>
               <button
                 onClick={handleResetFilters}
                 className="bg-primary text-primary-foreground px-6 py-2.5 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-sm"
               >
-                Tampilkan Semua Aktivitas
+                {t.blog.showAllBtn}
               </button>
             </div>
           ) : (
@@ -295,7 +319,7 @@ export function Blog() {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-                        No image
+                        {t.blog.noImage}
                       </div>
                     )}
                     {/* Category Badge on Top Right of Card */}
@@ -306,7 +330,7 @@ export function Blog() {
                         )}`}
                       >
                         <Tag size={12} />
-                        {post.computedCategory}
+                        {getCategoryLabel(post.computedCategory, t)}
                       </span>
                     </div>
                   </div>
@@ -329,7 +353,12 @@ export function Blog() {
                     </div>
                     <div className="flex items-center space-x-1.5 font-medium">
                       <Calendar size={15} />
-                      <span>{new Date(post.date).toLocaleDateString("id-ID")}</span>
+                      <span>
+                        {new Date(post.date).toLocaleDateString(
+                          language === "id" ? "id-ID" : "en-US",
+                          { year: "numeric", month: "short", day: "numeric" }
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>

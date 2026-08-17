@@ -2,6 +2,7 @@ import { useParams, Link, useNavigate } from "react-router";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useData } from "../contexts/DataContext";
+import { useLanguage } from "../contexts/LanguageContext";
 import { supabase } from "../../lib/supabase";
 import { SEO } from "../components/SEO";
 
@@ -70,6 +71,7 @@ export function BlogDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { blogPosts, blogLoaded } = useData();
+  const { language, t } = useLanguage();
   const [post, setPost] = useState<BlogDetailPost | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -154,13 +156,13 @@ export function BlogDetail() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">Artikel Tidak Ditemukan</h1>
+          <h1 className="text-3xl font-bold mb-4">{t.blogDetail.notFound}</h1>
           <Link
             to="/blog"
             className="inline-flex items-center space-x-2 text-primary hover:underline"
           >
             <ArrowLeft size={20} />
-            <span>Kembali ke Aktivitas</span>
+            <span>{t.blogDetail.backToBlog}</span>
           </Link>
         </div>
       </div>
@@ -178,7 +180,7 @@ export function BlogDetail() {
             className="flex items-center space-x-2 mb-4 hover:underline"
           >
             <ArrowLeft size={20} />
-            <span>Kembali</span>
+            <span>{t.blogDetail.back}</span>
           </button>
           <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex items-center space-x-6 text-sm opacity-90">
@@ -189,7 +191,7 @@ export function BlogDetail() {
             <div className="flex items-center space-x-2">
               <Calendar size={18} />
               <span>
-                {new Date(post.date).toLocaleDateString("id-ID", {
+                {new Date(post.date).toLocaleDateString(language === "id" ? "id-ID" : "en-US", {
                   weekday: "long",
                   year: "numeric",
                   month: "long",
@@ -232,7 +234,7 @@ export function BlogDetail() {
               className="inline-flex items-center space-x-2 text-primary hover:underline font-semibold"
             >
               <ArrowLeft size={20} />
-              <span>Lihat Artikel Lainnya</span>
+              <span>{t.blogDetail.viewOther}</span>
             </Link>
           </div>
         </div>

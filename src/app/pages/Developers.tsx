@@ -2,10 +2,10 @@ import { Code, Github, Linkedin, Mail } from "lucide-react";
 import abidinPhoto from "../../imports/abidin.jpg";
 import nardiPhoto from "../../imports/nardi.jpg";
 import ariaPhoto from "../../imports/aria.png";
+import { useLanguage } from "../contexts/LanguageContext";
 import { SEO } from "../components/SEO";
 
 interface Developer {
-
   name: string;
   role: string;
   photo: string;
@@ -16,30 +16,44 @@ interface Developer {
 }
 
 export function Developers() {
+  const { language, t } = useLanguage();
+
   const developers: Developer[] = [
     {
       name: "Muhammad Zulfan Abidin",
-      role: "Fullstack Web Developer — Secretary General PPI AIU 2023/2024",
+      role: language === "id" 
+        ? t.developers.roles.abidinRole 
+        : "Fullstack Web Developer — Secretary General PPI AIU 2023/2024",
       photo: abidinPhoto,
-      bio: "This website helps people learn more about PPI AIU and aims to be sustainable for future generations.",
+      bio: language === "id" 
+        ? t.developers.roles.abidinBio 
+        : "This website helps people learn more about PPI AIU and aims to be sustainable for future generations.",
       github: "https://github.com/Zulfan20",
       linkedin: "https://www.linkedin.com/in/muhammad-zulfan-abidin-b4427b212/",
       email: "zulfanisious20@gmail.com",
     },
     {
       name: "Nardi",
-      role: "Fullstack Web Developer — Secretary Department of Penkastrat PPI AIU 2023/2024",
+      role: language === "id" 
+        ? t.developers.roles.nardiRole 
+        : "Fullstack Web Developer — Secretary Department of Penkastrat PPI AIU 2023/2024",
       photo: nardiPhoto,
-      bio: "A Computer Science student who contributed to developing this platform to connect people with PPI AIU.",
+      bio: language === "id" 
+        ? t.developers.roles.nardiBio 
+        : "A Computer Science student who contributed to developing this platform to connect people with PPI AIU.",
       github: "https://github.com/nardi-nardi",
       linkedin: "https://www.linkedin.com/in/nardinardi/",
       email: "700nardi@gmail.com",
     },
     {
       name: "Aria Firmansyah",
-      role: "Full Stack Web Developer — Vice Precident 2 PPI AIU 2024/2025",
+      role: language === "id" 
+        ? t.developers.roles.ariaRole 
+        : "Fullstack Web Developer — Vice President 2 PPI AIU 2024/2025",
       photo: ariaPhoto,
-      bio: "Passionate about creating user-friendly interfaces and enhancing the user experience of the website.",
+      bio: language === "id" 
+        ? t.developers.roles.ariaBio 
+        : "Passionate about creating user-friendly interfaces and enhancing the user experience of the website.",
       github: "https://github.com/waltercoy",
       linkedin: "https://www.linkedin.com/in/aria-firmansyah-0b1a87286/",
       email: "ariafms00@gmail.com",
@@ -48,15 +62,14 @@ export function Developers() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="Pengembang Website" description="Tim pengembang website resmi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
+      <SEO title={t.developers.title} description={t.developers.subtitle} />
       <div className="bg-primary text-primary-foreground py-12">
-
         <div className="container mx-auto px-4">
           <div className="text-center">
             <Code className="w-16 h-16 mx-auto mb-4" />
-            <h1 className="text-4xl font-bold">Development Team</h1>
+            <h1 className="text-4xl font-bold">{t.developers.title}</h1>
             <p className="text-xl opacity-90 mt-4 max-w-2xl mx-auto">
-              Tim developer yang membangun website PPI AIU
+              {t.developers.subtitle}
             </p>
           </div>
         </div>
@@ -125,10 +138,9 @@ export function Developers() {
         </div>
 
         <div className="max-w-4xl mx-auto mt-16 bg-muted/30 border border-border rounded-xl p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Tech Stack</h2>
+          <h2 className="text-2xl font-bold mb-4">{t.developers.techStackTitle}</h2>
           <p className="text-muted-foreground mb-6">
-            Website ini dibangun menggunakan teknologi modern untuk performa dan
-            skalabilitas terbaik
+            {t.developers.techStackDesc}
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="p-4 bg-card rounded-lg border border-border">

@@ -9,12 +9,24 @@ export const translations = {
       documents: "Dokumen",
       login: "Masuk",
     },
+    // Footer
+    footer: {
+      desc: "Persatuan Pelajar Indonesia di AIU",
+      location: "Lokasi",
+      locationDetail: "Albukhary International University\nAlor Setar, Kedah, Malaysia",
+      contact: "Kontak",
+      email: "Email: adm.ppi.aiu@gmail.com",
+      social: "Sosial Media",
+      rights: "Hak cipta dilindungi.",
+      developedBy: "Dikembangkan oleh",
+      techTeam: "PPI AIU Tech Team",
+    },
     // Home Page
     home: {
       hero: {
         title: "Selamat Datang di PPI AIU",
         subtitle: "Persatuan Pelajar Indonesia Albukhary International University",
-        cta: "About Us",
+        cta: "Tentang Kami",
       },
       stats: {
         students: "Pelajar Indonesia",
@@ -23,7 +35,7 @@ export const translations = {
       },
       about: {
         title: "Tentang Kami",
-        desc1: "PPI AIU adalah organisasi yang menghimpun pelajar Indonesia di Albukhary International University, Alor Setar, Kedah, Malayisa. Kami berkomitmen untuk memfasilitasi kegiatan akademik, sosial, dan budaya bagi anggota kami.",
+        desc1: "PPI AIU adalah organisasi yang menghimpun pelajar Indonesia di Albukhary International University, Alor Setar, Kedah, Malaysia. Kami berkomitmen untuk memfasilitasi kegiatan akademik, sosial, dan budaya bagi anggota kami.",
         desc2: "Melalui berbagai program dan kegiatan, kami menciptakan lingkungan yang mendukung perkembangan mahasiswa Indonesia di luar negeri dengan semangat kebersamaan dan kekeluargaan.",
         readMore: "Pelajari Lebih Lanjut",
         photoCaption: "Kebersamaan Keluarga Besar PPI AIU",
@@ -138,38 +150,96 @@ export const translations = {
       clickToView: "Klik untuk lihat anggota",
       backToPhoto: "Kembali ke foto bersama",
       board: "Kepengurusan",
+      yearPrefix: "Kepengurusan",
+      noMembers: "Belum ada anggota yang terdaftar.",
+      noYears: "Belum ada data kepengurusan.",
     },
-    // Blog Page
+    // Blog / Activities Page
     blog: {
-      title: "Berita & Kegiatan",
-      subtitle: "Ikuti perkembangan terbaru dari PPI AIU",
-      loading: "Memuat artikel...",
+      title: "Rekam Jejak Aktivitas",
+      subtitle: "Jelajahi berbagai kegiatan, program kerja, dan acara seru PPI AIU",
+      loading: "Memuat artikel aktivitas...",
+      searchPlaceholder: "Cari judul aktivitas, topik, atau penulis (misal: Bakti Sosial, Webinar, dll)...",
+      filterCategory: "Filter Berdasarkan Kategori:",
+      categories: {
+        all: "Semua",
+        academic: "Akademik",
+        culture: "Budaya & Seni",
+        social: "Sosial & Bakti",
+        economy: "Ekonomi & Bisnis",
+        internal: "Internal Organisasi",
+        general: "Umum",
+      },
+      showing: "Menampilkan",
+      activities: "aktivitas",
+      forSearch: "untuk pencarian",
+      inCategory: "dalam kategori",
+      resetFilter: "Reset Filter",
+      notFoundTitle: "Aktivitas Tidak Ditemukan",
+      notFoundDesc: "Maaf, tidak ada aktivitas atau berita yang cocok dengan kriteria pencarian Anda.",
+      showAllBtn: "Tampilkan Semua Aktivitas",
+      noImage: "Tidak ada gambar",
       readMore: "Baca Selengkapnya",
       by: "oleh",
     },
-    // Foundation/Documents Page
+    // Blog Detail Page
+    blogDetail: {
+      back: "Kembali",
+      notFound: "Artikel Tidak Ditemukan",
+      backToBlog: "Kembali ke Aktivitas",
+      viewOther: "Lihat Artikel Lainnya",
+      loading: "Memuat artikel...",
+    },
+    // Foundation / Documents Page
     foundation: {
       title: "Dokumen Organisasi",
       subtitle: "Akses dokumen fundamental PPI AIU",
+      loading: "Memuat dokumen...",
+      noDocuments: "Belum ada dokumen yang tersedia.",
       size: "Ukuran",
       lastUpdated: "Terakhir diperbarui",
       download: "Unduh Dokumen",
+      showPreview: "Lihat Preview",
+      hidePreview: "Sembunyikan Preview",
+      previewTitle: "Preview Dokumen",
+      previewUnavailable: "Preview tidak tersedia untuk tipe file ini. Klik 'Unduh Dokumen' untuk melihat.",
       note: "Catatan Penting:",
       note1: "Dokumen-dokumen ini merupakan pedoman resmi organisasi PPI AIU",
       note2: "Setiap anggota diharapkan memahami dan mematuhi ketentuan yang tertera",
       note3: "Untuk pertanyaan lebih lanjut, silakan hubungi pengurus melalui email resmi",
     },
+    // Developers Page
+    developers: {
+      title: "Development Team",
+      subtitle: "Tim developer yang membangun website PPI AIU",
+      techStackTitle: "Tech Stack",
+      techStackDesc: "Website ini dibangun menggunakan teknologi modern untuk performa dan skalabilitas terbaik",
+      roles: {
+        abidinRole: "Fullstack Web Developer — Sekretaris Jenderal PPI AIU 2023/2024",
+        abidinBio: "Website ini membantu publik mengenal lebih dekat PPI AIU dan dirancang untuk berkelanjutan bagi generasi mendatang.",
+        nardiRole: "Fullstack Web Developer — Sekretaris Departemen Penkastrat PPI AIU 2023/2024",
+        nardiBio: "Mahasiswa Ilmu Komputer yang berkontribusi membangun platform ini untuk menghubungkan mahasiswa dengan PPI AIU.",
+        ariaRole: "Fullstack Web Developer — Wakil Presiden 2 PPI AIU 2024/2025",
+        ariaBio: "Berdedikasi dalam menciptakan antarmuka yang ramah pengguna serta meningkatkan pengalaman pengguna website.",
+      },
+    },
     // Login Page
     login: {
       title: "Masuk ke Dashboard Admin",
       subtitle: "Masukkan kredensial Anda untuk mengakses dashboard",
-      username: "Username",
-      usernamePlaceholder: "Masukkan username",
+      email: "Email",
       password: "Password",
-      passwordPlaceholder: "Masukkan password",
       button: "Masuk",
+      loading: "Memproses...",
+      invalidError: "Email atau password salah",
+      genericError: "Terjadi kesalahan saat login",
       backToHome: "Kembali ke Beranda",
-      demoNote: "Demo: Gunakan username 'admin' dan password 'admin123'",
+    },
+    // Not Found Page
+    notFound: {
+      title: "Halaman Tidak Ditemukan",
+      subtitle: "Maaf, halaman yang Anda cari tidak tersedia.",
+      backHome: "Kembali ke Beranda",
     },
     // Admin Dashboard
     admin: {
@@ -179,6 +249,7 @@ export const translations = {
         members: "Kepengurusan",
         blog: "Artikel",
         documents: "Dokumen",
+        users: "Pengguna Admin",
       },
       members: {
         title: "Kelola Kepengurusan",
@@ -203,7 +274,6 @@ export const translations = {
         addDoc: "Tambah Dokumen",
         deleteConfirm: "Apakah Anda yakin ingin menghapus dokumen ini?",
       },
-      demoNote: "Ini adalah versi demo. Pada implementasi penuh dengan Supabase, semua operasi CRUD akan tersimpan di database.",
     },
     // Forms
     forms: {
@@ -292,6 +362,18 @@ export const translations = {
       documents: "Documents",
       login: "Login",
     },
+    // Footer
+    footer: {
+      desc: "Indonesian Student Association at AIU",
+      location: "Location",
+      locationDetail: "Albukhary International University\nAlor Setar, Kedah, Malaysia",
+      contact: "Contact",
+      email: "Email: adm.ppi.aiu@gmail.com",
+      social: "Social Media",
+      rights: "All rights reserved.",
+      developedBy: "Developed by",
+      techTeam: "PPI AIU Tech Team",
+    },
     // Home Page
     home: {
       hero: {
@@ -306,7 +388,7 @@ export const translations = {
       },
       about: {
         title: "About Us",
-        desc1: "PPI AIU is an organization that brings together Indonesian students at Albukhary International University, Alor Setar, Kedah, Malaysia. We are committed to facilitating academic, social and cultural activities for our members.",
+        desc1: "PPI AIU is an organization that brings together Indonesian students at Albukhary International University, Alor Setar, Kedah, Malaysia. We are committed to facilitating academic, social, and cultural activities for our members.",
         desc2: "Through various programs and activities, we create an environment that supports the development of Indonesian students abroad with a spirit of togetherness and family.",
         readMore: "Learn More",
         photoCaption: "PPI AIU Big Family Togetherness",
@@ -415,44 +497,102 @@ export const translations = {
     // Members Page
     members: {
       title: "Board Directory",
-      subtitle: "PPI AIU board archive by year",
+      subtitle: "PPI AIU board archive by year of appointment",
       loading: "Loading board data...",
       groupPhoto: "Board group photo",
       clickToView: "Click to view members",
       backToPhoto: "Back to group photo",
       board: "Board",
+      yearPrefix: "Board of",
+      noMembers: "No members registered yet.",
+      noYears: "No board data yet.",
     },
-    // Blog Page
+    // Blog / Activities Page
     blog: {
-      title: "News & Activities",
-      subtitle: "Follow the latest developments from PPI AIU",
-      loading: "Loading articles...",
+      title: "Activity Records",
+      subtitle: "Explore various activities, work programs, and exciting events of PPI AIU",
+      loading: "Loading activity articles...",
+      searchPlaceholder: "Search activity title, topic, or author (e.g. Social Service, Webinar, etc)...",
+      filterCategory: "Filter by Category:",
+      categories: {
+        all: "All",
+        academic: "Academic",
+        culture: "Culture & Arts",
+        social: "Social & Service",
+        economy: "Economy & Business",
+        internal: "Internal Organization",
+        general: "General",
+      },
+      showing: "Showing",
+      activities: "activities",
+      forSearch: "for search",
+      inCategory: "in category",
+      resetFilter: "Reset Filter",
+      notFoundTitle: "No Activities Found",
+      notFoundDesc: "Sorry, no activities or news matched your search criteria.",
+      showAllBtn: "Show All Activities",
+      noImage: "No image",
       readMore: "Read More",
       by: "by",
     },
-    // Foundation/Documents Page
+    // Blog Detail Page
+    blogDetail: {
+      back: "Back",
+      notFound: "Article Not Found",
+      backToBlog: "Back to Activities",
+      viewOther: "View Other Articles",
+      loading: "Loading article...",
+    },
+    // Foundation / Documents Page
     foundation: {
       title: "Organization Documents",
       subtitle: "Access PPI AIU fundamental documents",
+      loading: "Loading documents...",
+      noDocuments: "No documents available yet.",
       size: "Size",
       lastUpdated: "Last updated",
       download: "Download Document",
+      showPreview: "View Preview",
+      hidePreview: "Hide Preview",
+      previewTitle: "Document Preview",
+      previewUnavailable: "Preview is not available for this file type. Click 'Download Document' to view.",
       note: "Important Note:",
       note1: "These documents are the official guidelines of PPI AIU organization",
       note2: "All members are expected to understand and comply with the stated provisions",
       note3: "For further questions, please contact the board via official email",
     },
+    // Developers Page
+    developers: {
+      title: "Development Team",
+      subtitle: "The developer team who built the PPI AIU website",
+      techStackTitle: "Tech Stack",
+      techStackDesc: "This website is built using modern technology for optimal performance and scalability",
+      roles: {
+        abidinRole: "Fullstack Web Developer — Secretary General PPI AIU 2023/2024",
+        abidinBio: "This website helps people learn more about PPI AIU and aims to be sustainable for future generations.",
+        nardiRole: "Fullstack Web Developer — Secretary Department of Penkastrat PPI AIU 2023/2024",
+        nardiBio: "A Computer Science student who contributed to developing this platform to connect people with PPI AIU.",
+        ariaRole: "Fullstack Web Developer — Vice President 2 PPI AIU 2024/2025",
+        ariaBio: "Passionate about creating user-friendly interfaces and enhancing the user experience of the website.",
+      },
+    },
     // Login Page
     login: {
       title: "Login to Admin Dashboard",
       subtitle: "Enter your credentials to access the dashboard",
-      username: "Username",
-      usernamePlaceholder: "Enter username",
+      email: "Email",
       password: "Password",
-      passwordPlaceholder: "Enter password",
       button: "Login",
+      loading: "Processing...",
+      invalidError: "Invalid email or password",
+      genericError: "An error occurred during login",
       backToHome: "Back to Home",
-      demoNote: "Demo: Use username 'admin' and password 'admin123'",
+    },
+    // Not Found Page
+    notFound: {
+      title: "Page Not Found",
+      subtitle: "Sorry, the page you are looking for is not available.",
+      backHome: "Back to Home",
     },
     // Admin Dashboard
     admin: {
@@ -462,6 +602,7 @@ export const translations = {
         members: "Board Members",
         blog: "Articles",
         documents: "Documents",
+        users: "Admin Users",
       },
       members: {
         title: "Manage Board",
@@ -486,7 +627,6 @@ export const translations = {
         addDoc: "Add Document",
         deleteConfirm: "Are you sure you want to delete this document?",
       },
-      demoNote: "This is a demo version. In full implementation with Supabase, all CRUD operations will be saved to the database.",
     },
     // Forms
     forms: {

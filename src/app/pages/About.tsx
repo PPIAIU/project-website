@@ -20,7 +20,7 @@ export function About() {
   const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-background">
-      <SEO title="Tentang Kami" description="Profil, sejarah, visi, misi, dan nilai-nilai organisasi Perhimpunan Pelajar Indonesia di Albukhary International University (PPI AIU)." />
+      <SEO title={t.about.hero.title} description={t.about.hero.subtitle} />
 
       {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-16">

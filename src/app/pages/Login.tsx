@@ -2,7 +2,8 @@ import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { Lock, Mail } from "lucide-react";
 import { supabase } from "../../lib/supabase";
-
+import { useLanguage } from "../contexts/LanguageContext";
+import { SEO } from "../components/SEO";
 import { getLocalAdminUsers, setCurrentAdminSession } from "../../lib/adminUsers";
 
 export function Login() {
@@ -10,6 +11,7 @@ export function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -42,7 +44,7 @@ export function Login() {
       }
 
       if (!isSuccess) {
-        setError("Email atau password salah");
+        setError(t.login.invalidError);
         setLoading(false);
         return;
       }
@@ -62,21 +64,22 @@ export function Login() {
       setCurrentAdminSession(sessionUser);
       navigate("/admin");
     } catch (err) {
-      setError("Terjadi kesalahan saat login");
+      setError(t.login.genericError);
       setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-secondary flex items-center justify-center px-4">
+      <SEO title={t.login.title} description={t.login.subtitle} />
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <div className="inline-block bg-primary text-primary-foreground w-16 h-16 rounded-full flex items-center justify-center mb-4">
             <Lock size={32} />
           </div>
-          <h1 className="text-3xl font-bold">Login Admin</h1>
+          <h1 className="text-3xl font-bold">{t.login.title}</h1>
           <p className="text-muted-foreground mt-2">
-            Masuk untuk mengelola konten website
+            {t.login.subtitle}
           </p>
         </div>
 
@@ -89,7 +92,7 @@ export function Login() {
             )}
 
             <div>
-              <label className="block mb-2">Email</label>
+              <label className="block mb-2 font-medium">{t.login.email}</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
                 <input
@@ -104,7 +107,7 @@ export function Login() {
             </div>
 
             <div>
-              <label className="block mb-2">Password</label>
+              <label className="block mb-2 font-medium">{t.login.password}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
                 <input
@@ -123,7 +126,7 @@ export function Login() {
               disabled={loading}
               className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-              {loading ? "Memproses..." : "Masuk"}
+              {loading ? t.login.loading : t.login.button}
             </button>
           </form>
         </div>
