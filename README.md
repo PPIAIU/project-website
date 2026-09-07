@@ -80,16 +80,6 @@ pnpm install
 
 5. Simpan credentials di environment variables atau konfigurasi Supabase
 
-### 4. Run Development Server
-
-Development server sudah berjalan otomatis di environment Make/Figma.
-
-## Demo Credentials
-
-Untuk testing fitur admin:
-- **Email**: admin@ppi-aiu.org
-- **Password**: admin123
-
 ## File Structure
 
 ```
